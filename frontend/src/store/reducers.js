@@ -7,6 +7,7 @@ const requests = (state = {}, action ) => {
             return {
                 ...state,
                 [action.name] : {
+                    ...state[action.name],
                     reqType: action.reqType,
                     isFetching: action.isFetching,
                     params: [action.params]
@@ -17,6 +18,7 @@ const requests = (state = {}, action ) => {
             return {
                 ...state,
                 [action.name] : {
+                    ...state[action.name],
                     data: action.data
                 }
             }
@@ -25,8 +27,10 @@ const requests = (state = {}, action ) => {
             return {
                 ...state,
                 [action.name] : {
+                    ...state[action.name],
                     isFetching: action.isFetching,
-
+                    status: action.status,
+                    statusText: action.statusText
                 }
             }
         
@@ -34,8 +38,9 @@ const requests = (state = {}, action ) => {
             return {
                 ...state,
                 [action.name] : {
+                    ...state[action.name],
                     isFetching: action.isFetching,
-                    
+                    error: action.error
                 }
             }    
 
