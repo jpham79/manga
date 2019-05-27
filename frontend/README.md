@@ -1,3 +1,29 @@
+Project Structure:
+
+components - Functional React components that only display data using props.
+root - the entrance to our application
+store - contains actions, reducers, and the logic for the redux store/global state tree
+view - contains the template and container which handles the logic for a certain view
+
+We will be using axios for http requests.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
