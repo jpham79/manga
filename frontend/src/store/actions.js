@@ -10,24 +10,30 @@ const request = (reqType, name, params = undefined) => {
     }
 }
 
-const reqSuccess = response => {
+const reqSuccess = (name, response) => {
     return {
         type: req_success,
-        isFetching: false
+        isFetching: false,
+        name,
+        status: response.status,
+        statusText: response.statusText
     }
 }
 
-const reqFail = response => {
+const reqFail = (name, error) => {
     return {
         type: req_fail,
-        isFetching: false
+        isFetching: false,
+        name,
+        error
     }
 }
 
-const reqData = (data) => {
+const reqData = (name, response) => {
     return {
         type: req_data,
-        data
+        data: response.data,
+        name
     }
 }
 
