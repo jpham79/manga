@@ -2,6 +2,8 @@ import urllib.request
 import urllib.parse
 import urllib.robotparser
 
+import time
+
 from bs4 import BeautifulSoup
 
 sites = ['https://mangakakalot.com']
@@ -19,6 +21,13 @@ def crawl():
         request = urllib.request.Request(page + '/robots.txt', headers=header)
         response = urllib.request.urlopen(request)
         parse_sitemap(response.read().decode("utf-8").splitlines())
+
+        robotParser = urllib.robotparser.RobotFileParser(page + '/robots.txt')
+        robotParser.read()
+        requestRate = robotParser.request_rate(botName)
+        if requestRate is None:
+            requestRate = robotParser.request_rate("*")
+        
         for xml in siteMaps:
             request = urllib.request.Request(xml, headers=header)
             xmlFile = urllib.request.urlopen(request)
@@ -30,6 +39,8 @@ def crawl():
                     siteMaps.append(link)
                 else:
                     mangaLinks.append(link)
+            if requestRate:
+               time.sleep(requestRate) 
     print(mangaLinks)
                     
                 
