@@ -45,4 +45,6 @@ const mangaSchema = new Schema({
     }],
 });
 
-mongoose.model('Manga', mangaSchema);
+const manga = mongoose.model('Manga', mangaSchema);
+
+module.exports = manga;
