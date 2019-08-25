@@ -15,6 +15,10 @@ backend         ~ Top Level Directory
 
 ## Getting Started
 
+#Prereqs - local
+    1. MongoDB
+    2. Node
+
 To start the local application, run the following commands. 
 
 ```
@@ -23,3 +27,11 @@ npm start
 ```
 
 Access the application at http://localhost:3000
+
+## Database
+
+We use mongoose ORM for connecting to mongodb and making updates to the db.
+Upon launching the webserver, it populates your mongodb
+instance with the "mangabois" database and collections by loading 
+all the fixture files under the dev folder. Fixtures are used to populate
+the initial state of the database upon load.

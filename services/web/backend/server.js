@@ -10,7 +10,7 @@ process.on('uncaughtException', err => {
 async.waterfall([
   cb => require('./config/mongo')(config, cb),
   cb => {
-    let app = express();
+    let app = express();    
     let server = require('http').Server(app);
     let io = require('socket.io')(server);
     require('./config/express')(app);
@@ -18,6 +18,10 @@ async.waterfall([
     require('./routes')(app);
     cb();
   },
+  cb => {
+    require('./fixtures').loadFixtures(cb);
+    cb();
+  }
 ], err => {
   if (err) {
     console.log("Error during server bootstrap");

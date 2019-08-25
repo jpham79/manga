@@ -14,6 +14,7 @@ class Model {
                 callback(err);
             } else {
                 console.log("MongoDB connected successfully.");
+                callback();
             }
         });
     };
@@ -27,6 +28,7 @@ class Model {
                     callback(err);
                 } else {
                     console.log("MongoDB connected successfully.");
+                    callback();
                 }
             });
         });
