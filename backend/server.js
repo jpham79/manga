@@ -1,15 +1,23 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const async = require('async');
+const config = require('./config/config');
 
-app.get('/', (request, response) => {
-  response.send('Hello from Express!')
-})
-
-app.listen(port, (err) => {
+async.waterfall([
+  cb => {
+    let app = express();
+    let server = require('http').Server(app);
+    let io = require('socket.io')(server);
+    require('./config/express')(app);
+    server.listen(config.port);
+    require('./routes')(app);
+    cb();
+  },
+], err => {
   if (err) {
-    return console.log('something bad happened', err)
+    console.log("Error during server bootstrap");
+    console.error(err);
+  } else {
+    console.log("Server is ready");
   }
-
-  console.log(`server is listening on ${port}`)
-})
+}
+);
