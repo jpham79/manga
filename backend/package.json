@@ -1,0 +1,28 @@
+{
+  "name": "web-service",
+  "version": "1.0.0",
+  "description": "MangaBois backend",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpham79/manga.git"
+  },
+  "keywords": [
+    "manga"
+  ],
+  "author": "Justin Pham - jpham79@hawaii.edu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jpham79/manga/issues"
+  },
+  "homepage": "https://github.com/jpham79/manga#readme",
+  "dependencies": {
+    "async": "^3.1.0",
+    "express": "^4.17.1",
+    "socket.io": "^2.2.0"
+  }
+}
