@@ -1,6 +1,7 @@
 import urllib.request
 import urllib.parse
 import urllib.robotparser
+import requests
 
 import time
 
@@ -34,14 +35,15 @@ def crawl():
             parsedXml = BeautifulSoup(xmlFile, 'xml')
             for location in parsedXml.find_all('loc'):
                 link = location.contents[0]
-                print(link)
+                # print(link)
                 if link.endswith('.xml'):
                     siteMaps.append(link)
                 else:
                     mangaLinks.append(link)
+                    grab_images(link)
             if requestRate:
                time.sleep(requestRate) 
-    print(mangaLinks)
+    # print(mangaLinks)
                     
                 
 def parse_sitemap(response):
@@ -56,12 +58,25 @@ def parse_sitemap(response):
         if len(line) == 2:
             line[0] = line[0].strip().lower()
             line[1] = urllib.parse.unquote(line[1].strip())
-            print(line[1])
+            # print(line[1])
             if line[0] == 'user-agent' and (line[1] == '*' or line[1] == botName):
                 applicable = True
             if line[0] == 'sitemap' and applicable:
                 siteMaps.append(line[1])
                 applicable = False
+
+def grab_images(link):
+    images = []
+    if "chapter" in link:
+        print(link)
+        page = requests.get(link)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        images = soup.find_all('img')
+        for image in images:
+            if "chapter" in image['src']:
+                print(image['src'])
+        print()
+
 
 crawl()
                 
