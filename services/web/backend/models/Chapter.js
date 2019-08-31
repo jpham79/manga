@@ -16,7 +16,8 @@ const chapterSchema = new Schema({
         type: String //Url to a page
     }],
     comments: [{
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
     }],
     contributors: [{
         types: Schema.Types.ObjectId,
