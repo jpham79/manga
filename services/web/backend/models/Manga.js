@@ -7,8 +7,13 @@ const mangaSchema = new Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String,
+        required: true //link to display image
+    },
     author: {
-        type: String
+        type: String,
+        required: true
     },
     chapters: [{
         type:  Schema.Types.ObjectId,
