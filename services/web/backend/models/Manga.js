@@ -7,13 +7,17 @@ const mangaSchema = new Schema({
         type: String,
         required: true
     },
+    author: {
+        type: String
+    },
     chapters: [{
         type:  Schema.Types.ObjectId,
         ref: 'Chapter'
     }],
-    author: {
-        type: String
-    },
+    reviews: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+    }],
     updated: {
         type: Date
     },
@@ -22,6 +26,9 @@ const mangaSchema = new Schema({
     },
     ongoing: {
         type: Boolean
+    },
+    direction: {
+        type: String
     },
     stats: {
         rank: {

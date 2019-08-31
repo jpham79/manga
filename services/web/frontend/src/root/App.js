@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
 import store from '../store/store'
-import { Hello } from '../view/Hello.jsx.js'
+import { Hello } from '../view/Hello.jsx'
 import { request, reqSuccess, reqFail } from '../store/actions'
 import axios from 'axios'
 import {reqData} from '../store/actions'
