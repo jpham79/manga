@@ -27,7 +27,7 @@ npm install
 npm start
 ```
 
-Access the application at http://localhost:3000
+Access the application at http://localhost:5000
 
 ## Database
 

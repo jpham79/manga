@@ -6,11 +6,19 @@ const chapterSchema = new Schema({
     title: {
         type: String
     },
-    mangaName: {
-        type: String
+    manga: {
+        mangaId: Schema.Types.ObjectId,
+        name: {
+            type: String,
+            required: true
+        }
     },
-    chapterNum: {
-        type: Number
+    chapter: {
+        chapterId: Schema.Types.ObjectId,
+        num: {
+            type: Number,
+            required: true
+        }
     },
     pages: [{
         type: String //Url to a page
