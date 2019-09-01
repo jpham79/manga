@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
 import store from '../store/store'
-import { Hello } from '../view/Hello.jsx'
+import { Landing } from '../view/landing/Landing.jsx'
 import { request, reqSuccess, reqFail } from '../store/actions'
 import axios from 'axios'
 import {reqData} from '../store/actions'
@@ -11,13 +11,15 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <Router>
-          <Switch>
-            <Route path="/" component={Hello} />
-          </Switch>
-        </Router>
-      </Provider>
+      <div className="App">
+        <Provider store={store}>
+          <Router>
+            <Switch>
+              <Route path="/" component={Landing} />
+            </Switch>
+          </Router>
+        </Provider>
+      </div>
     );
   }
 }
