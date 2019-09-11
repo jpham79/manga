@@ -8,17 +8,42 @@ import axios from 'axios'
 import {reqData} from '../store/actions'
 import './App.css';
 
+import { Sidebar } from 'semantic-ui-react';
+import { Navagation } from '../view/Navagation/Navagation.jsx';
+
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { visible: false  };
+
+    this.showSidebar = this.showSidebar.bind(this);
+    this.hideSidebar = this.hideSidebar.bind(this);
+  }
+
+  showSidebar() {
+    this.setState({visible: true});
+  }
+
+  hideSidebar() {
+      this.setState({visible: false});
+  }
+
   render() {
     return (
       <div className="App">
-        <Provider store={store}>
-          <Router>
-            <Switch>
-              <Route path="/" component={Landing} />
-            </Switch>
-          </Router>
-        </Provider>
+        <Sidebar.Pushable>
+          <Navagation/>
+          <Sidebar.Pusher>
+            <Provider store={store}>
+              <Router>
+                <Switch>
+                  <Route path="/" component={Landing} />
+                </Switch>
+              </Router>
+            </Provider>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </div>
     );
   }

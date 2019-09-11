@@ -1,11 +1,18 @@
 import 'semantic-ui-css/semantic.min.css';
-import './side-nav.scss';
+import './navagation.scss';
 
 import React from 'react';
-import {   Button, Header, Icon,  Menu, Sidebar } from 'semantic-ui-react';
+import { Header, Icon,  Menu, Sidebar } from 'semantic-ui-react';
 
-export class SideNav extends React.Component {
-    state = { activeItem: 'bio', visible: true  };
+export class Navagation extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { activeItem: 'Navigation', visible: false  };
+
+        this.showSidebar = this.showSidebar.bind(this);
+        this.hideSidebar = this.hideSidebar.bind(this);
+    }
 
     menuEntries = [
         {type: 'header', name: 'Navigation'},
@@ -17,51 +24,52 @@ export class SideNav extends React.Component {
         {type: 'item', name: 'Mangarock', icon: 'home'}
     ];
 
-    handleHideClick = () => this.setState({ visible: false });
-    handleShowClick = () => this.setState({ visible: true });
-    handleSidebarHide = () => this.setState({ visible: false });
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+    showSidebar() {
+        this.setState({visible: true});
+    }
+    
+    hideSidebar() {
+        this.setState({visible: false});
+    }
+
+    handleItemClick(e, { name }) { 
+        this.setState({ activeItem: name });
+    }
 
     render() {
         const { activeItem, visible } = this.state;
-
-        return (
-            <div className="side-nav">
-                <Button.Group>
-                    <Button disabled={visible} onClick={this.handleShowClick}>
-                        Show sidebar
-                    </Button>
-                    <Button disabled={!visible} onClick={this.handleHideClick}>
-                        Hide sidebar
-                    </Button>
-                </Button.Group>
+        
+        // return as array to get the Pusher on the parent to work properly
+        return [
+                <Menu inverted>
+                    <Menu.Item onClick={this.showSidebar}>Show Navagation</Menu.Item>
+                </Menu>,
                 <Sidebar
                     as={Menu}
-                    animation='overlay'
+                    animation='push'
                     icon='labeled'
                     inverted
                     onHide={this.handleSidebarHide}
                     vertical
                     visible={visible}
                     width='wide'>
+                    <Menu.Item onClick={this.hideSidebar}>Hide Navagation</Menu.Item>
                     {
                         this.menuEntries.map((entry) => {
                             if (entry.type === 'header') 
-                             return <Header as="h2">{entry.name}</Header>;
+                             return <Header as="h2"color='blue'>{entry.name}</Header>;
                             else 
                                 return (
                                     <Menu.Item
                                         active={activeItem === entry.name}
                                         onClick={this.handleItemClick}>
-                                        <Icon name={entry.icon} className="menu-icon"/>
+                                        <Icon name={entry.icon}/>
                                         <span className="menu-label">{entry.name}</span>
                                     </Menu.Item>
                                 );
                         })
                     }
-                </Sidebar>
-            </div>
-        )
+                </Sidebar>];
     }
 }
 
