@@ -17,10 +17,44 @@ const userSchema = new Schema({
     email: {
         type: String
     },
-    subscriptions: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Subscription'
-    }],
+    subscriptions: [
+        {
+            subscriptionId: {
+                type: Schema.Types.ObjectId,
+                ref: 'Subscription'
+            },
+            name: {
+                type: String,
+                required: true
+            },
+            category: { //different types of subscriptions
+                type: String,
+                default: 'manga',
+                required: true
+            },
+            link: {
+                type: String,
+                required: true
+            },
+            lastUpdated: {
+                type: Date
+            },
+            manga: {
+                name: {
+                    type: String
+                },
+                chapter: {
+                    type: Number
+                },
+                page: {
+                    type: Number
+                },
+                link: {
+                    type: String
+                }
+            }
+        }
+    ],
     groups: [{
         groupId: {
             type: Schema.Types.ObjectId
