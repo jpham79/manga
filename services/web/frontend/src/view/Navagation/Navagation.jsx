@@ -46,7 +46,7 @@ export class Navagation extends React.Component {
                 </Menu>,
                 <Sidebar
                     as={Menu}
-                    animation='push'
+                    animation='overlay'
                     icon='labeled'
                     inverted
                     onHide={this.handleSidebarHide}

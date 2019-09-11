@@ -12,23 +12,7 @@ import { Sidebar } from 'semantic-ui-react';
 import { Navagation } from '../view/Navagation/Navagation.jsx';
 
 class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { visible: false  };
-
-    this.showSidebar = this.showSidebar.bind(this);
-    this.hideSidebar = this.hideSidebar.bind(this);
-  }
-
-  showSidebar() {
-    this.setState({visible: true});
-  }
-
-  hideSidebar() {
-      this.setState({visible: false});
-  }
-
+  
   render() {
     return (
       <div className="App">
