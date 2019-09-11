@@ -17,6 +17,10 @@ const commentSchema = new Schema({
             required: true
         }
     },
+    comment: {
+        type: String,
+        required: true
+    },
     user: {
         userId: Schema.Types.ObjectId,
         name: String,

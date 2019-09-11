@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const chapterSchema = new Schema({
     _id: Schema.Types.ObjectId,
     title: {
-        type: String
+        type: String,
+        required: true
     },
     manga: {
         mangaId: Schema.Types.ObjectId,
