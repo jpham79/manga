@@ -1,7 +1,11 @@
-import {req, req_data, req_success, req_fail} from './actionTypes'
+import {req, req_data, req_success, req_fail, toggle_sidenav} from './actionTypes'
 import { combineReducers } from 'redux'
 
-const requests = (state = {}, action ) => {
+const initState = {
+    isSidenavVisible: false
+}
+
+const requests = (state = initState, action ) => {
     switch (action.type) {
         case req:
             return {
@@ -35,14 +39,20 @@ const requests = (state = {}, action ) => {
             }
         
             case req_fail:
-            return {
-                ...state,
-                [action.name] : {
-                    ...state[action.name],
-                    isFetching: action.isFetching,
-                    error: action.error
+                return {
+                    ...state,
+                    [action.name] : {
+                        ...state[action.name],
+                        isFetching: action.isFetching,
+                        error: action.error
+                    }
+                } 
+                
+            case toggle_sidenav:
+                return {
+                    ...state,
+                    isSidenavVisible: action.visible
                 }
-            }    
 
             default:
                 return state
