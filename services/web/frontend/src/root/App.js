@@ -19,7 +19,7 @@ class App extends Component {
     let routes = [];
 
     for (let key in ROUTES) {
-      routes.push(<Route key={ROUTES[key].path} path={ROUTES[key].path} component={ROUTES[key].component} />);
+      routes.push(<Route key={ROUTES[key].path} exact={ROUTES[key].useExactPath} path={ROUTES[key].path} component={ROUTES[key].component} />);
     }
 
     return routes;
@@ -50,31 +50,21 @@ class App extends Component {
 
 export default App;
 
-export const ROUTES = {
-  landing: {
-    path: '/',
-    component: Landing
-  },
-  favorites: {
-    path: '/favorites',
-    component: Landing
-  },
-  profile: {
-    path: '/profile',
-    component: Landing
-  },
-  accountCreation: {
-    path: '/new-account',
-    component: Landing
-  },
-  settings: {
-    path: '/settings',
-    component: Landing
-  },
-  offlineLibrary: {
-    path: '/offline-library',
-    component: Landing
+function createRoute(path, component, useExactPath = false) {
+  return {
+    path, 
+    useExactPath,
+    component
   }
+}
+
+export const ROUTES = {
+  landing: createRoute('/', Landing, true),
+  favorites: createRoute('/favorites', Landing),
+  profile: createRoute('/profile', Landing),
+  accountCreation: createRoute('/new-account', Landing),
+  settings: createRoute('/settings', Landing) ,
+  offlineLibrary: createRoute('/offline-library', Landing)
 };
 
 
