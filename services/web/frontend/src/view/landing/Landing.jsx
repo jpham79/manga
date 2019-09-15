@@ -1,10 +1,26 @@
 import React from 'react';
 
-export default function wrapLandingPage(WrappedComponent) {
-    return class extends React.Component {
+import { connect } from 'react-redux';
+import { toggleSidenav } from '../../store/actions.js';
 
-        render() {
-            return <WrappedComponent {...this.props}/>
-        }
-    }
+const mapStateToProps = (state) => ({
+    visible: state.requests.isSidenavVisible
+});
+  
+const mapDispatchToProps = (dispatch) => ({
+    showSidebar: () => dispatch(toggleSidenav(true))
+});
+
+export default function wrapLandingPage(WrappedComponent) {
+    return connect(mapStateToProps, mapDispatchToProps) (
+            class extends React.Component {
+
+                render() {
+                    let {...rest} = this.props
+
+                    return <WrappedComponent {...rest}/>
+                }
+            }
+        );
 }
+

@@ -7,7 +7,6 @@ import axios from 'axios'
 import {reqData} from '../store/actions'
 import './App.css';
 
-import { Sidebar } from 'semantic-ui-react';
 import  SideNav  from '../view/Navagation/SideNav/SideNav.jsx';
 import  TopMenu  from '../view/Navagation/TopMenu/TopMenu.jsx';
 import Home from '../view/landing/home/Home.jsx';
@@ -19,7 +18,8 @@ class App extends Component {
     let routes = [];
 
     for (let key in ROUTES) {
-      routes.push(<Route key={ROUTES[key].path} exact={ROUTES[key].useExactPath} path={ROUTES[key].path} component={ROUTES[key].component} />);
+      let Component = ROUTES[key].component;
+      routes.push(<Route key={ROUTES[key].path} exact={ROUTES[key].useExactPath} path={ROUTES[key].path} render={(props) => <Component {...props}/>} />);
     }
 
     return routes;
@@ -30,17 +30,11 @@ class App extends Component {
       <div className="App">
         <Router>
           <Provider store={store}>
-            <Sidebar.Pushable>
-              <TopMenu/>
-              <SideNav/>
-                <Switch>
-                  <Sidebar.Pusher>
-                      {
-                        this.generateRoutes()
-                      }
-                  </Sidebar.Pusher>
-                </Switch>
-            </Sidebar.Pushable>
+            <TopMenu/>
+            <SideNav/>
+            <Switch>
+              { this.generateRoutes() }
+            </Switch>
           </Provider>
         </Router>
       </div>

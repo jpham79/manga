@@ -7,6 +7,13 @@ import { Header, Segment } from 'semantic-ui-react';
 
 class Home extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        console.log(props);
+        
+    }
+
     render() {
         return (
             <Segment basic>
