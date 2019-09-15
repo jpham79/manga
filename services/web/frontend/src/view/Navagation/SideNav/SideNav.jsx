@@ -10,13 +10,13 @@ import { toggleSidenav } from '../../../store/actions.js';
 class Navagation extends React.Component {
 
     menuEntries = [
-        {type: 'header', name: 'Navigation'},
-        {type: 'item', name: 'Series', icon: 'home'},
-        {type: 'item', name: 'Favorites', icon: 'home'},
-        {type: 'item', name: 'Offline Library', icon: 'home'},
-        {type: 'item', name: 'Settings', icon: 'home'},
-        {type: 'header', name: 'Sources', icon: 'home'},
-        {type: 'item', name: 'Mangarock', icon: 'home'}
+        {type: 'header', name: 'Navigation', key: 'navHeader'},
+        {type: 'item', name: 'Series', key: 'seriesLink', icon: 'home'},
+        {type: 'item', name: 'Favorites', key: 'favoriteLink', icon: 'home'},
+        {type: 'item', name: 'Offline Library', key: 'offlineLink', icon: 'home'},
+        {type: 'item', name: 'Settings', key: 'settingsLink', icon: 'home'},
+        {type: 'header', name: 'Sources', key: 'sourceHeader', icon: 'home'},
+        {type: 'item', name: 'Mangarock', key: 'sourceLink1', icon: 'home'}
     ];
 
     render() {
@@ -36,11 +36,12 @@ class Navagation extends React.Component {
                     {
                         this.menuEntries.map((entry) => {
                             if (entry.type === 'header') 
-                             return <Header as="h2"color='blue'>{entry.name}</Header>;
+                             return <Header as="h2"color='blue' key ={entry.key}>{entry.name}</Header>;
                             else 
                                 return (
                                     <Menu.Item
-                                        onClick={this.handleItemClick}>
+                                        link
+                                        key={entry.key}>
                                         <Icon name={entry.icon}/>
                                         <span className="menu-label">{entry.name}</span>
                                     </Menu.Item>

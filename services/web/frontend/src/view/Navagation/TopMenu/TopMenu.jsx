@@ -3,8 +3,10 @@ import './top-menu.scss';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Menu } from 'semantic-ui-react';
+import { Link } from "react-router-dom"
+import { Menu, Popup, Form, Input, Button } from 'semantic-ui-react';
 
+import { ROUTES } from '../../../root/App.js'
 import { toggleSidenav } from '../../../store/actions.js';
 
 class TopMenu extends React.Component {
@@ -20,10 +22,35 @@ class TopMenu extends React.Component {
         return <Menu inverted>
                     <Menu.Item onClick={showSidebar}>Show Navagation</Menu.Item>
                     <Menu.Item position='right'>Search</Menu.Item>
-                    <Menu.Item>Filter</Menu.Item>
-                    <Menu.Item>Download</Menu.Item>
-                    <Menu.Item>Favorite</Menu.Item>
-                    <Menu.Item>Login</Menu.Item>
+                    <Menu.Item link>
+                        Filter
+                    </Menu.Item>
+                    <Menu.Item link>
+                        Download
+                    </Menu.Item>
+                    <Menu.Item link>
+                        <Link to={ROUTES.favorites.path}>Favorites</Link>
+                    </Menu.Item>
+                    <Popup 
+                        hoverable
+                        position ='bottom right'
+                        on='click'
+                        trigger={ 
+                            <Menu.Item>Login</Menu.Item>
+                        }
+                        >
+                            <Popup.Content>
+                                <Form>
+                                    <Form.Field>
+                                        <Input placeholder='Username' />
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <Input placeholder='Password' />
+                                    </Form.Field>
+                                    <Button type='submit'>Login</Button>
+                                </Form>
+                            </Popup.Content>
+                    </Popup>
                 </Menu>;
     }
 }
