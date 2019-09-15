@@ -17,13 +17,38 @@ class TopMenu extends React.Component {
 
     render() {
         const { showSidebar } = this.props;
-        
+
         // return as array to get the Pusher on the parent to work properly
-        return <Menu inverted>
+        return <Menu inverted className='top-menu'>
                     <Menu.Item onClick={showSidebar}>Show Navagation</Menu.Item>
-                    <Menu.Item position='right'>Search</Menu.Item>
+                    <Menu.Item position='right'><Input icon='search' placeholder='Search' iconPosition='left'/></Menu.Item>
+                    <Popup 
+                        hoverable
+                        position ='bottom right'
+                        on='click'
+                        className='top-menu filter'
+                        trigger={ 
+                            <Menu.Item>Filter</Menu.Item>
+                        }
+                        >
+                            {/* popup is rendered outside of component */}
+                            <Popup.Content className='body'>
+                                <Form>
+                                    <Form.Field>
+                                        <label>Tags</label>
+                                        <Form.Checkbox label='Isekai' />
+                                        <Form.Checkbox label='Action' />
+                                        <Form.Checkbox label='Comedy' />
+                                        <Form.Checkbox label='Slice of Life' />
+                                        <Form.Checkbox label='NTR' />
+                                        <Form.Checkbox label='Mystery' />
+                                        <Form.Checkbox label='Fantasy' />
+                                    </Form.Field>
+                                </Form>
+                            </Popup.Content>
+                    </Popup>
                     <Menu.Item link>
-                        Filter
+                        <Link to={ROUTES.landing.path}>Home</Link>
                     </Menu.Item>
                     <Menu.Item link>
                         Download
@@ -48,6 +73,8 @@ class TopMenu extends React.Component {
                                         <Input placeholder='Password' />
                                     </Form.Field>
                                     <Button type='submit'>Login</Button>
+                                    <br/>
+                                    <Link to={ROUTES.accountCreation.path}>New User?</Link>
                                 </Form>
                             </Popup.Content>
                     </Popup>

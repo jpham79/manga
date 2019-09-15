@@ -11,12 +11,12 @@ class Navagation extends React.Component {
 
     menuEntries = [
         {type: 'header', name: 'Navigation', key: 'navHeader'},
-        {type: 'item', name: 'Series', key: 'seriesLink', icon: 'home'},
-        {type: 'item', name: 'Favorites', key: 'favoriteLink', icon: 'home'},
-        {type: 'item', name: 'Offline Library', key: 'offlineLink', icon: 'home'},
-        {type: 'item', name: 'Settings', key: 'settingsLink', icon: 'home'},
-        {type: 'header', name: 'Sources', key: 'sourceHeader', icon: 'home'},
-        {type: 'item', name: 'Mangarock', key: 'sourceLink1', icon: 'home'}
+        {type: 'item', name: 'Series', key: 'seriesLink', icon: 'book'},
+        {type: 'item', name: 'Favorites', key: 'favoriteLink', icon: 'star'},
+        {type: 'item', name: 'Offline Library', key: 'offlineLink', icon: 'folder open'},
+        {type: 'item', name: 'Settings', key: 'settingsLink', icon: 'cogs'},
+        {type: 'header', name: 'Sources', key: 'sourceHeader'},
+        {type: 'item', name: 'Mangarock', key: 'sourceLink1', icon: 'sitemap'}
     ];
 
     render() {

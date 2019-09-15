@@ -1,3 +1,14 @@
 .top-menu {
-    
+}
+
+.top-menu.filter {
+    padding-right: 0px;
+    padding-top: 0px; 
+    padding-bottom: 0px; 
+    .body {
+        max-height: 200px;
+        overflow-y: scroll;
+        padding-right: 10px;
+        padding-bottom: 10px;
+    }
 }
