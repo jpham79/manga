@@ -3,9 +3,8 @@ const Schema = mongoose.Schema;
 
 const chapterSchema = new Schema({
     _id: Schema.Types.ObjectId,
-    title: {
-        type: String,
-        required: true
+    name: {
+        type: String
     },
     manga: {
         mangaId: Schema.Types.ObjectId,
