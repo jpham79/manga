@@ -1,15 +1,10 @@
 import React from 'react';
-import 'semantic-ui-css/semantic.min.css';
 
-import { Header, Segment } from 'semantic-ui-react';
+export default function wrapLandingPage(WrappedComponent) {
+    return class extends React.Component {
 
-export class Landing extends React.Component {
-
-    render() {
-        return (
-            <Segment basic>
-                <Header as='h3' color='blue'>Application Content</Header>
-            </Segment>
-        )
+        render() {
+            return <WrappedComponent {...this.props}/>
+        }
     }
 }

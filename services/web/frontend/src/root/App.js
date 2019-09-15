@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import store from '../store/store'
-import { Landing } from '../view/landing/Landing.jsx'
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import store from '../store/store';
 import { request, reqSuccess, reqFail } from '../store/actions'
 import axios from 'axios'
 import {reqData} from '../store/actions'
@@ -11,6 +10,7 @@ import './App.css';
 import { Sidebar } from 'semantic-ui-react';
 import  SideNav  from '../view/Navagation/SideNav/SideNav.jsx';
 import  TopMenu  from '../view/Navagation/TopMenu/TopMenu.jsx';
+import Home from '../view/landing/home/Home.jsx';
 
 
 class App extends Component {
@@ -59,12 +59,12 @@ function createRoute(path, component, useExactPath = false) {
 }
 
 export const ROUTES = {
-  landing: createRoute('/', Landing, true),
-  favorites: createRoute('/favorites', Landing),
-  profile: createRoute('/profile', Landing),
-  accountCreation: createRoute('/new-account', Landing),
-  settings: createRoute('/settings', Landing) ,
-  offlineLibrary: createRoute('/offline-library', Landing)
+  landing: createRoute('/', Home, true),
+  favorites: createRoute('/favorites', Home),
+  profile: createRoute('/profile', Home),
+  accountCreation: createRoute('/new-account', Home),
+  settings: createRoute('/settings', Home) ,
+  offlineLibrary: createRoute('/offline-library', Home)
 };
 
 
