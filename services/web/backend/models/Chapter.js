@@ -13,24 +13,31 @@ const chapterSchema = new Schema({
             required: true
         }
     },
-    chapter: {
-        chapterId: Schema.Types.ObjectId,
-        num: {
-            type: Number,
-            required: true
-        }
+    num: {
+        type: Number,
+        required: true
     },
     pages: [{
-        type: String //Url to a page
+        num: {
+            type: String
+        },
+        url: {
+            type: String //Url to a page
+        },
     }],
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
     contributors: [{
-        types: Schema.Types.ObjectId,
-        ref: 'User'
-    }] 
+        username: {
+            type: String
+        },
+        userId: {
+            types: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    }]
 })
 
 const chapter = mongoose.model('Chapter', chapterSchema);
