@@ -1,7 +1,13 @@
 import urllib.request
 import urllib.parse
 import urllib.robotparser
+
+###
 import requests
+import re
+import json
+from pymongo import MongoClient
+###
 
 import time
 
@@ -9,6 +15,7 @@ from bs4 import BeautifulSoup
 
 sites = ['https://mangakakalot.com']
 mangaLinks = []
+mangaChapterLinks = []
 siteMaps = []
 botName = 'MangaLinkCollectorBot'
 header = {'User-Agent' : botName}
@@ -18,6 +25,9 @@ header = {'User-Agent' : botName}
  disallow and allow rule parsing will be directed to urllib.robotpaser
 """
 def crawl():
+
+    stop = 0
+
     for page in sites:
         request = urllib.request.Request(page + '/robots.txt', headers=header)
         response = urllib.request.urlopen(request)
@@ -39,12 +49,21 @@ def crawl():
                 if link.endswith('.xml'):
                     siteMaps.append(link)
                 else:
-                    mangaLinks.append(link)
-                    grab_images(link)
+                    # mangaLinks.append(link)
+                    if 'chapter' in link:
+                        mangaChapterLinks.append(link)
+                    else:
+                        if get_manga_info(link) is not None:
+                            mangaLinks.append(get_manga_info(link))
+                        #if stop == 3:
+                            #y = json.dumps({'manga': mangaLinks}, indent=3)
+                            #print(y)
+                            #exit()
+                            #return
+                        #stop = stop + 1
             if requestRate:
                time.sleep(requestRate) 
     # print(mangaLinks)
-                    
                 
 def parse_sitemap(response):
     applicable = False
@@ -58,31 +77,56 @@ def parse_sitemap(response):
         if len(line) == 2:
             line[0] = line[0].strip().lower()
             line[1] = urllib.parse.unquote(line[1].strip())
-            # print(line[1])
             if line[0] == 'user-agent' and (line[1] == '*' or line[1] == botName):
                 applicable = True
             if line[0] == 'sitemap' and applicable:
                 siteMaps.append(line[1])
                 applicable = False
 
-def grab_images(link):
-    images = []
-    if "chapter" in link:
-        print(link)
-        page = requests.get(link)
-        soup = BeautifulSoup(page.content, 'html.parser')
-        images = soup.find_all('img')
-        for image in images:
-            if "chapter" in image['src']:
-                print(image['src'])
-        print()
+def get_manga_info(info_url):
+    data = {}
+    resp = requests.get(info_url)
+    txt = resp.text
+    soup = BeautifulSoup(txt, 'lxml')
+    myul = soup.findAll('ul', {'class': 'manga-info-text'})
 
+    if len(myul) > 0:
+        # name
+        manga_name = info_url.rsplit('/')[4]
+        manga_name = manga_name.replace('_', ' ')
+        data['name'] = manga_name
 
+        # image
+        manga_image = soup.select('div.manga-info-pic img[src]')
+        data['image'] = manga_image[0]['src']
+
+        # author
+        authors = soup.findAll(href = re.compile('search_author'))
+        if len(authors) > 0:
+            data['author'] = authors[0].text
+
+        # status
+        status = soup.findAll(text = re.compile('Status'))
+        if status[0].split(':')[1].strip() == 'Ongoing':
+            data['ongoing'] = True
+        else:
+            data['ongoing'] = False
+
+        # genres
+        genres = myul[0].findAll('li')
+        genres = genres[6].findAll('a')
+        genres_arr = []
+        for genre in genres:
+            genres_arr.append(genre.text)
+        data['genres'] = genres_arr
+
+        # alt title of manga
+        alt_title = soup.findAll('h2')
+        if len(alt_title[0].text.split(';')) > 1:
+            if alt_title[0].text.split(';')[1].strip().isascii():
+                data['otherNames'] = alt_title[0].text.split(';')[1].strip()
+        
+        return data
 crawl()
-                
-##    soup = BeautifulSoup(html, 'html.parser')
-##    for link in soup.find_all('a'):
-##        print(link.get('href'))
-
-
-    
+y = json.dumps({'manga': mangaLinks}, indent=3)
+print(y)
