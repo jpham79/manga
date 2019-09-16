@@ -2,12 +2,11 @@ import 'semantic-ui-css/semantic.min.css';
 import './top-menu.scss';
 
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from "react-router-dom"
 import { Menu, Popup, Form, Input, Button } from 'semantic-ui-react';
 
 import { ROUTES } from '../../../root/App.js'
-import { toggleSidenav } from '../../../store/actions.js';
+import wrapper from '../../landing/Landing.jsx';
 
 class TopMenu extends React.Component {
 
@@ -82,12 +81,4 @@ class TopMenu extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    visible: state.requests.isSidenavVisible
-});
-  
-const mapDispatchToProps = (dispatch) => ({
-    showSidebar: () => dispatch(toggleSidenav(true))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TopMenu);
+export default wrapper(TopMenu);

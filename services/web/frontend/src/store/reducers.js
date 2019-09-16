@@ -51,7 +51,7 @@ const requests = (state = initState, action ) => {
             case toggle_sidenav:
                 return {
                     ...state,
-                    isSidenavVisible: action.visible
+                    isSidebarVisible: action.visible
                 }
 
             default:

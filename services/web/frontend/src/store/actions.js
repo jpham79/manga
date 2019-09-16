@@ -37,10 +37,15 @@ const reqData = (name, response) => {
     }
 }
 
-const toggleSidenav = (visible) => {
-    return {
-        type: toggle_sidenav,
-        visible
+const toggleSidenav = makeActionCreator(toggle_sidenav, 'visible')
+
+function makeActionCreator(type, ...argNames) {
+    return function(...args) {
+      const action = { type }
+      argNames.forEach((arg, index) => {
+        action[arg] = args[index]
+      })
+      return action
     }
 }
 
