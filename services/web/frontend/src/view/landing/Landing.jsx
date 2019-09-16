@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { toggleSidenav } from '../../store/actions.js';
+import { toggleSidenav, selectTags } from '../../store/actions.js';
 
 /**
  * Assumed schema
@@ -21,18 +21,19 @@ import { toggleSidenav } from '../../store/actions.js';
  * 
  * isSidebarVisible: boolean
  * 
- * tags: [list of selected strings]
+ * tags: [list of selected ids]
  */
 const mapStateToProps = (state) => ({
     isSidebarVisible: state.requests.isSidebarVisible,
     posts: state.requests.posts,
     mangas: state.requests.mangas,
-    tags: state.requests.tags
+    selectedTags: state.requests.selectedTags
 });
   
 const mapDispatchToProps = (dispatch) => ({
     showSidebar: () => dispatch(toggleSidenav(true)),
-    hideSidebar: () => dispatch(toggleSidenav(false))
+    hideSidebar: () => dispatch(toggleSidenav(false)),
+    selectTags: (tags) => dispatch(selectTags(tags))
 });
 
 export default function wrapLandingPage(WrappedComponent) {

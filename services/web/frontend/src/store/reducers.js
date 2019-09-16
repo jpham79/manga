@@ -1,8 +1,9 @@
-import {req, req_data, req_success, req_fail, toggle_sidenav} from './actionTypes'
+import {req, req_data, req_success, req_fail, toggle_sidenav, select_tags} from './actionTypes'
 import { combineReducers } from 'redux'
 
 const initState = {
-    isSidenavVisible: false
+    isSidenavVisible: false,
+    selectedTags: []
 }
 
 const requests = (state = initState, action ) => {
@@ -52,6 +53,12 @@ const requests = (state = initState, action ) => {
                 return {
                     ...state,
                     isSidebarVisible: action.visible
+                }
+
+            case select_tags:
+                return {
+                    ...state,
+                    selectedTags: action.tags
                 }
 
             default:

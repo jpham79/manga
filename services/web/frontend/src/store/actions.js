@@ -1,4 +1,4 @@
-import {req, req_success, req_fail, req_data, toggle_sidenav} from './actionTypes'
+import {req, req_success, req_fail, req_data, toggle_sidenav, select_tags} from './actionTypes'
 
 const request = (reqType, name, params = undefined) => {
     return {
@@ -39,6 +39,8 @@ const reqData = (name, response) => {
 
 const toggleSidenav = makeActionCreator(toggle_sidenav, 'visible')
 
+const selectTags = makeActionCreator(select_tags, 'tags')
+
 function makeActionCreator(type, ...argNames) {
     return function(...args) {
       const action = { type }
@@ -49,4 +51,4 @@ function makeActionCreator(type, ...argNames) {
     }
 }
 
-export {request, reqData, reqFail, reqSuccess, toggleSidenav}
+export {request, reqData, reqFail, reqSuccess, toggleSidenav, selectTags}
