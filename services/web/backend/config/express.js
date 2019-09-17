@@ -10,5 +10,4 @@ module.exports = function(app) {
     app.set('showStackError', true);
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-
 };

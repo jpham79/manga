@@ -1,27 +1,48 @@
 Project Structure:
-
-components - Functional React components that only display data using props.
-root - the entrance to our application
-store - contains actions, reducers, and the logic for the redux store/global state tree
-view - contains the template and container which handles the logic for a certain view
-
-We will be using axios for http requests.
-
-
-
-
-
-
-
-
+```
+frontend/src         ~ Top Level Directory
+    - actions        ~ Holds the action files for every store interaction
+    - reducers       ~ Holds all reducers that pertain to the store structure
+    - components     ~ Shared functional components
+    - root           ~ The root of the application
+    - store          ~ Holds the base classes for redux store
+        - actions       ~ Creates object with action type and payload
+        - actionTypes   ~ List of all the possible actions
+        - reducers      ~ Processes an action object and updates the state of the store
+        - store         ~ Holds overall application state   
+    - view            ~ Compositions of higher order components and functional components to create a page
+```
 
 
+## Frontend design composition
+
+If you aren't familiar with redux, please give that a look. 
+Our frontend is built using react and redux. This means that cross application state
+and http requests must be maintained with the redux (We will be using axios for http requests).
+
+When making a view the hierarchy is:
+
+    - Higher order component    ~ Interacts and receives updates from the store
+        * Dispatches actions and requests to the store
+        * Gives and receives data from functional components
+        * Composes the layout of the functional components to form a view
+
+        - Functional component      ~ Receives data from higher order component and displays it
+
+    - view
+        - view folder
+            - higher order component
+            - functional components
+            - css
 
 
+## Crash course redux
 
-
-
-
+    Interactions with the store are handled through actions and reducers.
+    A higher order component will dispatch an action to a reducer.
+    The reducer processes that action and updates the store.
+    The higher order component receives the updated store information and passes it to
+    its functional components.
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

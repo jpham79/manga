@@ -3,13 +3,16 @@
 ```
 backend         ~ Top Level Directory
 - config        ~ Configurations that are used when launching the server
-    `config         ~ Setup environment variables to configure the server
-    `express        ~ Setup middleware for express to use
+    - config         ~ Setup environment variables to configure the server
+    - express        ~ Setup middleware for express to use
+    - mongo          ~ Setup mongodb 
+- controllers   ~ Logic to perform actions on models
+- fixtures      ~ Seeds the database with persistent data or test data depending on folder
 - libs          ~ Shared libraries across the different directories
 - models        ~ Mongoose Schema definitions declared here
-- controllers   ~ Logic to perform actions on models
+
 - routes        ~ Contains the main files associated with a controller
-    `paths      ~ Route definitions that map to controllers
+    - paths      ~ Route definitions that map to controllers
 
 ```
 
