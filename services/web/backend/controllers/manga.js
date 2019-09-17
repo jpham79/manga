@@ -41,5 +41,4 @@ const criteria = (req, res, next) => {
     }
 }
 
-
-export { get, list, criteria };
+module.exports = { get, list, criteria };
