@@ -4,7 +4,8 @@ const Manga = require('../../models/manga');
 const mangas = [{
     name: 'TestMangaX',
     author: 'Yeti Boi5000',
-    summary: "In a world of no imagination, I came up with this manga"
+    image: "https://www.leisureopportunities.co.uk/images/imagesX/HIGH340040_155465_768692.jpg",
+    summary: "In a world of no imagination, I came up with this manga",
 }];
 
 module.exports = fixturesCallback => {
