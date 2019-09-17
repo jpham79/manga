@@ -19,15 +19,22 @@ const subscriptionSchema = new Schema({
     manga: {
         mangaId: {
             type: Schema.Types.ObjectId,
+            ref: 'Manga',
         },
         name: {
-            type: String
+            type: String,
         },
         chapter: {
-            type: Number
+            type: Number,
+            required: function () {
+                return this.manga || this.category === 'manga' ? true : false;
+            }
         },
         page: {
-            type: Number
+            type: Number,
+            required: function () {
+                return this.manga || this.category === 'manga' ? true : false;
+            }
         },
         link: {
             type: String
@@ -35,11 +42,28 @@ const subscriptionSchema = new Schema({
     },
     group: {
         groupId: {
-            type: Schema.Types.ObjectId
+            type: Schema.Types.ObjectId,
+            ref: 'Group',
         },
         name: {
             type: String
+        },
+        link: {
+            type: String,
         }
+    },
+    user: {
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
+        username: {
+            type: String,
+        },
+        link: {
+            type: String,
+        },
+
     }
 })
 
