@@ -30,9 +30,6 @@ const commentSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Manga',
         },
-        test: {
-            type: String
-        },
         name: {
             type: String,
         }

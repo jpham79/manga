@@ -11,7 +11,7 @@ const chapterSchema = new Schema({
         num: {
             type: String
         },
-        url: {
+        link: {
             type: String //Url to a page
         },
     }],
