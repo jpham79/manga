@@ -15,7 +15,7 @@ class TopMenu extends React.Component {
         this.createTag(2, 'Action'),
         this.createTag(3, 'Comedy'),
         this.createTag(4, 'Slice of Life'),
-        this.createTag(5, 'NTR'),
+        this.createTag(5, 'Wholesome NTR'),
         this.createTag(6, 'Mystery'),
         this.createTag(7, 'Fantasy')
     ];

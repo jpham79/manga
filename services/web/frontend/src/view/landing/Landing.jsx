@@ -8,10 +8,11 @@ import { toggleSidenav, selectTags } from '../../store/actions.js';
  * 
  * posts {
  *      text,
- *      author,
+ *      authorObject,
  *      upvoteCount,
  *      downvoteCount,
- *      isArchived
+ *      isArchived,
+ *      isAnnouncement
  * }
  * 
  * mangas: {
