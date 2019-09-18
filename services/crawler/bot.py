@@ -6,7 +6,7 @@ import urllib.robotparser
 import requests
 import re
 import json
-from pymongo import MongoClient
+import pymongo
 ###
 
 import time
@@ -19,6 +19,7 @@ mangaChapterLinks = []
 siteMaps = []
 botName = 'MangaLinkCollectorBot'
 header = {'User-Agent' : botName}
+db = pymongo.MongoClient().mangabois
 
 """
  Will only be checking for sitemaps,
@@ -43,24 +44,77 @@ def crawl():
             request = urllib.request.Request(xml, headers=header)
             xmlFile = urllib.request.urlopen(request)
             parsedXml = BeautifulSoup(xmlFile, 'xml')
+            # mangaLinks.append(link)
+            bulkChapters = []
+            chapterNums = []
+            manga = {}
+            prevNum = -1
             for location in parsedXml.find_all('loc'):
                 link = location.contents[0]
                 # print(link)
+
                 if link.endswith('.xml'):
                     siteMaps.append(link)
                 else:
-                    # mangaLinks.append(link)
+  
+  
                     if 'chapter' in link:
                         mangaChapterLinks.append(link)
+                        # print(link)
+                        # fuck this manga tho, so i skipped it. it's like hella chapters long
+                        if 'yume_maboroshi' not in link:
+                            mangaName = link.rsplit('/')[4]
+                            mangaName = mangaName.replace('_', ' ')
+                            m = re.search("chapter_(.*)", link)
+                            currNum = float(m.group(1))
+                            # print(currNum)
+                            # print(prevNum)
+
+                            # This checks if we have moved on to another manga
+                            # this was done before i started grabbing manga name
+                            if currNum > prevNum:
+                                chapter = {'num': currNum, 'pages': getPages(link), 'manga': {'name': mangaName}}
+                                bulkChapters.append(chapter)
+                                chapterNums.append(currNum)
+                                prevNum = currNum
+                                # getPages(link)
+                                # print(chapter)
+                            else:
+                                # Once we have all the chapters for a manga we go ahead and batch insert them into the db
+                                chapters = []
+
+                                # If the insert succeeds, it returns a list of objectids we can use to reference the chapters from
+                                chapterIds = db.chapters.insert_many(bulkChapters).inserted_ids
+
+                                # Creating the chapter object to attach to the manga object which we will later insert
+                                for i in range(0, len(chapterNums)):
+                                    formattedChapter = {'num': chapterNums[i], 'chapterId': chapterIds[i]}
+                                    chapters.append(formattedChapter)
+                                manga['chapters'] = chapters
+
+                                # clearing the slate and starting over for the next manga
+                                bulkChapters.clear()
+                                chapterNums.clear()
+                                prevNum = -1
+                                # don't forget to append the manga chapter that failed the condition to a new array
+                                chapter = {'num': currNum, 'pages': getPages(link)}
+                                bulkChapters.append(chapter)
+                                chapterNums.append(currNum)
                     else:
+                        # If the chapter is not in the link, we know it is the landing page, so we grab metadata here
                         if get_manga_info(link) is not None:
-                            mangaLinks.append(get_manga_info(link))
-                        #if stop == 3:
-                            #y = json.dumps({'manga': mangaLinks}, indent=3)
-                            #print(y)
-                            #exit()
-                            #return
-                        #stop = stop + 1
+                            # mangaLinks.append(get_manga_info(link))
+                            if 'yume_maboroshi' not in link:
+                                print(get_manga_info(link))
+                                manga = get_manga_info(link)
+
+                    # If the chapters have been inserted into the database
+                    # We will insert the manga here with the reference to the ids
+                    if 'chapters' in manga:
+                        print(manga)
+                        db.mangas.insert_one(manga)
+                        manga = {}
+    
             if requestRate:
                time.sleep(requestRate) 
     # print(mangaLinks)
@@ -82,6 +136,32 @@ def parse_sitemap(response):
             if line[0] == 'sitemap' and applicable:
                 siteMaps.append(line[1])
                 applicable = False
+
+def getPages(link):
+    resp = requests.get(link)
+    txt = resp.text
+    soup = BeautifulSoup(txt, 'lxml')
+    images = soup.find_all('img')
+    pages = []
+    for index, image in enumerate(images):
+        if 'chapter' in image['src']:
+            page = {'num': index, 'link': image['src']}
+            pages.append(page)
+    # print(pages)
+    return pages
+
+# def getName(link):
+#     data = {}
+#     resp = requests.get(link)
+#     txt = resp.text
+#     soup = BeautifulSoup(txt, 'lxml')
+#     myul = soup.findAll('ul', {'class': 'manga-info-text'})
+
+#     if len(myul) > 0:
+#         # name
+#         manga_name = link.rsplit('/')[4]
+#         manga_name = manga_name.replace('_', ' ')
+#         return manga_name
 
 def get_manga_info(info_url):
     data = {}
