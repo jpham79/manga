@@ -16,25 +16,24 @@ const mapStateToProps = (state) => ({
     isSidebarVisible: state.requests.isSidebarVisible,
     selectedTags: state.requests.selectedTags
 });
-  
+
 const mapDispatchToProps = (dispatch) => ({
     showSidebar: () => dispatch(toggleSidenav(true)),
     hideSidebar: () => dispatch(toggleSidenav(false)),
     selectTags: (tags) => dispatch(selectTags(tags))
 });
 
-export default function getNavMenus() {
-    return connect(mapStateToProps, mapDispatchToProps) (
-        class extends React.Component  {
-            render() {
-                let { isSidebarVisible, hideSidebar, showSidebar, selectedTags, selectTags } = this.props;
-            
-                return [
-                    <TopMenu key='topMenu' showSidebar={showSidebar} selectedTags={selectedTags} selectTags={selectTags}/>,
-                    <SideNav key='sideNav' isSidebarVisible={isSidebarVisible} hideSidebar={hideSidebar}/>
-                ];
-            }
-        }
+const Navigation = props => {
+    return (
+        <div>
+            <div>
+                <TopMenu key='topMenu' showSidebar={props.showSidebar} selectedTags={props.selectedTags} selectTags={props.selectTags} />
+            </div>
+            <div>
+                <SideNav key='sideNav' isSidebarVisible={props.isSidebarVisible} hideSidebar={props.hideSidebar} />
+            </div>
+        </div>
     );
 }
 
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
