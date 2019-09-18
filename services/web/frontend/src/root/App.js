@@ -1,28 +1,22 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import store from '../store/store';
 import { request, reqSuccess, reqFail } from '../store/actions'
 import axios from 'axios'
 import {reqData} from '../store/actions'
 import './App.css';
 
-import  SideNav  from '../view/Navagation/SideNav/SideNav.jsx';
-import  TopMenu  from '../view/Navagation/TopMenu/TopMenu.jsx';
-import Home from '../view/landing/home/Home.jsx';
+import  getNavMenus  from '../view/Navagation/Navagation.jsx';
+import getLandingPages from '../view/landing/Landing.jsx';
 
 
 class App extends Component {
 
-  generateRoutes() {
-    let routes = [];
+  generateComponent(wrapper) {
+    let Component = wrapper();
 
-    for (let key in ROUTES) {
-      let Component = ROUTES[key].component;
-      routes.push(<Route key={ROUTES[key].path} exact={ROUTES[key].useExactPath} path={ROUTES[key].path} render={(props) => <Component {...props}/>} />);
-    }
-
-    return routes;
+    return <Component/>;
   }
   
   render() {
@@ -30,10 +24,9 @@ class App extends Component {
       <div className="App">
         <Router>
           <Provider store={store}>
-            <TopMenu/>
-            <SideNav/>
+            { this.generateComponent(getNavMenus) }
             <Switch>
-              { this.generateRoutes() }
+              { this.generateComponent(getLandingPages) }
             </Switch>
           </Provider>
         </Router>
@@ -44,21 +37,15 @@ class App extends Component {
 
 export default App;
 
-function createRoute(path, component, useExactPath = false) {
-  return {
-    path, 
-    useExactPath,
-    component
-  }
-}
+
 
 export const ROUTES = {
-  landing: createRoute('/', Home, true),
-  favorites: createRoute('/favorites', Home),
-  profile: createRoute('/profile', Home),
-  accountCreation: createRoute('/new-account', Home),
-  settings: createRoute('/settings', Home) ,
-  offlineLibrary: createRoute('/offline-library', Home)
+  landing: '/',
+  favorites: '/favorites',
+  profile: '/profile',
+  accountCreation: '/new-account',
+  settings: '/settings',
+  offlineLibrary: '/offline-library'
 };
 
 

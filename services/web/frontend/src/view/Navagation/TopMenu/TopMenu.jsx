@@ -5,10 +5,9 @@ import React from 'react';
 import { Link } from "react-router-dom"
 import { Menu, Popup, Form, Input, Button } from 'semantic-ui-react';
 
-import { ROUTES } from '../../../root/App.js'
-import wrapper from '../../landing/Landing.jsx';
+import { ROUTES } from '../../../root/App.js';
 
-class TopMenu extends React.Component {
+export class TopMenu extends React.Component {
     
     filter = [
         this.createTag(1, 'Isekai'),
@@ -77,13 +76,13 @@ class TopMenu extends React.Component {
                             </Popup.Content>
                     </Popup>
                     <Menu.Item link>
-                        <Link to={ROUTES.landing.path}>Home</Link>
+                        <Link to={ROUTES.landing}>Home</Link>
                     </Menu.Item>
                     <Menu.Item link>
                         Download
                     </Menu.Item>
                     <Menu.Item link>
-                        <Link to={ROUTES.favorites.path}>Favorites</Link>
+                        <Link to={ROUTES.favorites}>Favorites</Link>
                     </Menu.Item>
                     <Popup 
                         hoverable
@@ -103,12 +102,10 @@ class TopMenu extends React.Component {
                                     </Form.Field>
                                     <Button type='submit'>Login</Button>
                                     <br/>
-                                    <Link to={ROUTES.accountCreation.path}>New User?</Link>
+                                    <Link to={ROUTES.accountCreation}>New User?</Link>
                                 </Form>
                             </Popup.Content>
                     </Popup>
                 </Menu>;
     }
 }
-
-export default wrapper(TopMenu);

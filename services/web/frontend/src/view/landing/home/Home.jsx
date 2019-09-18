@@ -1,11 +1,9 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 
-import wrapper from '../Landing.jsx';
-
 import { Header, Segment } from 'semantic-ui-react';
 
-class Home extends React.Component {
+export class Home extends React.Component {
 
     render() {
         return (
@@ -15,5 +13,3 @@ class Home extends React.Component {
         )
     }
 }
-
-export default wrapper(Home);

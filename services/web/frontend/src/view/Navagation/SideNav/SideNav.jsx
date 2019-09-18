@@ -4,9 +4,7 @@ import './side-nav.scss';
 import React from 'react';
 import { Header, Icon, Menu, Sidebar } from 'semantic-ui-react';
 
-import wrapper from '../../landing/Landing.jsx';
-
-class Navagation extends React.Component {
+export class SideNav extends React.Component {
 
     menuEntries = [
         {type: 'header', name: 'Navigation', key: 'navHeader'},
@@ -50,5 +48,3 @@ class Navagation extends React.Component {
                 </Sidebar>;
     }
 }
-
-export default wrapper(Navagation);

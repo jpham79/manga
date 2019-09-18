@@ -1,7 +1,9 @@
 import React from 'react';
+import { Route } from "react-router-dom";
 
 import { connect } from 'react-redux';
-import { toggleSidenav, selectTags } from '../../store/actions.js';
+import { Home } from './home/Home.jsx';
+import { ROUTES } from '../../root/App.js';
 
 /**
  * Assumed schema
@@ -20,33 +22,29 @@ import { toggleSidenav, selectTags } from '../../store/actions.js';
  *      trending: [list of objects]
  * }
  * 
- * isSidebarVisible: boolean
- * 
  * tags: [list of selected ids]
  */
 const mapStateToProps = (state) => ({
-    isSidebarVisible: state.requests.isSidebarVisible,
     posts: state.requests.posts,
     mangas: state.requests.mangas,
     selectedTags: state.requests.selectedTags
 });
   
 const mapDispatchToProps = (dispatch) => ({
-    showSidebar: () => dispatch(toggleSidenav(true)),
-    hideSidebar: () => dispatch(toggleSidenav(false)),
-    selectTags: (tags) => dispatch(selectTags(tags))
+    // nothing so far
 });
 
-export default function wrapLandingPage(WrappedComponent) {
+export default function wrapLandingPage() {
     return connect(mapStateToProps, mapDispatchToProps) (
-            class extends React.Component {
-
-                render() {
-                    let {...rest} = this.props;
-                    
-                    return <WrappedComponent {...rest}/>
-                }
+        class extends React.Component  {
+            render() {
+                let { mangas, selectedTags } = this.props;
+                
+                return [
+                    <Route key='home' exact={true} path={ROUTES.landing} render={() => <Home mangas={mangas} selectedTags={selectedTags}/>} />
+                ];
             }
-        );
+        }
+    );
 }
 
