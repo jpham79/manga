@@ -1,28 +1,24 @@
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import store from '../store/store'
-import { Landing } from '../view/landing/Landing.jsx'
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import store from '../store/store';
 import { request, reqSuccess, reqFail } from '../store/actions'
 import axios from 'axios'
 import {reqData} from '../store/actions'
 import './App.css';
 
-import { Sidebar } from 'semantic-ui-react';
-import  SideNav  from '../view/Navagation/SideNav/SideNav.jsx';
-import  TopMenu  from '../view/Navagation/TopMenu/TopMenu.jsx';
+// import  getNavMenus  from '../view/Navigation/Navagation.jsx.js';
+import Landing from '../view/landing/Landing.jsx';
+
+import Navigation from '../view/Navigation/Navigation.jsx';
 
 
 class App extends Component {
 
-  generateRoutes() {
-    let routes = [];
+  generateComponent(wrapper) {
+    let Component = wrapper();
 
-    for (let key in ROUTES) {
-      routes.push(<Route key={ROUTES[key].path} path={ROUTES[key].path} component={ROUTES[key].component} />);
-    }
-
-    return routes;
+    return <Component/>;
   }
   
   render() {
@@ -30,17 +26,10 @@ class App extends Component {
       <div className="App">
         <Router>
           <Provider store={store}>
-            <Sidebar.Pushable>
-              <TopMenu/>
-              <SideNav/>
-                <Switch>
-                  <Sidebar.Pusher>
-                      {
-                        this.generateRoutes()
-                      }
-                  </Sidebar.Pusher>
-                </Switch>
-            </Sidebar.Pushable>
+            <Navigation />
+            <Switch>
+              <Landing />
+            </Switch>
           </Provider>
         </Router>
       </div>
@@ -50,31 +39,15 @@ class App extends Component {
 
 export default App;
 
+
+
 export const ROUTES = {
-  landing: {
-    path: '/',
-    component: Landing
-  },
-  favorites: {
-    path: '/favorites',
-    component: Landing
-  },
-  profile: {
-    path: '/profile',
-    component: Landing
-  },
-  accountCreation: {
-    path: '/new-account',
-    component: Landing
-  },
-  settings: {
-    path: '/settings',
-    component: Landing
-  },
-  offlineLibrary: {
-    path: '/offline-library',
-    component: Landing
-  }
+  landing: '/',
+  favorites: '/favorites',
+  profile: '/profile',
+  accountCreation: '/new-account',
+  settings: '/settings',
+  offlineLibrary: '/offline-library'
 };
 
 

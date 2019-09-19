@@ -1,15 +1,46 @@
 import React from 'react';
-import 'semantic-ui-css/semantic.min.css';
+import { Route } from "react-router-dom";
 
-import { Header, Segment } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Home } from './home/Home.jsx';
+import { ROUTES } from '../../root/App.js';
 
-export class Landing extends React.Component {
+/**
+ * Assumed schema
+ * 
+ * posts {
+ *      text,
+ *      authorObject,
+ *      upvoteCount,
+ *      downvoteCount,
+ *      isArchived,
+ *      isAnnouncement
+ * }
+ * 
+ * mangas: {
+ *      popluar: [list of objects],
+ *      trending: [list of objects]
+ * }
+ * 
+ * tags: [list of selected ids]
+ */
+const mapStateToProps = (state) => ({
+    posts: state.requests.posts,
+    mangas: state.requests.mangas,
+    selectedTags: state.requests.selectedTags
+});
+  
+const mapDispatchToProps = (dispatch) => ({
+    // nothing so far
+});
 
-    render() {
-        return (
-            <Segment basic>
-                <Header as='h3' color='blue'>Application Content</Header>
-            </Segment>
-        )
-    }
+const Landing = (props) => {
+    let { mangas, selectedTags } = props;
+
+    return [
+        <Route key='home' exact={true} path={ROUTES.landing} render={() => <Home mangas={mangas} selectedTags={selectedTags}/>} />
+    ]
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);
+

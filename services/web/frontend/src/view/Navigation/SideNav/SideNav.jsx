@@ -2,12 +2,9 @@ import 'semantic-ui-css/semantic.min.css';
 import './side-nav.scss';
 
 import React from 'react';
-import { connect } from 'react-redux';
 import { Header, Icon, Menu, Sidebar } from 'semantic-ui-react';
 
-import { toggleSidenav } from '../../../store/actions.js';
-
-class Navagation extends React.Component {
+export class SideNav extends React.Component {
 
     menuEntries = [
         {type: 'header', name: 'Navigation', key: 'navHeader'},
@@ -20,7 +17,7 @@ class Navagation extends React.Component {
     ];
 
     render() {
-        const { visible, hideSidebar } = this.props;
+        const { isSidebarVisible, hideSidebar } = this.props;
         
         // return as array to get the Pusher on the parent to work properly
         return <Sidebar
@@ -30,7 +27,7 @@ class Navagation extends React.Component {
                     inverted
                     onHide={hideSidebar}
                     vertical
-                    visible={visible}
+                    visible={isSidebarVisible}
                     width='wide'>
                     <Menu.Item onClick={hideSidebar}>Hide Navagation</Menu.Item>
                     {
@@ -51,13 +48,3 @@ class Navagation extends React.Component {
                 </Sidebar>;
     }
 }
-
-const mapStateToProps = (state) => ({
-    visible: state.requests.isSidenavVisible
-});
-  
-const mapDispatchToProps = (dispatch) => ({
-    hideSidebar: () => dispatch(toggleSidenav(false))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navagation);
