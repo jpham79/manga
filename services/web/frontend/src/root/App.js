@@ -8,7 +8,7 @@ import {reqData} from '../store/actions'
 import './App.css';
 
 // import  getNavMenus  from '../view/Navigation/Navagation.jsx.js';
-import getLandingPages from '../view/landing/Landing.jsx';
+import Landing from '../view/landing/Landing.jsx';
 
 import Navigation from '../view/Navigation/Navigation.jsx';
 
@@ -26,10 +26,9 @@ class App extends Component {
       <div className="App">
         <Router>
           <Provider store={store}>
-            {/* { this.generateComponent(getNavMenus) } */}
             <Navigation />
             <Switch>
-              { this.generateComponent(getLandingPages) }
+              <Landing />
             </Switch>
           </Provider>
         </Router>

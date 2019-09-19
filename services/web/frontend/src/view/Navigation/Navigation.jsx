@@ -23,17 +23,11 @@ const mapDispatchToProps = (dispatch) => ({
     selectTags: (tags) => dispatch(selectTags(tags))
 });
 
-const Navigation = props => {
-    return (
-        <div>
-            <div>
-                <TopMenu key='topMenu' showSidebar={props.showSidebar} selectedTags={props.selectedTags} selectTags={props.selectTags} />
-            </div>
-            <div>
-                <SideNav key='sideNav' isSidebarVisible={props.isSidebarVisible} hideSidebar={props.hideSidebar} />
-            </div>
-        </div>
-    );
+const Navigation = (props) => {
+    return [
+            <TopMenu key='topMenu' showSidebar={props.showSidebar} selectedTags={props.selectedTags} selectTags={props.selectTags} />,
+            <SideNav key='sideNav' isSidebarVisible={props.isSidebarVisible} hideSidebar={props.hideSidebar} />
+        ];
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

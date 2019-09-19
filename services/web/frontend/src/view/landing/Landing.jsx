@@ -34,17 +34,13 @@ const mapDispatchToProps = (dispatch) => ({
     // nothing so far
 });
 
-export default function wrapLandingPage() {
-    return connect(mapStateToProps, mapDispatchToProps) (
-        class extends React.Component  {
-            render() {
-                let { mangas, selectedTags } = this.props;
-                
-                return [
-                    <Route key='home' exact={true} path={ROUTES.landing} render={() => <Home mangas={mangas} selectedTags={selectedTags}/>} />
-                ];
-            }
-        }
-    );
+const Landing = (props) => {
+    let { mangas, selectedTags } = props;
+
+    return [
+        <Route key='home' exact={true} path={ROUTES.landing} render={() => <Home mangas={mangas} selectedTags={selectedTags}/>} />
+    ]
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);
 
