@@ -3,35 +3,58 @@ const Schema = mongoose.Schema;
 
 const chapterSchema = new Schema({
     _id: Schema.Types.ObjectId,
-    title: {
-        type: String,
+    num: {
+        type: Number,
         required: true
     },
+    pages: [{
+        num: {
+            type: String
+        },
+        url: {
+            type: String //Url to a page
+        },
+    }],
     manga: {
-        mangaId: Schema.Types.ObjectId,
+        mangaId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Manga',
+        },
         name: {
             type: String,
-            required: true
+            required: function () {
+                return this.manga ? true : false;
+            }
         }
     },
-    chapter: {
-        chapterId: Schema.Types.ObjectId,
-        num: {
-            type: Number,
-            required: true
+    novel: {
+        novelId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Novel',
+        },
+        name: {
+            type: String,
+            required: function () {
+                return this.novel ? true : false;
+            }
         }
     },
-    pages: [{
-        type: String //Url to a page
-    }],
+    name: {
+        type: String
+    },
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
     contributors: [{
-        types: Schema.Types.ObjectId,
-        ref: 'User'
-    }] 
+        userId: {
+            types: Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        username: {
+            type: String
+        },
+    }]
 })
 
 const chapter = mongoose.model('Chapter', chapterSchema);

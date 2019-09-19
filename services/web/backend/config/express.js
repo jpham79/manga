@@ -2,7 +2,6 @@
 
 // Module dependencies
 const express = require('express');
-const expressValidator = require('express-validator');
 
 module.exports = function(app) {
 
@@ -11,5 +10,4 @@ module.exports = function(app) {
     app.set('showStackError', true);
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-    app.use(expressValidator());
 };
