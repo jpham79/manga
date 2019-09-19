@@ -1,12 +1,15 @@
 'use strict';
 
-const testController = require('../../controllers/auth');
+const authController = require('../../controllers/auth');
+const authMiddleware = require('../middleware/auth');
 
 module.exports = app => {
     app.route('/api/auth')
-        .get((req, res) => {
-            res.send("yeet the auth routing is set up");
-        });
+        .get(authMiddleware.auth, authController.get);
+
+    app.route('/api/auth')
+        .post(authController.post);
+
     app.route('/api/auth/controller')
         .get((req, res) => {
             res.send(testController.testAuth());
