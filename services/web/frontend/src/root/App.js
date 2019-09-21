@@ -5,7 +5,7 @@ import store from '../store/store';
 import { request, reqSuccess, reqFail } from '../store/actions'
 import axios from 'axios'
 import {reqData} from '../store/actions'
-import './App.css';
+import './App.scss';
 
 // import  getNavMenus  from '../view/Navigation/Navagation.jsx.js';
 import Landing from '../view/landing/Landing.jsx';
@@ -26,10 +26,12 @@ class App extends Component {
       <div className="App">
         <Router>
           <Provider store={store}>
-            <Navigation />
-            <Switch>
-              <Landing />
-            </Switch>
+              <Navigation />
+              <div className="enableScroll">
+                <Switch>
+                  <Landing />
+                </Switch>
+              </div>
           </Provider>
         </Router>
       </div>
