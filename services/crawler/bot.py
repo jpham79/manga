@@ -10,6 +10,7 @@ import pymongo
 ###
 
 import time
+import asyncio
 
 from bs4 import BeautifulSoup
 
@@ -25,7 +26,7 @@ db = pymongo.MongoClient().mangabois
  Will only be checking for sitemaps,
  disallow and allow rule parsing will be directed to urllib.robotpaser
 """
-def crawl():
+async def crawl():
 
     stop = 0
 
@@ -84,10 +85,16 @@ def crawl():
                                 chapters = []
 
                                 # If the insert succeeds, it returns a list of objectids we can use to reference the chapters from
-                                chapterIds = db.chapters.insert_many(bulkChapters).inserted_ids
+                                # chapterIds = db.chapters.insert_many(bulkChapters).inserted_ids
+                                chapterIds = []
+                                for chapter in bulkChapters:
+                                    count = db.chapters.count_documents({'manga': {'name': chapter['manga']['name']}, 'num': chapter['num']})
+                                    if count is 0:
+                                        chapterId = db.chapters.insert_one(chapter).inserted_id
+                                        chapterIds.append(chapterId)
 
                                 # Creating the chapter object to attach to the manga object which we will later insert
-                                for i in range(0, len(chapterNums)):
+                                for i in range(0, len(chapterIds)):
                                     formattedChapter = {'num': chapterNums[i], 'chapterId': chapterIds[i]}
                                     chapters.append(formattedChapter)
                                 manga['chapters'] = chapters
@@ -97,7 +104,7 @@ def crawl():
                                 chapterNums.clear()
                                 prevNum = -1
                                 # don't forget to append the manga chapter that failed the condition to a new array
-                                chapter = {'num': currNum, 'pages': getPages(link)}
+                                chapter = {'num': currNum, 'pages': getPages(link), 'manga': {'name': mangaName}}
                                 bulkChapters.append(chapter)
                                 chapterNums.append(currNum)
                     else:
@@ -111,8 +118,17 @@ def crawl():
                     # If the chapters have been inserted into the database
                     # We will insert the manga here with the reference to the ids
                     if 'chapters' in manga:
-                        print(manga)
-                        db.mangas.insert_one(manga)
+                        count = db.mangas.count_documents({'name': manga['name']})
+                        if count is 0:
+                            db.mangas.insert_one(manga)
+                            print(f"Just inserted: {manga['name']}")
+                        # db.mangas.update_one(
+                        #     {'name': manga['name']}, 
+                        #     {"$set": {
+                        #         'chapters': manga['chapters'],
+                        #         ''
+                        #         }},
+                        #     upsert=True)
                         manga = {}
     
             if requestRate:
@@ -137,8 +153,8 @@ def parse_sitemap(response):
                 siteMaps.append(line[1])
                 applicable = False
 
-def getPages(link):
-    resp = requests.get(link)
+async def getPages(link):
+    resp = await requests.get(link)
     txt = resp.text
     soup = BeautifulSoup(txt, 'lxml')
     images = soup.find_all('img')
@@ -149,19 +165,6 @@ def getPages(link):
             pages.append(page)
     # print(pages)
     return pages
-
-# def getName(link):
-#     data = {}
-#     resp = requests.get(link)
-#     txt = resp.text
-#     soup = BeautifulSoup(txt, 'lxml')
-#     myul = soup.findAll('ul', {'class': 'manga-info-text'})
-
-#     if len(myul) > 0:
-#         # name
-#         manga_name = link.rsplit('/')[4]
-#         manga_name = manga_name.replace('_', ' ')
-#         return manga_name
 
 def get_manga_info(info_url):
     data = {}
@@ -197,7 +200,7 @@ def get_manga_info(info_url):
         genres = genres[6].findAll('a')
         genres_arr = []
         for genre in genres:
-            genres_arr.append(genre.text)
+            genres_arr.append(genre.text.lower())
         data['genres'] = genres_arr
 
         # alt title of manga
@@ -207,6 +210,9 @@ def get_manga_info(info_url):
                 data['otherNames'] = alt_title[0].text.split(';')[1].strip()
         
         return data
-crawl()
-y = json.dumps({'manga': mangaLinks}, indent=3)
-print(y)
+
+if __name__ == "__main__":
+    asyncio.run(crawl())
+
+# y = json.dumps({'manga': mangaLinks}, indent=3)
+# print(y)
