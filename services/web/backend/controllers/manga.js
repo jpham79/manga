@@ -27,18 +27,22 @@ const list = (req, res) => {
 
 const criteria = (req, res, next) => {
     req.criteria = {};
+    if (req.query.name) {
+
+    }
     if (req.query.tags) {
         req.criteria.tags = { "$in": req.query.tags };
     }
-    if (req.query.genre) {
-        req.criteria.genre = { "$in": req.query.genres };
+    if (req.query.genres) {
+        req.criteria.genres = { "$in": req.query.genres };
     }
-    if (req.stats) {
+    if (req.query.stats) {
         req.criteria.stats = req.query.stats;
     }
-    if (req.ongoing) {
+    if (req.query.ongoing) {
         req.criteria.ongoing = req.query.ongoing;
     }
+    next();
 }
 
 module.exports = { get, list, criteria };

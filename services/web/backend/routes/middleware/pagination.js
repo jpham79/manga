@@ -1,19 +1,20 @@
 'use strict';
 
-const { buildSanitizeFunction } = require('express-validator');
+const { buildSanitizeFunction, buildCheckFunction } = require('express-validator');
 const sanitizeQuery = buildSanitizeFunction(['query']);
+const checkQuery = buildCheckFunction(['query']);
 
 /*
  * Pagination middleware. Sets the appropriate request
  * parameters for paging through large result sets.
  */
-exports.paginate = function(req, res, next) {
+exports.paginate = function (req, res, next) {
 
     req.pagination = {};
 
     // Validate input parameters parameters
-    req.checkQuery('page', 'Invalid page size.').optional().isInt({ min: 0, max: 65535 });
-    req.checkQuery('pageSize').optional().isInt({ min: 0, max: 100 });
+    checkQuery('page', 'Invalid page size.').optional().isInt({ min: 0, max: 65535 });
+    checkQuery('pageSize').optional().isInt({ min: 0, max: 100 });
 
     // Populate the page number.
     // Defaults to 1
