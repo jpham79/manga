@@ -2,22 +2,50 @@ import 'semantic-ui-css/semantic.min.css';
 import './top-menu.scss';
 
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from "react-router-dom"
 import { Menu, Popup, Form, Input, Button } from 'semantic-ui-react';
 
-import { ROUTES } from '../../../root/App.js'
-import { toggleSidenav } from '../../../store/actions.js';
+import { ROUTES } from '../../../root/App.js';
 
-class TopMenu extends React.Component {
+export class TopMenu extends React.Component {
+    
+    filter = [
+        this.createTag(1, 'Isekai'),
+        this.createTag(2, 'Action'),
+        this.createTag(3, 'Comedy'),
+        this.createTag(4, 'Slice of Life'),
+        this.createTag(5, 'Wholesome NTR'),
+        this.createTag(6, 'Mystery'),
+        this.createTag(7, 'Fantasy')
+    ];
 
-    handleItemClick(e, { name }) { 
-        //send redirect
+    constructor(props) {
+        super(props);
+
+        this.handleItemClick = this.handleItemClick.bind(this);
+        this.createTag = this.createTag.bind(this);
+    }
+
+    createTag(id, name) {
+        return {
+            name,
+            id
+        }
+    }
+
+    handleItemClick(e, { checked }, id) { 
+        const { selectTags } = this.props;
+        let selections = this.props.selectedTags.slice();
+        let index = -1;
+
+        if (checked && !selections.includes(id)) selections.push(id);
+        if (!checked && (index = selections.indexOf(id)) >= 0) selections.splice(index, 1);
+
+        selectTags(selections);
     }
 
     render() {
-        const { showSidebar } = this.props;
-
+        const { showSidebar, selectedTags } = this.props;
         // return as array to get the Pusher on the parent to work properly
         return <Menu inverted className='top-menu'>
                     <Menu.Item onClick={showSidebar}>Show Navagation</Menu.Item>
@@ -36,25 +64,25 @@ class TopMenu extends React.Component {
                                 <Form>
                                     <Form.Field>
                                         <label>Tags</label>
-                                        <Form.Checkbox label='Isekai' />
-                                        <Form.Checkbox label='Action' />
-                                        <Form.Checkbox label='Comedy' />
-                                        <Form.Checkbox label='Slice of Life' />
-                                        <Form.Checkbox label='NTR' />
-                                        <Form.Checkbox label='Mystery' />
-                                        <Form.Checkbox label='Fantasy' />
+                                        { this.filter.map((tag) =>  (
+                                                <Form.Checkbox 
+                                                    onChange={(event, target) => this.handleItemClick(event, target, tag.id)} 
+                                                    checked={selectedTags.includes(tag.id)}
+                                                    key={tag.id} 
+                                                    label={tag.name} />))
+                                        }
                                     </Form.Field>
                                 </Form>
                             </Popup.Content>
                     </Popup>
                     <Menu.Item link>
-                        <Link to={ROUTES.landing.path}>Home</Link>
+                        <Link to={ROUTES.landing}>Home</Link>
                     </Menu.Item>
                     <Menu.Item link>
                         Download
                     </Menu.Item>
                     <Menu.Item link>
-                        <Link to={ROUTES.favorites.path}>Favorites</Link>
+                        <Link to={ROUTES.favorites}>Favorites</Link>
                     </Menu.Item>
                     <Popup 
                         hoverable
@@ -74,20 +102,10 @@ class TopMenu extends React.Component {
                                     </Form.Field>
                                     <Button type='submit'>Login</Button>
                                     <br/>
-                                    <Link to={ROUTES.accountCreation.path}>New User?</Link>
+                                    <Link to={ROUTES.accountCreation}>New User?</Link>
                                 </Form>
                             </Popup.Content>
                     </Popup>
                 </Menu>;
     }
 }
-
-const mapStateToProps = (state) => ({
-    visible: state.requests.isSidenavVisible
-});
-  
-const mapDispatchToProps = (dispatch) => ({
-    showSidebar: () => dispatch(toggleSidenav(true))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TopMenu);
