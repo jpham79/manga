@@ -11,6 +11,7 @@ import pymongo
 
 import time
 import asyncio
+import aiohttp
 
 from bs4 import BeautifulSoup
 
@@ -21,6 +22,12 @@ siteMaps = []
 botName = 'MangaLinkCollectorBot'
 header = {'User-Agent' : botName}
 db = pymongo.MongoClient().mangabois
+
+async def fetch(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            print('awaiting something')
+            return await response.text()
 
 """
  Will only be checking for sitemaps,
@@ -42,8 +49,9 @@ async def crawl():
             requestRate = robotParser.request_rate("*")
         
         for xml in siteMaps:
-            request = urllib.request.Request(xml, headers=header)
-            xmlFile = urllib.request.urlopen(request)
+            # request = urllib.request.Request(xml, headers=header)
+            # xmlFile = urllib.request.urlopen(request)
+            xmlFile = await fetch(xml)
             parsedXml = BeautifulSoup(xmlFile, 'xml')
             # mangaLinks.append(link)
             bulkChapters = []
@@ -73,14 +81,17 @@ async def crawl():
 
                             # This checks if we have moved on to another manga
                             # this was done before i started grabbing manga name
+                            # pages = await getPages(link)
                             if currNum > prevNum:
-                                chapter = {'num': currNum, 'pages': getPages(link), 'manga': {'name': mangaName}}
+                                pages = await getPages(link)
+                                chapter = {'num': currNum, 'pages': pages, 'manga': {'name': mangaName}}
                                 bulkChapters.append(chapter)
                                 chapterNums.append(currNum)
                                 prevNum = currNum
                                 # getPages(link)
                                 # print(chapter)
                             else:
+                                pages = await getPages(link)
                                 # Once we have all the chapters for a manga we go ahead and batch insert them into the db
                                 chapters = []
 
@@ -104,16 +115,16 @@ async def crawl():
                                 chapterNums.clear()
                                 prevNum = -1
                                 # don't forget to append the manga chapter that failed the condition to a new array
-                                chapter = {'num': currNum, 'pages': getPages(link), 'manga': {'name': mangaName}}
+                                chapter = {'num': currNum, 'pages': pages, 'manga': {'name': mangaName}}
                                 bulkChapters.append(chapter)
                                 chapterNums.append(currNum)
                     else:
                         # If the chapter is not in the link, we know it is the landing page, so we grab metadata here
-                        if get_manga_info(link) is not None:
+                        testlink = await get_manga_info(link)
+                        if testlink is not None:
                             # mangaLinks.append(get_manga_info(link))
                             if 'yume_maboroshi' not in link:
-                                print(get_manga_info(link))
-                                manga = get_manga_info(link)
+                                manga = testlink
 
                     # If the chapters have been inserted into the database
                     # We will insert the manga here with the reference to the ids
@@ -122,13 +133,6 @@ async def crawl():
                         if count is 0:
                             db.mangas.insert_one(manga)
                             print(f"Just inserted: {manga['name']}")
-                        # db.mangas.update_one(
-                        #     {'name': manga['name']}, 
-                        #     {"$set": {
-                        #         'chapters': manga['chapters'],
-                        #         ''
-                        #         }},
-                        #     upsert=True)
                         manga = {}
     
             if requestRate:
@@ -154,8 +158,9 @@ def parse_sitemap(response):
                 applicable = False
 
 async def getPages(link):
-    resp = await requests.get(link)
-    txt = resp.text
+    # resp = await requests.get(link)
+    # txt = resp.text
+    txt = await fetch(link)
     soup = BeautifulSoup(txt, 'lxml')
     images = soup.find_all('img')
     pages = []
@@ -166,10 +171,11 @@ async def getPages(link):
     # print(pages)
     return pages
 
-def get_manga_info(info_url):
+async def get_manga_info(info_url):
     data = {}
-    resp = requests.get(info_url)
-    txt = resp.text
+    # resp = requests.get(info_url)
+    # txt = resp.text
+    txt = await fetch(info_url)
     soup = BeautifulSoup(txt, 'lxml')
     myul = soup.findAll('ul', {'class': 'manga-info-text'})
 
@@ -211,8 +217,13 @@ def get_manga_info(info_url):
         
         return data
 
-if __name__ == "__main__":
-    asyncio.run(crawl())
+# if __name__ == "__main__":
+#     # asyncio.run(crawl())
+#     # asyncio.ensure_future(crawl())
+#     loop = asyncio.get_event_loop()
+#     loop.run_until_complete(main())
+#     await crawl()
+asyncio.run(crawl())
 
 # y = json.dumps({'manga': mangaLinks}, indent=3)
 # print(y)
