@@ -24,15 +24,11 @@ header = {'User-Agent' : botName}
 db = pymongo.MongoClient().mangabois
 
 async def fetch(url):
-    async with aiohttp.ClientSession() as session:
+    connector = aiohttp.TCPConnector(limit=50)
+    async with aiohttp.ClientSession(connector=connector) as session:
         async with session.get(url) as response:
             return await response.text()
 
-async def parseXML():
-    bulkChapters = []
-    chapter_nums = []
-    manga = {}
-    prevNum = -1
 
 """
  Will only be checking for sitemaps,
@@ -173,43 +169,51 @@ async def insertChapters(chapter):
     if count is 0:
         chapter_id = db.chapters.insert_one(chapter).inserted_id
         chapter_ids.append(chapter_id)
-
     return chapter_ids
 
 async def insertManga(manga):
-    pass
+    count = db.mangas.count_documents({'name': manga['name']})
+    if count is 0:
+        db.mangas.insert_one(manga)
+        print(f"Just inserted: {manga['name']}")
 
 async def parse(currChapter, chapters):
-    # print(currChapter, chapters)
-    bulkChapters = []
     chapter_nums = []
-    manga = {}
     manga_name = currChapter.rsplit('/')[4]
     manga_name = manga_name.replace('_', ' ')
+    manga = await get_manga_info(currChapter)
+    if manga is not None:
+        tasks = []
+        for link in chapters:
+            task = asyncio.create_task(getPages(link))
+            tasks.append(task)
+        result_chapters = await asyncio.wait(tasks)
 
-    tasks = []
-    for link in chapters:
-        task = asyncio.create_task(getPages(link))
-        tasks.append(task)
-    result_chapters = await asyncio.wait(tasks)
+        for link in chapters:
+            m = re.search("chapter_(.*)", link)
+            currNum = float(m.group(1))
+            chapter_nums.append(currNum)
 
-    for link in chapters:
-        m = re.search("chapter_(.*)", link)
-        currNum = float(m.group(1))
-        chapter_nums.append(currNum)
+        chapter_tasks = []
+        for chapter in result_chapters: 
+            for index, pages in enumerate(chapter):  # pages are sets of pages for a chapter
+                chapter = {'num': chapter_nums[index], 'pages': pages.result(), 'manga': {'name': manga_name}}
+                task = asyncio.create_task(insertChapters(chapter))
+                chapter_tasks.append(task)
+        
+        result_chapter_insert = await asyncio.wait(chapter_tasks)
 
-    chapter_tasks = []
-    for chapter in result_chapters: 
-        for index, pages in enumerate(chapter):  # pages are sets of pages for a chapter
-            chapter = {'num': chapter_nums[index], 'pages': pages.result(), 'manga': {'name': manga_name}}
-            task = asyncio.create_task(insertChapters(chapter))
-            chapter_tasks.append(task)
-    
-    result_chapter_insert = await asyncio.wait(chapter_tasks)
-    for chapter_ids in result_chapter_insert:
-        for chapter_id in chapter_ids:
-            print(chapter_id.result())
-
+        chapters = []
+        for chapter_ids in result_chapter_insert:
+            for index, chapter_id in enumerate(chapter_ids):
+                try:
+                    chapter = {'num': chapter_nums[index], 'chapterId': chapter_id.result()[0]}
+                    chapters.append(chapter)
+                except:
+                    print('There was no chapter_id for some reason wtf?')
+                    continue
+        manga['chapters'] = chapters
+        await insertManga(manga)
 
     # print(count)
     # print(f"length of chapters: {len(result_chapters)}")
@@ -266,6 +270,7 @@ async def parse(currChapter, chapters):
     #         db.mangas.insert_one(manga)
     #         print(f"Just inserted: {manga['name']}")
     #     manga = {}
+
 
 asyncio.run(crawl())
 
