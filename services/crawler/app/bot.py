@@ -21,7 +21,8 @@ mangaChapterLinks = []
 siteMaps = []
 botName = 'MangaLinkCollectorBot'
 header = {'User-Agent' : botName}
-db = pymongo.MongoClient().mangabois
+# db = pymongo.MongoClient().mangabois
+db = pymongo.MongoClient('mongodb://host.docker.internal:21017').mangabois
 
 async def fetch(url):
     connector = aiohttp.TCPConnector(limit=50)
