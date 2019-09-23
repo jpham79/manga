@@ -1,12 +1,13 @@
-const auth = require('../routes/middleware/auth');
-const bcyrpt = require('bcryptjs');
+//const auth = require('../routes/middleware/auth');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
-const user = require('../models/User');
+const User = require('../models/User');
 
 let get = async (req, res) => {
     try {
+        console.log("User ID: " + req.user.id)
         const user = await User.findById(req.user.id).select("-password");
         res.json(user);
     } catch (err) {
@@ -32,12 +33,14 @@ let post = async (req, res) => {
         }
 
         const payload = {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            picture: user.picture,
-            subscriptions: user.subscriptions,
-            groups: user.groups
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                picture: user.picture,
+                subscriptions: user.subscriptions,
+                groups: user.groups
+            }
         }
 
         jwt.sign(
