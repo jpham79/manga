@@ -18,7 +18,17 @@ import { ROUTES } from '../../root/App.js';
  * }
  * 
  * mangas: {
- *      popluar: [list of objects],
+ *      popluar: [list of objects,
+ *      {
+ *          name: string, 
+ *          image: string,
+ *          author: string,
+ *          ongoing: boolean,
+ *          genres:  array,
+ *          otherNames: string,
+ *          chapters: array,
+ *          summary: string
+ *      }],
  *      trending: [list of objects]
  * }
  * 
