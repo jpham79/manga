@@ -21,7 +21,9 @@ mangaChapterLinks = []
 siteMaps = []
 botName = 'MangaLinkCollectorBot'
 header = {'User-Agent' : botName}
-db = pymongo.MongoClient().mangabois
+# db = pymongo.MongoClient().mangabois
+db = pymongo.MongoClient("mongodb://localhost:27017").mangabois
+
 
 async def fetch(url):
     connector = aiohttp.TCPConnector(limit=50)
@@ -177,11 +179,11 @@ async def insertManga(manga):
         db.mangas.insert_one(manga)
         print(f"Just inserted: {manga['name']}")
 
-async def parse(currChapter, chapters):
+async def parse(currManga, chapters):
     chapter_nums = []
-    manga_name = currChapter.rsplit('/')[4]
+    manga_name = currManga.rsplit('/')[4]
     manga_name = manga_name.replace('_', ' ')
-    manga = await get_manga_info(currChapter)
+    manga = await get_manga_info(currManga)
     if manga is not None:
         tasks = []
         for link in chapters:
@@ -206,7 +208,7 @@ async def parse(currChapter, chapters):
         chapters = []
         for chapter_ids in result_chapter_insert:
             for index, chapter_id in enumerate(chapter_ids):
-                if chapter_id.result()[0] is not None:
+                if chapter_id.result() is not None:
                     try:
                         chapter = {'num': chapter_nums[index], 'chapterId': chapter_id.result()[0]}
                         chapters.append(chapter)

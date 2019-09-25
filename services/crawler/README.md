@@ -14,3 +14,18 @@ When installing new packages please run:
 ```
 pip freeze > requirements.txt
 ```
+### Docker:
+
+# Building Image 
+
+Note: This step might take a little while during the build.
+"Building wheel for lxml (setup.py): started
+Building wheel for lxml (setup.py): still running..."
+
+```
+docker build --rm -f "services\crawler\Dockerfile" -t crawler:latest services\crawler
+```
+# Running Docker
+```
+docker run -it crawler:latest
+```
