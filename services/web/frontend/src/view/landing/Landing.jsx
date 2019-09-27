@@ -17,8 +17,7 @@ import { ROUTES } from '../../root/App.js';
  *      isAnnouncement
  * }
  * 
- * mangas: {
- *      popluar: [list of objects,
+ * mangas: [list of objects,
  *      {
  *          name: string, 
  *          image: string,
@@ -27,9 +26,9 @@ import { ROUTES } from '../../root/App.js';
  *          genres:  array,
  *          otherNames: string,
  *          chapters: array,
- *          summary: string
- *      }],
- *      trending: [list of objects]
+ *          summary: string,
+ *          tags: string array
+ *      }]
  * }
  * 
  * tags: [list of selected ids]

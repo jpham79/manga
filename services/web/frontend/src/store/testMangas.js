@@ -1,7 +1,7 @@
 const mangaList = [
     {
         name: 'TestMangaX',
-        image: 'https://i.pximg.net/img-original/img/2019/09/23/12/29/40/76926056_p0.png',
+        image: 'https://vignette.wikia.nocookie.net/jjba/images/a/a6/Pillarmen.png',
         author: 'Yeti Boi5000',
         summary: 'In a world of no imagination, I came up with this manga',
         ongoing: true,
@@ -25,7 +25,7 @@ const mangaList = [
     },
     {
         name: 'If it is for catgirls, I will even raid Arena 51',
-        image: 'https://i.pximg.net/img-master/img/2019/07/14/21/13/30/75722031_p0_master1200.jpg',
+        image: 'https://i.kym-cdn.com/photos/images/masonry/001/496/868/f24',
         author: 'Yeti Boi5000',
         summary: "Jon deeply loves catgirls, and internet rumors says that they're in Arena 51",
         ongoing: true,
@@ -33,7 +33,7 @@ const mangaList = [
     },
     {
         name: 'Last Survivor',
-        image: 'https://i.pximg.net/img-original/img/2019/09/22/19/23/45/76912157_p0.jpg',
+        image: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/50395b51-0934-45d7-b631-6a4ff3528f59/d7kh9sl-2544db3e-cb64-4af0-bc03-238a842a142b.png',
         author: 'Yeti Boi5000',
         summary: 'Someone wants to see the last human on Earth, and so he sets out to make it a reality',
         ongoing: true,

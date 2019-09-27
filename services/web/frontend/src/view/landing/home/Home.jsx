@@ -1,7 +1,7 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 
-import { Grid, Image } from 'semantic-ui-react';
+import { Grid, Image, Segment, Label } from 'semantic-ui-react';
 
 export class Home extends React.Component {
 
@@ -13,7 +13,10 @@ export class Home extends React.Component {
             for (let x = index; x < index + 3 && index < mangas.length; x++) {
                 columns.push(
                     <Grid.Column width={3}>
-                        <Image size='large' src={mangas[x].image} />
+                        <Segment>
+                            <Label attached='bottom'>{mangas[x].name}</Label>
+                            <Image size='large' src={mangas[x].image} />
+                        </Segment>
                     </Grid.Column>
                 );
             }
