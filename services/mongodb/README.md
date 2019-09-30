@@ -6,7 +6,7 @@
 
 
 ```
-docker build --rm -f "services\crawler\Dockerfile" -t crawler:latest services\crawler
+docker build --rm -f "services\mongodb\Dockerfile" -t mongodb:latest services\mongodb
 ```
 # Running Docker
 ```

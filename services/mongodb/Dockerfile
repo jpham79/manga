@@ -6,4 +6,5 @@ RUN mkdir /data
 VOLUME [ "/data/db" ]
 WORKDIR /data
 EXPOSE 27017
-CMD ["/bin/sh"]
+# CMD ["/bin/sh"]
+CMD ["mongod", "--bind_ip", "0.0.0.0"]

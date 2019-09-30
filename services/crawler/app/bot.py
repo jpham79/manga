@@ -12,6 +12,7 @@ import pymongo
 import time
 import asyncio
 import aiohttp
+from concurrent.futures import ThreadPoolExecutor
 
 from bs4 import BeautifulSoup
 
@@ -22,14 +23,16 @@ siteMaps = []
 botName = 'MangaLinkCollectorBot'
 header = {'User-Agent' : botName}
 # db = pymongo.MongoClient().mangabois
+# db = pymongo.MongoClient("mongodb://localhost:27017").mangabois
 db = pymongo.MongoClient("mongodb://172.17.0.1:27017").mangabois
-
+executor = ThreadPoolExecutor(50)
+async def get(url):
+    response = await loop.run_in_executor(executor, requests.get, url)
+    return response.text
 
 async def fetch(url):
-    connector = aiohttp.TCPConnector(limit=50)
-    async with aiohttp.ClientSession(connector=connector) as session:
+    async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            assert response.status == 200
             return await response.text()
 
 """
@@ -52,8 +55,6 @@ async def crawl():
             requestRate = robotParser.request_rate("*")
         
         for xml in siteMaps:
-            # request = urllib.request.Request(xml, headers=header)
-            # xmlFile = urllib.request.urlopen(request)
             xmlFile = await fetch(xml)
             parsedXml = BeautifulSoup(xmlFile, 'xml')
             # mangaLinks.append(link)
@@ -103,8 +104,8 @@ def parse_sitemap(response):
                 applicable = False
 
 async def getPages(link):
-    txt = await fetch(link)
-    soup = BeautifulSoup(txt, 'lxml')
+    txt = await get(link)
+    soup = BeautifulSoup(txt, 'html.parser')
     images = soup.find_all('img')
     pages = []
     for index, image in enumerate(images):
@@ -117,7 +118,7 @@ async def getPages(link):
 async def get_manga_info(info_url):
     data = {}
     txt = await fetch(info_url)
-    soup = BeautifulSoup(txt, 'lxml')
+    soup = BeautifulSoup(txt, 'html.parser')
     myul = soup.findAll('ul', {'class': 'manga-info-text'})
 
     if len(myul) > 0:
@@ -158,14 +159,13 @@ async def get_manga_info(info_url):
         
         return data
 
-async def insertChapters(chapter):
-    chapter_ids = []
+async def insertChapter(chapter):
+    chapter_id = None
     count = db.chapters.count_documents({'manga': {'name': chapter['manga']['name']}, 'num': chapter['num']})
     if count is 0:
         chapter_id = db.chapters.insert_one(chapter).inserted_id
-        chapter_ids.append(chapter_id)
         print(f"just inserted chapter {chapter['num']} for manga: {chapter['manga']['name']}")
-    return chapter_ids
+    return chapter_id
 
 async def insertManga(manga):
     count = db.mangas.count_documents({'name': manga['name']})
@@ -194,8 +194,8 @@ async def parse(currManga, chapters):
         chapter_ids = []
         for index, pages in enumerate(result_chapters): 
             if len(pages) > 0:
-                chapter = {'num': chapter_nums[index], 'pages': pages, 'manga': {'name': manga_name}}
-                task = asyncio.create_task(insertChapters(chapter))
+                chapter = {'num': chapter_nums[index], 'pages': pages, 'manga': {'name': manga_name}, 'source': 'mangakakalot'}
+                task = asyncio.create_task(insertChapter(chapter))
                 chapter_tasks.append(task)
                 if len(chapter_tasks) > 49:
                     chapter_ids += await asyncio.gather(*chapter_tasks)
@@ -214,10 +214,5 @@ async def parse(currManga, chapters):
         await insertManga(manga)
 
 
-asyncio.run(crawl())
-# if sys.platform == 'win32':
-    # loop = asyncio.ProactorEventLoop() # for subprocess' pipes on Windows
-    # asyncio.set_event_loop(loop)
-# loop.run_until_complete(crawl())
-# y = json.dumps({'manga': mangaLinks}, indent=3)
-# print(y)
+loop = asyncio.get_event_loop()
+loop.run_until_complete(crawl())

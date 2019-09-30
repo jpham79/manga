@@ -22,8 +22,9 @@ mangaChapterLinks = []
 siteMaps = []
 botName = 'MangaLinkCollectorBot'
 header = {'User-Agent' : botName}
-db = pymongo.MongoClient().mangabois
-# db = pymongo.MongoClient("mongodb://0.0.0.0:27017").mangabois
+# db = pymongo.MongoClient().mangabois
+db = pymongo.MongoClient("mongodb://localhost:27017").mangabois
+# db = pymongo.MongoClient("mongodb://172.17.0.1:27017").mangabois
 executor = ThreadPoolExecutor(50)
 async def get(url):
     response = await loop.run_in_executor(executor, requests.get, url)
@@ -54,8 +55,6 @@ async def crawl():
             requestRate = robotParser.request_rate("*")
         
         for xml in siteMaps:
-            # request = urllib.request.Request(xml, headers=header)
-            # xmlFile = urllib.request.urlopen(request)
             xmlFile = await fetch(xml)
             parsedXml = BeautifulSoup(xmlFile, 'xml')
             # mangaLinks.append(link)
@@ -160,14 +159,13 @@ async def get_manga_info(info_url):
         
         return data
 
-async def insertChapters(chapter):
-    chapter_ids = []
+async def insertChapter(chapter):
+    chapter_id = None
     count = db.chapters.count_documents({'manga': {'name': chapter['manga']['name']}, 'num': chapter['num']})
     if count is 0:
         chapter_id = db.chapters.insert_one(chapter).inserted_id
-        chapter_ids.append(chapter_id)
         print(f"just inserted chapter {chapter['num']} for manga: {chapter['manga']['name']}")
-    return chapter_ids
+    return chapter_id
 
 async def insertManga(manga):
     count = db.mangas.count_documents({'name': manga['name']})
@@ -196,8 +194,8 @@ async def parse(currManga, chapters):
         chapter_ids = []
         for index, pages in enumerate(result_chapters): 
             if len(pages) > 0:
-                chapter = {'num': chapter_nums[index], 'pages': pages, 'manga': {'name': manga_name}}
-                task = asyncio.create_task(insertChapters(chapter))
+                chapter = {'num': chapter_nums[index], 'pages': pages, 'manga': {'name': manga_name}, 'source': 'mangakakalot'}
+                task = asyncio.create_task(insertChapter(chapter))
                 chapter_tasks.append(task)
                 if len(chapter_tasks) > 49:
                     chapter_ids += await asyncio.gather(*chapter_tasks)
@@ -216,11 +214,5 @@ async def parse(currManga, chapters):
         await insertManga(manga)
 
 
-# asyncio.run(crawl())
 loop = asyncio.get_event_loop()
-# if sys.platform == 'win32':
-# loop = asyncio.ProactorEventLoop() # for subprocess' pipes on Windows
-# asyncio.set_event_loop(loop)
 loop.run_until_complete(crawl())
-# y = json.dumps({'manga': mangaLinks}, indent=3)
-# print(y)
