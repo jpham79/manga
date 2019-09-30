@@ -11,7 +11,7 @@ const chapterSchema = new Schema({
         num: {
             type: String
         },
-        url: {
+        link: {
             type: String //Url to a page
         },
     }],
@@ -54,7 +54,10 @@ const chapterSchema = new Schema({
         username: {
             type: String
         },
-    }]
+    }],
+    source: {
+        type: String
+    }
 })
 
 const chapter = mongoose.model('Chapter', chapterSchema);

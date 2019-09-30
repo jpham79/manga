@@ -1,5 +1,5 @@
 const async = require('async');
-const Manga = require('../../models/manga');
+const Manga = require('../../models/Manga');
 
 const mangas = [{
     name: 'TestMangaX',
