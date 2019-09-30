@@ -3,6 +3,8 @@ import 'semantic-ui-css/semantic.min.css';
 
 import { Grid, Image, Segment, Label } from 'semantic-ui-react';
 
+import './home.scss';
+
 export class Home extends React.Component {
 
     render() {
@@ -13,7 +15,7 @@ export class Home extends React.Component {
             for (let x = index; x < index + 3 && index < mangas.length; x++) {
                 columns.push(
                     <Grid.Column width={3}>
-                        <Segment>
+                        <Segment className='manga-segment'>
                             <Label attached='bottom'>{mangas[x].name}</Label>
                             <Image size='large' src={mangas[x].image} />
                         </Segment>
@@ -25,7 +27,7 @@ export class Home extends React.Component {
         }
         
         return (
-            <Grid centered stackable columns={3}>
+            <Grid centered stackable columns={3} className='home'>
                 { mangas.map((manga, index) => {
                     if (index % 3 === 0) {
                         return (
