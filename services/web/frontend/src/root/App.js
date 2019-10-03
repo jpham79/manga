@@ -50,17 +50,39 @@ export const ROUTES = {
   offlineLibrary: '/offline-library'
 };
 
+/**
+ * EXAMPLE GET REQUEST WITH AXIOS AND REDUX
+ * You can only use listTest if your backend is running
+ */
 
-const httpTest = () => {
+const listTest = () => {
   return dispatch => {
-    dispatch(request('GET', 'GetTest'))
-    return axios.get('https://httpbin.org/get')
-    .then(response => {
-      dispatch(reqSuccess('GetTest', response))
-      dispatch(reqData('GetTest', response))
+    dispatch(request('GET', 'ListTest'))
+    return axios.get('http://localhost:5000/api/manga', {
+      params: {
+        genres: ['adult', 'shounen']
+      }
     })
-    .catch(response => dispatch(reqFail('GetTest', response)))
+    .then(response => {
+      dispatch(reqSuccess('ListTest', response))
+      dispatch(reqData('ListTest', response))
+    })
+    .catch(response => dispatch(reqFail('ListTest', response)))
   }
 }
-store.dispatch(httpTest())
+store.dispatch(listTest())
+
+// const httpTest = () => {
+//   return dispatch => {
+//     dispatch(request('GET', 'GetTest'))
+//     return axios.get('https://httpbin.org/get')
+//     .then(response => {
+//       dispatch(reqSuccess('GetTest', response))
+//       dispatch(reqData('GetTest', response))
+//     })
+//     .catch(response => dispatch(reqFail('GetTest', response)))
+//   }
+// }
+// store.dispatch(httpTest())
+
 
