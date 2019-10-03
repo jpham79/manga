@@ -20,6 +20,9 @@ const list = (req, res) => {
                 console.error(err);
                 return res.status(500).end()
             }
+            if (mangalist.length === 0) {
+                res.status(404).send("Not found.");
+            } 
             res.json(mangalist);
         });
 }
