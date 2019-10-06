@@ -3,10 +3,14 @@
 ### Docker:
 
 # Building Image 
-
+Windows:
 
 ```
 docker build --rm -f "services\mongodb\Dockerfile" -t mongodb:latest services\mongodb
+```
+MacOs:
+```
+docker build --rm -f "services/mongodb/Dockerfile" -t mongodb:latest services/mongodb
 ```
 # Running Docker
 ```

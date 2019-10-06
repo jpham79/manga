@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { Home } from './home/Home.jsx';
 import { ROUTES } from '../../root/App.js';
 
+import { listTest } from './home/homeActions';
+import MangaList from '../../shared/components/mangaList/MangaList.jsx';
+
 /**
  * Assumed schema
  * 
@@ -36,20 +39,25 @@ import { ROUTES } from '../../root/App.js';
 const mapStateToProps = (state) => ({
     posts: state.requests.posts,
     mangas: state.requests.mangas,
+    mangaList: state.requests.ListTest ? state.requests.ListTest : null,
     selectedTags: state.requests.selectedTags
 });
   
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = {
     // nothing so far
-});
+    // list: listTest,
+    list: listTest
+}
 
 const Landing = (props) => {
-    let { mangas, selectedTags } = props;
+    let { mangas, selectedTags, list, mangaList } = props;
+    
 
     return [
-        <Route key='home' exact={true} path={ROUTES.landing} render={() => <Home mangas={mangas} selectedTags={selectedTags}/>} />
+        <Route key='home' exact={true} path={ROUTES.landing} render={() => <div><MangaList mangaList={mangaList} list={list}></MangaList></div>} />
     ]
 }
+// <Home mangas={mangas} selectedTags={selectedTags}/>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
 

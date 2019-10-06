@@ -2,7 +2,6 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 
 import { Grid, Image, Segment, Label } from 'semantic-ui-react';
-
 import './home.scss';
 
 export class Home extends React.Component {
@@ -27,20 +26,22 @@ export class Home extends React.Component {
         }
         
         return (
-            <Grid centered stackable columns={3} className='home'>
-                { mangas.map((manga, index) => {
-                    if (index % 3 === 0) {
-                        return (
-                            <Grid.Row>
-                                { columnMapper(index) }
-                            </Grid.Row>
-                        )
-                    }
-                    else {
-                        return '';
-                    }
-                }) }
-            </Grid>
+            <div>
+                <Grid centered stackable columns={3} className='home'>
+                    { mangas.map((manga, index) => {
+                        if (index % 3 === 0) {
+                            return (
+                                <Grid.Row>
+                                    { columnMapper(index) }
+                                </Grid.Row>
+                            )
+                        }
+                        else {
+                            return '';
+                        }
+                    }) }
+                </Grid>
+            </div>
         )
     }
 }

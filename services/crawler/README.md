@@ -22,8 +22,13 @@ Note: This step might take a little while during the build.
 "Building wheel for lxml (setup.py): started
 Building wheel for lxml (setup.py): still running..."
 
+windows:
 ```
 docker build --rm -f "services\crawler\Dockerfile" -t crawler:latest services\crawler
+```
+mac:
+```
+docker build --rm -f "services/crawler/Dockerfile" -t crawler:latest services/crawler
 ```
 # Running Docker
 ```

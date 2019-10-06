@@ -72,7 +72,7 @@ const listTest = () => {
     .catch(response => dispatch(reqFail('ListTest', response)))
   }
 }
-store.dispatch(listTest())
+// store.dispatch(listTest())
 
 // const httpTest = () => {
 //   return dispatch => {
