@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import store from '../store/store';
 import { request, reqSuccess, reqFail } from '../store/actions'
 import axios from 'axios'
@@ -11,6 +11,7 @@ import './App.scss';
 import Landing from '../view/landing/Landing.jsx';
 
 import Navigation from '../view/Navigation/Navigation.jsx';
+import MangaOverview from '../view/MangaOverview/MangaOverview';
 
 
 class App extends Component {
@@ -29,7 +30,7 @@ class App extends Component {
               <Navigation />
               <div className="enableScroll">
                 <Switch>
-                  <Landing />
+                  {routeList}
                 </Switch>
               </div>
           </Provider>
@@ -45,12 +46,18 @@ export default App;
 
 export const ROUTES = {
   landing: '/',
+  manganame: '/manga/:manganame',
   favorites: '/favorites',
   profile: '/profile',
   accountCreation: '/new-account',
   settings: '/settings',
   offlineLibrary: '/offline-library'
 };
+
+const routeList = [
+  <Route key='home' exact={true} path={ROUTES.landing} component={Landing} />,
+  <Route exact={true} path={ROUTES.manganame} component={MangaOverview} />
+];
 
 /**
  * EXAMPLE GET REQUEST WITH AXIOS AND REDUX

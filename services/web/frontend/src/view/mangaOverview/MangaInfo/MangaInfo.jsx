@@ -1,11 +1,13 @@
 import React from 'react'
-
-const mangaInfo = () => {
+const MangaInfo = props => {
+    // console.log(props.match.params.manganame);
+    console.log('hi')
     return (
         <div>
             hi
+            dhjsfljkasghdfklahflkah
         </div>
     )
 }
 
-export default mangaInfo;
+export default MangaInfo;
