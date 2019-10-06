@@ -53,9 +53,9 @@ const Landing = (props) => {
     let { mangas, selectedTags, list, mangaList } = props;
     
 
-    return [
-        <Route key='home' exact={true} path={ROUTES.landing} render={() => <div><MangaList mangaList={mangaList} list={list}></MangaList></div>} />
-    ]
+    return (
+        <div><MangaList mangaList={mangaList} list={list}></MangaList></div>
+    ) 
 }
 // <Home mangas={mangas} selectedTags={selectedTags}/>
 
