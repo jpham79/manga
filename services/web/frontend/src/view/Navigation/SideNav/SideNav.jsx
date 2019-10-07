@@ -2,16 +2,19 @@ import 'semantic-ui-css/semantic.min.css';
 import './side-nav.scss';
 
 import React from 'react';
+import { Link } from "react-router-dom"
 import { Header, Icon, Menu, Sidebar } from 'semantic-ui-react';
+
+import { ROUTES } from '../../../root/App.js';
 
 export class SideNav extends React.Component {
 
     menuEntries = [
         {type: 'header', name: 'Navigation', key: 'navHeader'},
         {type: 'item', name: 'Series', key: 'seriesLink', icon: 'book'},
-        {type: 'item', name: 'Favorites', key: 'favoriteLink', icon: 'star'},
-        {type: 'item', name: 'Offline Library', key: 'offlineLink', icon: 'folder open'},
-        {type: 'item', name: 'Settings', key: 'settingsLink', icon: 'cogs'},
+        {type: 'item', name: 'Favorites', key: ROUTES.favorites, icon: 'star'},
+        {type: 'item', name: 'Offline Library', key: ROUTES.offlineLibrary, icon: 'folder open'},
+        {type: 'item', name: 'Settings', key: ROUTES.settings, icon: 'cogs'},
         {type: 'header', name: 'Sources', key: 'sourceHeader'},
         {type: 'item', name: 'Mangarock', key: 'sourceLink1', icon: 'sitemap'}
     ];
@@ -40,7 +43,7 @@ export class SideNav extends React.Component {
                                         link
                                         key={entry.key}>
                                         <Icon name={entry.icon}/>
-                                        <span className="menu-label">{entry.name}</span>
+                                        <Link to={entry.key}><span className="menu-label">{entry.name}</span></Link>
                                     </Menu.Item>
                                 );
                         })

@@ -53,9 +53,7 @@ const Landing = (props) => {
     let { mangas, selectedTags, list, mangaList } = props;
     
 
-    return (
-        <div><MangaList mangaList={mangaList} list={list}></MangaList></div>
-    ) 
+    return <MangaList mangaList={mangaList} list={list}></MangaList>;
 }
 // <Home mangas={mangas} selectedTags={selectedTags}/>
 
