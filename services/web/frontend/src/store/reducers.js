@@ -1,11 +1,9 @@
 import {req, req_data, req_success, req_fail, toggle_sidenav, select_tags} from './actionTypes'
 import { combineReducers } from 'redux'
-import { mangaList } from './testMangas'
 
 const initState = {
     isSidenavVisible: false,
     selectedTags: [],
-    mangas: mangaList
 }
 
 const requests = (state = initState, action ) => {

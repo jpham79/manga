@@ -5,20 +5,9 @@ import { Grid, Image, Segment, Label } from 'semantic-ui-react';
 import './home.scss';
 
 export class Home extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.filterMangas = this.filterMangas.bind(this);
-    }
-
-    filterMangas(selectedTags) {
-
-    }
-
+    
     render() {
-        let { mangas, selectedTags } = this.props;
-        console.log(selectedTags);
+        let { mangas } = this.props;
 
         let columnMapper = (index) => {
             let columns = [];
