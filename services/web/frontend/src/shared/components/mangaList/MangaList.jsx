@@ -29,7 +29,7 @@ let MangaList = (props) => {
             return (
                 <Grid centered stackable>
                     {data.map((manga, index) => {
-                        if (index % 3 === 0) {
+                        if (index % mangaPerRow === 0) {
                             return (
                                 <Grid.Row>
                                     { columnMapper(data, index, mangaPerRow) }
