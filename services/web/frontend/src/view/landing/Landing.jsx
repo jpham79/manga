@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { listTest } from './home/homeActions';
 import MangaList from '../../shared/components/mangaList/MangaList.jsx';
 import { Home } from './home/Home.jsx';
-
+import Category from './listings/Category.jsx';
 
 /**
  * Assumed schema
@@ -62,7 +62,12 @@ const getPersonalizedLanding = (mangaList) => {
  * Page user will see when they are not logged in
  */
 const getDefaultLanding = (mangaList, list) => {
-    return <MangaList mangaList={mangaList} list={list} />;
+    //<MangaList mangaList={mangaList} list={list} />
+    let mangas = [];
+    
+    if (mangaList && mangaList.data) mangas = mangaList.data;
+
+    return <Category mangas={mangas} />;
 }
 
 const Landing = (props) => {
