@@ -46,7 +46,7 @@ async def crawl():
     for page in sites:
         request = urllib.request.Request(page + '/robots.txt', headers=header)
         response = urllib.request.urlopen(request)
-        parse_sitemap(response.read().decode("utf-8").splitlines())
+        parse_sitemap(response.read().decode("utf-8", errors="ignore").splitlines())
 
         robotParser = urllib.robotparser.RobotFileParser(page + '/robots.txt')
         robotParser.read()
