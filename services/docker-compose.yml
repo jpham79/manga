@@ -1,0 +1,27 @@
+version: '3'
+
+volumes:
+  data:
+    external:
+      name: "mongodb"
+
+services:
+
+  mongodb:
+    image: mongo:local
+    container_name: mongo
+    build:
+      context: ./mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+
+
+  crawler:
+    image: crawler:local
+    container_name: crawler
+    depends_on:
+      - mongodb
+    build:
+      context: ./crawler

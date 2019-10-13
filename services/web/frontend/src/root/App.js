@@ -11,7 +11,7 @@ import './App.scss';
 import Landing from '../view/landing/Landing.jsx';
 
 import Navigation from '../view/Navigation/Navigation.jsx';
-import MangaOverview from '../view/mangaOverview/MangaOverview';
+import MangaOverview from '../view/MangaOverview/MangaOverview.jsx';
 
 
 class App extends Component {
