@@ -5,26 +5,27 @@ import MangaInfo from './MangaInfo/MangaInfo.jsx';
 
 
 const mapStateToProps = (state) => ({
-    
+
 });
-  
+
 const mapDispatchToProps = {
     // nothing so far
     // list: listTest,
     // list: listTest
 }
 
-const MangaOverview = (props) => {
-    
-    console.log(props.match);
+const MangaOverview = () => {
 
-    
-    
-
+    console.log('hi');
     return (
-        <MangaInfo />
+        <div>
+            hihih
+            {/* <MangaInfo></MangaInfo> */}
+        </div>
     )
 }
+//  {/* <MangaInfo /> */}
 // <Home mangas={mangas} selectedTags={selectedTags}/>
 
 export default connect(mapStateToProps, mapDispatchToProps)(MangaOverview);
+// export default MangaOverview;

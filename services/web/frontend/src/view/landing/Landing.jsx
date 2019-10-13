@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { listTest } from './home/homeActions';
+import { selectManga } from '../../shared/actions/mangaActions';
 import MangaList from '../../shared/components/mangaList/MangaList.jsx';
 import { Home } from './home/Home.jsx';
 import Category from './listings/Category.jsx';
@@ -44,6 +45,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     // nothing so far
     // list: listTest,
+    selectManga: manga => selectManga(manga),
     list: listTest
 }
 
@@ -61,21 +63,20 @@ const getPersonalizedLanding = (mangaList) => {
 /**
  * Page user will see when they are not logged in
  */
-const getDefaultLanding = (mangaList, list) => {
-    //<MangaList mangaList={mangaList} list={list} />
+const getDefaultLanding = (mangaList, selectManga) => {
     let mangas = [];
     
     if (mangaList && mangaList.data) mangas = mangaList.data;
-
-    return <Category mangas={mangas} />;
+    return <MangaList mangas={mangas} selectManga={selectManga}></MangaList>
+    // return <Category mangas={mangas} />;
 }
 
 const Landing = (props) => {
-    let { selectedTags, list, mangaList, isLoggedIn } = props;
+    let { selectedTags, list, mangaList, isLoggedIn, selectManga } = props;
     
     if (!mangaList) list();
     
-    return isLoggedIn ? getPersonalizedLanding(mangaList) : getDefaultLanding(mangaList, list);
+    return isLoggedIn ? getPersonalizedLanding(mangaList) : getDefaultLanding(mangaList, selectManga);
 }
 // <Home mangas={mangas} selectedTags={selectedTags}/>
 

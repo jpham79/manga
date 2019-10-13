@@ -11,7 +11,7 @@ import './App.scss';
 import Landing from '../view/landing/Landing.jsx';
 
 import Navigation from '../view/Navigation/Navigation.jsx';
-import MangaOverview from '../view/MangaOverview/MangaOverview.jsx';
+import MangaOverview from '../view/mangaOverview/MangaOverview.jsx';
 
 
 class App extends Component {
@@ -56,7 +56,7 @@ export const ROUTES = {
 
 const routeList = [
   <Route key='home' exact={true} path={ROUTES.landing} component={Landing} />,
-  <Route exact={true} path={ROUTES.manganame} component={MangaOverview} />
+  <Route key='home' exact={true} path={ROUTES.manganame} component={MangaOverview} />
 ];
 
 /**

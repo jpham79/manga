@@ -1,4 +1,5 @@
 import {req, req_data, req_success, req_fail, toggle_sidenav, select_tags} from './actionTypes'
+import manga from '../../src/shared/reducers/mangaReducers';
 import { combineReducers } from 'redux'
 
 const initState = {
@@ -67,7 +68,8 @@ const requests = (state = initState, action ) => {
 }
 
 const app = combineReducers({
-    requests
+    requests,
+    manga
 })
 
 export default app
