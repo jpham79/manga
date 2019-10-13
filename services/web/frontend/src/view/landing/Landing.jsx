@@ -1,12 +1,10 @@
 import React from 'react';
-import { Route } from "react-router-dom";
-
 import { connect } from 'react-redux';
-import { Home } from './home/Home.jsx';
-import { ROUTES } from '../../root/App.js';
 
 import { listTest } from './home/homeActions';
 import MangaList from '../../shared/components/mangaList/MangaList.jsx';
+import { Home } from './home/Home.jsx';
+import Category from './listings/Category.jsx';
 
 /**
  * Assumed schema
@@ -34,7 +32,7 @@ import MangaList from '../../shared/components/mangaList/MangaList.jsx';
  *      }]
  * }
  * 
- * tags: [list of selected ids]
+ * tags: [list of selected tags]
  */
 const mapStateToProps = (state) => ({
     posts: state.requests.posts,
@@ -49,13 +47,35 @@ const mapDispatchToProps = {
     list: listTest
 }
 
-const Landing = (props) => {
-    let { mangas, selectedTags, list, mangaList } = props;
+/**
+ * Page user will see if they are logged in
+ */
+const getPersonalizedLanding = (mangaList) => {
+    let mangas = [];
     
+    if (mangaList && mangaList.data) mangas = mangaList.data;
 
-    return (
-        <div><MangaList mangaList={mangaList} list={list}></MangaList></div>
-    ) 
+    return <Home mangas={mangas} />;
+}
+
+/**
+ * Page user will see when they are not logged in
+ */
+const getDefaultLanding = (mangaList, list) => {
+    //<MangaList mangaList={mangaList} list={list} />
+    let mangas = [];
+    
+    if (mangaList && mangaList.data) mangas = mangaList.data;
+
+    return <Category mangas={mangas} />;
+}
+
+const Landing = (props) => {
+    let { selectedTags, list, mangaList, isLoggedIn } = props;
+    
+    if (!mangaList) list();
+    
+    return isLoggedIn ? getPersonalizedLanding(mangaList) : getDefaultLanding(mangaList, list);
 }
 // <Home mangas={mangas} selectedTags={selectedTags}/>
 

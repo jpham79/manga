@@ -1,64 +1,27 @@
 import React from 'react'
-import { Grid, Image, Segment, Label } from 'semantic-ui-react';
+import { Grid, Segment, Label } from 'semantic-ui-react';
 
-let rowMapper = (list, size) => {
-    let rows = [];
-    let columns = [];
-    for (let i = 0; i < list.length; i++) {
-        if (columns.length < size) {
-            columns.push(
-                <Grid.Column width={2}>
-                    {/* <Segment className='manga-segment'> */}
-                        <Label attached='bottom'>{list[i].name}</Label>
-                        <Image size='large' src={list[i].image} />
-                    {/* </Segment> */}
-                </Grid.Column>
-            );
-        } else {
-            rows.push([...columns]);
-            columns = [];
-            columns.push(
-                <Grid.Column width={2}>
-                    {/* <Segment className='manga-segment'> */}
-                        <Label attached='bottom'>{list[i].name}</Label>
-                        <Image size='large' src={list[i].image} />
-                    {/* </Segment> */}
-                </Grid.Column>
-            );
-        }
+import '../../../view/landing/landing.scss';
 
-    }
-    rows.push([...columns]);
-    columns = [];
-    console.log(rows);
-    
-    return rows;
-}
-
-let MangaList = props => {
+let MangaList = (props) => {
 
     const mangas = props.mangaList;
 
     if (mangas) {
-        // console.log('hi2');
         if (mangas.data) {
-            console.log(mangas.data);
             const data = mangas.data;
-            let rows = rowMapper(data, 8)
             return (
-                <Grid>
-                    {rows.map((row, index) => {
-                    
+                <Grid centered stackable>
+                    {data.map((manga) => {
                         return (
-                            <Grid.Row>
-                                {row.map(column => column)}
-                            </Grid.Row>
-                    )
-                    })}
-                    hi
+                                <Segment className='manga-segment'>
+                                    <Label attached='bottom'>{manga.name}</Label>
+                                    <img src={manga.image} height='200px' width='150px' />
+                                </Segment>
+                            )
+                        })
+                    }
                 </Grid>
-
-
             )
         }
         return <div>loading</div>
