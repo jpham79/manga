@@ -60,6 +60,14 @@ const mangaSchema = new Schema({
     tags: [{
         type: String
     }],
+    source: [{
+        name: {
+            type: String
+        },
+        link: {
+            type: String
+        }
+    }]
 });
 
 const manga = mongoose.model('Manga', mangaSchema);
