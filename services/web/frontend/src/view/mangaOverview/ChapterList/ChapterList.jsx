@@ -7,7 +7,7 @@ const ChapterList = props => {
         <div>
             {chapters.map(chapter =>
                 <li>
-                    {chapter.num}: {chapter.chapterId}
+                    {chapter.name}
                 </li>
             )}
         </div>

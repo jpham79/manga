@@ -15,14 +15,18 @@ const mapDispatchToProps = {
 
 const MangaOverview = props => {
     const { manga } = props;
-    const chapters = manga.chapters;
+    const sources = manga.source;
     return (
         <div>
             <div>
                 {manga.name}
             </div>
             <div>
-                {manga.chapters && manga.chapters.length > 0 ? <ChapterList chapters={chapters} /> : 'loading'}
+                {sources? sources.map(source => {
+                    return (
+                        <ChapterList chapters={source.chapters}></ChapterList>
+                    )
+                }) : <div>Loading</div>}
                 
             </div>
         </div>
