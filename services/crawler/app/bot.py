@@ -165,7 +165,7 @@ async def get_manga_info(info_url):
                 chapter_names.append('No name')
         chapters.reverse()
         chapter_names.reverse()
-        data['source'] = {'name': 'mangakakalot', 'link': info_url}
+        data['source'] = [{'name': 'mangakakalot', 'link': info_url}]
         data['chapters'] = {'chapters': chapters, 'chapter_names': chapter_names}
         return data
 
@@ -222,7 +222,10 @@ async def parse(currManga):
                     chapters.append(chapter)
                 except:
                     print('This chapter was already inserted.')
-        manga['chapters'] = chapters
+        del manga['chapters']
+        for source in manga['source']:
+            if source['name'] == 'mangakakalot':
+                source['chapters'] = chapters
         await insertManga(manga)
 
 

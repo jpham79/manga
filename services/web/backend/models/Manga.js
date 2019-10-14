@@ -18,15 +18,6 @@ const mangaSchema = new Schema({
         type: String,
         required: true
     },
-    chapters: [{
-        chapterId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Chapter'
-        },
-        num: {
-            type: Number
-        },
-    }],
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: 'Review'
@@ -66,7 +57,19 @@ const mangaSchema = new Schema({
         },
         link: {
             type: String
-        }
+        },
+        chapters: [{
+            num: {
+                type: Number
+            },
+            name: {
+                type: String
+            },
+            chapterId: {
+                type: Schema.Types.ObjectId,
+                ref: 'Chapter'
+            }
+        }]
     }]
 });
 
