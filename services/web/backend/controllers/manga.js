@@ -1,4 +1,5 @@
 const Manga = require('../models/Manga');
+const Chapter = require('../models/Chapter');
 
 
 const get = (req, res) => {
@@ -27,6 +28,21 @@ const list = (req, res) => {
         });
 }
 
+const getChapter = (req, res) => {
+    Chapter
+        .findById(req.params.chapterId)
+        .exec((err, chapter) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).end()
+            }
+            if (chapter.length === 0) {
+                res.status(404).send("Not found.");
+            }
+            res.json(chapter);
+        })
+}
+
 
 const criteria = (req, res, next) => {
     req.criteria = {};
@@ -48,4 +64,4 @@ const criteria = (req, res, next) => {
     next();
 }
 
-module.exports = { get, list, criteria };
+module.exports = { get, list, criteria, getChapter };

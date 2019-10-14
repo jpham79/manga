@@ -80,7 +80,24 @@ const listTest = () => {
   }
 }
 // store.dispatch(listTest())
-
+const fetchChapter = chapterId => {
+  let params = {
+      chapterId
+  }
+  console.log('yeet');
+  
+  return dispatch => {
+      dispatch(request('GET', 'MangaChapter', params ))
+      return axios.get(`http://localhost:5000/api/manga/chapter/${chapterId}`)
+          .then(response => {
+              dispatch(reqSuccess('MangaChapter', response))
+              dispatch(reqData('MangaChapter', response))
+              // dispatch(selectChapter(response))
+          })
+          .catch(response => dispatch(reqFail('MangaChapter', response)))
+  }
+}
+store.dispatch(fetchChapter('5da42b12d7b142cfc693584a'));
 // const httpTest = () => {
 //   return dispatch => {
 //     dispatch(request('GET', 'GetTest'))

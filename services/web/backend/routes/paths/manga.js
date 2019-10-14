@@ -7,6 +7,9 @@ module.exports = app => {
     app.route('/api/manga')
         .get(pagination.paginate, manga.criteria, manga.list);
 
-    app.route('/api/manga/:name')
+    app.route('/api/manga/:mangaName')
         .get(manga.get)
+        
+    app.route('/api/manga/chapter/:chapterId')
+        .get(manga.getChapter)
 }
