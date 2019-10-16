@@ -1,0 +1,10 @@
+.scrolling-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    
+    .card {
+      flex: 0 0 auto;
+    }
+  }
