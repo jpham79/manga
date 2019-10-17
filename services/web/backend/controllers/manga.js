@@ -10,10 +10,11 @@ const get = (req, res) => {
                 console.error(err);
                 return res.status(500).end()
             }
-            if (manga.length === 0) {
+            if (!manga) {
                 res.status(404).send("Not found.");
+            } else {
+                res.json(manga);
             }
-            res.json(manga);
         })
 }
 /**
@@ -47,7 +48,6 @@ const getByName = (req, res) => {
             console.log(`Successfully found: ${manga.name}`);
             res.json(manga);
         }
-
     });
 }
 
@@ -61,10 +61,11 @@ const list = (req, res) => {
                 console.error(err);
                 return res.status(500).end()
             }
-            if (mangalist.length === 0) {
+            if (!mangalist) {
                 res.status(404).send("Not found.");
+            } else {
+                res.json(mangalist);
             }
-            res.json(mangalist);
         });
 }
 

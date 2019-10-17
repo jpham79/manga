@@ -3,8 +3,9 @@ import './mangaOverview.scss';
 import { Container, Grid, Image, Header } from 'semantic-ui-react'
 import ChapterList from './ChapterList.jsx';
 const MangaInfo = props => {
-    const { manga } = props;
-    const { name, summary, image, author, ongoing, genres, source } = manga;
+    let { manga } = props;
+    let { name, summary, image, author, ongoing, genres, source } = manga;
+
     return (
         <div>
             <Grid>
