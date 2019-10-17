@@ -1,5 +1,5 @@
 import {req, req_data, req_success, req_fail, toggle_sidenav, select_tags} from './actionTypes'
-import manga from '../../src/shared/reducers/mangaReducers';
+import manga from '../../src/reducers/mangaReducers';
 import { combineReducers } from 'redux'
 
 const initState = {

@@ -97,7 +97,7 @@ const fetchChapter = chapterId => {
           .catch(response => dispatch(reqFail('MangaChapter', response)))
   }
 }
-store.dispatch(fetchChapter('5da42b12d7b142cfc693584a'));
+// store.dispatch(fetchChapter('5da42b12d7b142cfc693584a'));
 // const httpTest = () => {
 //   return dispatch => {
 //     dispatch(request('GET', 'GetTest'))

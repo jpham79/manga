@@ -1,4 +1,4 @@
-import { request, reqSuccess, reqFail, reqData } from '../../store/actions';
+import { request, reqSuccess, reqFail, reqData } from '../store/actions';
 import axios from 'axios';
 
 const select_manga = 'select_manga';
@@ -29,6 +29,10 @@ const fetchChapter = chapterId => {
             })
             .catch(response => dispatch(reqFail('MangaChapter', response)))
     }
+}
+
+const findChapterByName = chapterName => {
+    
 }
 
 const selectChapter = chapter => {
