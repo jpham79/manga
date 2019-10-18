@@ -1,4 +1,4 @@
-import { select_manga, select_chapter } from '../actions/mangaActions';
+import { select_manga } from '../actions/mangaActions';
 
 const initState = {
     selectedManga: '',
@@ -11,11 +11,6 @@ const manga = (state = initState, action ) => {
                 ...state,
                 selectedManga: action.manga
             };
-            case select_chapter:
-                return {
-                    ...state,
-                    selectedChapter: action.chapter
-                };
 
             default:
                 return state

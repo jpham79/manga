@@ -5,7 +5,7 @@ import PageList from '../../components/pageList/PageList.jsx';
 
 
 const mapStateToProps = state => ({
-    selectedChapter: state.manga.selectedChapter
+    selectedChapter: state.chapter.selectedChapter
 });
 
 const mapDispatchToProps = {
@@ -26,8 +26,5 @@ const Reader = props => {
     }
 
 }
-//  {/* <MangaInfo /> */}
-// <Home mangas={mangas} selectedTags={selectedTags}/>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reader);
-// export default MangaOverview;

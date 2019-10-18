@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { findMangaName, getChapter }  from '../../actions/mangaActions';
+import { findMangaName }  from '../../actions/mangaActions';
+import { getChapter } from '../../actions/chapterActions';
 import MangaInfo from './MangaInfo.jsx';
 
 
