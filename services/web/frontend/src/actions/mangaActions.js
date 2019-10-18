@@ -4,7 +4,7 @@ import axios from 'axios';
 const select_manga = 'select_manga';
 const get_manga_name = 'get_manga_name';
 const select_chapter = 'select_chapter';
-const fetch_chapter = 'fetch_chapter';
+const get_chapter = 'get_chapter';
 
 
 const selectManga = manga => {
@@ -14,7 +14,7 @@ const selectManga = manga => {
     }
 }
 
-const fetchChapter = chapterId => {
+const getChapter = chapterId => {
     let params = {
         chapterId
     }
@@ -24,11 +24,11 @@ const fetchChapter = chapterId => {
             params
         })
             .then(response => {
-                dispatch(reqSuccess('MangaChapter', response))
-                dispatch(reqData('MangaChapter', response))
-                dispatch(selectChapter(response))
+                dispatch(reqSuccess(get_chapter, response))
+                dispatch(reqData(get_chapter, response))
+                dispatch(selectChapter(response.data))
             })
-            .catch(response => dispatch(reqFail('MangaChapter', response)))
+            .catch(response => dispatch(reqFail(get_chapter, response)))
     }
 }
 
@@ -55,4 +55,4 @@ const selectChapter = chapter => {
     }
 }
 
-export { selectManga, select_manga, selectChapter, findMangaName, select_chapter, fetchChapter, fetch_chapter };
+export { selectManga, select_manga, selectChapter, findMangaName, select_chapter, getChapter, get_chapter };

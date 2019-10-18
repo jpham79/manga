@@ -12,6 +12,7 @@ import Landing from '../view/landing/Landing.jsx';
 
 import Navigation from '../view/Navigation/Navigation.jsx';
 import MangaOverview from '../view/mangaOverview/MangaOverview.jsx';
+import Reader from '../view/reader/Reader.jsx';
 
 
 class App extends Component {
@@ -47,6 +48,7 @@ export default App;
 export const ROUTES = {
   landing: '/',
   manganame: '/manga/:manganame',
+  chapterId: '/manga/:manganame/chapter/:chapternum',
   favorites: '/favorites',
   profile: '/profile',
   accountCreation: '/new-account',
@@ -56,7 +58,8 @@ export const ROUTES = {
 
 const routeList = [
   <Route key='home' exact={true} path={ROUTES.landing} component={Landing} />,
-  <Route key='home' exact={true} path={ROUTES.manganame} component={MangaOverview} />
+  <Route key='manga' exact={true} path={ROUTES.manganame} component={MangaOverview} />,
+  <Route key='chapter' exact={true} path={ROUTES.chapterId} component={Reader} />,
 ];
 
 /**

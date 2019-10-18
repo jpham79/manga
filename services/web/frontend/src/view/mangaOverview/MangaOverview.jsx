@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { findMangaName }  from '../../actions/mangaActions';
+import { findMangaName, getChapter }  from '../../actions/mangaActions';
 import MangaInfo from './MangaInfo.jsx';
 
 
@@ -10,10 +10,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     findMangaName: mangaName => findMangaName(mangaName),
+    getChapter: chapterId => getChapter(chapterId),
 }
 
 const MangaOverview = props => {
-    let { manga, findMangaName } = props;
+    let { manga, findMangaName, getChapter } = props;
     if (!manga) {
         const mangaName = window.location.href.split('/').pop().replace('_', ' ');
         findMangaName(mangaName);
@@ -21,7 +22,7 @@ const MangaOverview = props => {
     return (
         <div>
             <div>
-                <MangaInfo manga={manga} findMangaName={findMangaName} ></MangaInfo>
+                <MangaInfo manga={manga} findMangaName={findMangaName} getChapter={getChapter} ></MangaInfo>
             </div>
         </div>
     )

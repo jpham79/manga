@@ -1,9 +1,9 @@
 import React from 'react';
 import './mangaOverview.scss';
 import { Container, Grid, Image, Header } from 'semantic-ui-react'
-import ChapterList from './ChapterList.jsx';
+import ChapterList from '../../components/chapterList/ChapterList.jsx';
 const MangaInfo = props => {
-    let { manga } = props;
+    let { manga, getChapter } = props;
     let { name, summary, image, author, ongoing, genres, source } = manga;
 
     return (
@@ -32,7 +32,7 @@ const MangaInfo = props => {
                 <Grid.Column width={4}>
                     {source ? source.map(sourceObj => {
                         return (
-                            <ChapterList chapters={sourceObj.chapters}></ChapterList>
+                            <ChapterList key={sourceObj.name} name={name.split(' ').join('_')} chapters={sourceObj.chapters} getChapter={getChapter}></ChapterList>
                         )
                     }) : <div>Loading</div>}
                 </Grid.Column>

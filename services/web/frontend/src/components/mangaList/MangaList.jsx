@@ -11,8 +11,8 @@ let MangaList = props => {
     return (
         <Grid centered stackable columns={3} className='manga-grid'>
             {mangas.map((manga) =>
-                <Link to={`manga/${manga.name.split(' ').join('_')}`}>
-                    <Segment className='manga-segment' onClick={() => selectManga(manga)}>
+                <Link key={manga._id} to={`manga/${manga.name.split(' ').join('_')}`}>
+                    <Segment  className='manga-segment' onClick={() => selectManga(manga)}>
                         <Label attached='bottom'>{manga.name}</Label>
                         <img src={manga.image} height='200px' width='150px' />
                     </Segment>
