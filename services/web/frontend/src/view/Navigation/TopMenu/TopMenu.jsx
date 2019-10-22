@@ -2,7 +2,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './top-menu.scss';
 
 import React from 'react';
-import { Link } from "react-router-dom"
+import { Link, withRouter   } from "react-router-dom"
 import { Menu, Popup, Form, Input, Button } from 'semantic-ui-react';
 
 import { ROUTES } from '../../../root/App.js';
@@ -33,7 +33,7 @@ export class TopMenu extends React.Component {
         }
     }
 
-    handleItemClick(e, { checked }, id) { 
+    handleItemClick(event, { checked }, id) { 
         const { selectTags } = this.props;
         let selections = this.props.selectedTags.slice();
         let index = -1;
@@ -44,12 +44,21 @@ export class TopMenu extends React.Component {
         selectTags(selections);
     }
 
+    enterSearch(event, input, history) {
+        console.log(input);
+        
+        history.push("/search/" + input);
+    }
+
     render() {
         const { showSidebar, selectedTags } = this.props;
+        const SearchBar = withRouter(({ history }) => (
+            <Input icon='search' placeholder='Search' iconPosition='left' onChange={(event, { value }) => this.enterSearch(event, value, history)}/>
+        ));
         // return as array to get the Pusher on the parent to work properly
         return <Menu inverted className='top-menu'>
                     <Menu.Item onClick={showSidebar}>Show Navagation</Menu.Item>
-                    <Menu.Item position='right'><Input icon='search' placeholder='Search' iconPosition='left'/></Menu.Item>
+                    <Menu.Item position='right'><SearchBar /></Menu.Item>
                     <Popup 
                         hoverable
                         position ='bottom right'

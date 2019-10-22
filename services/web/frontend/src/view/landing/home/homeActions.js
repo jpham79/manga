@@ -1,9 +1,9 @@
 import { request, reqSuccess, reqFail, reqData } from '../../../store/actions'
 import axios from 'axios'
 
-const listTest = () => {
+const listTest = (tags) => {
     let params = {
-        genres: ['adult', 'shounen']
+        genres: tags ? tags : ['adult', 'shounen']
     }
     return dispatch => {
         dispatch(request('GET', 'ListTest', params ))
