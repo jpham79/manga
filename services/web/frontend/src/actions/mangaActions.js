@@ -19,7 +19,7 @@ const findMangaName = mangaName => {
     }
     return dispatch => {
         dispatch(request('GET', get_manga_name, params ))
-        return axios.get(`http://localhost:5000/api/manga/name/${mangaName}`)
+        return axios.get(`/api/manga/name/${mangaName}`)
             .then(response => {
                 dispatch(reqSuccess(get_manga_name, response))
                 dispatch(reqData(get_manga_name, response))

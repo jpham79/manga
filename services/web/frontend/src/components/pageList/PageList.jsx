@@ -1,5 +1,10 @@
 import React from 'react';
 
+// if (!manga) {
+//     const mangaName = window.location.href.split('/').pop().replace('_', ' ');
+//     findMangaName(mangaName);
+// }
+
 const PageList = props => {
     const { pages }  = props;
     return (

@@ -7,7 +7,7 @@ const listTest = () => {
     }
     return dispatch => {
         dispatch(request('GET', 'ListTest', params ))
-        return axios.get('http://localhost:5000/api/manga', {
+        return axios.get('/api/manga', {
             params
         })
             .then(response => {

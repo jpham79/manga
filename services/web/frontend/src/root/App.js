@@ -70,7 +70,7 @@ const routeList = [
 const listTest = () => {
   return dispatch => {
     dispatch(request('GET', 'ListTest'))
-    return axios.get('http://localhost:5000/api/manga', {
+    return axios.get('/api/manga', {
       params: {
         genres: ['adult', 'shounen']
       }
@@ -91,7 +91,7 @@ const fetchChapter = chapterId => {
   
   return dispatch => {
       dispatch(request('GET', 'MangaChapter', params ))
-      return axios.get(`http://localhost:5000/api/manga/chapter/${chapterId}`)
+      return axios.get(`/api/manga/chapter/${chapterId}`)
           .then(response => {
               dispatch(reqSuccess('MangaChapter', response))
               dispatch(reqData('MangaChapter', response))
