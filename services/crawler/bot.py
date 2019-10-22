@@ -133,7 +133,7 @@ async def get_manga_info(info_url):
         # author
         authors = soup.findAll(href = re.compile('search_author'))
         if len(authors) > 0:
-            data['author'] = authors[0].text
+            data['author'] = authors[0].text.lower()
 
         # status
         status = soup.findAll(text = re.compile('Status'))
@@ -154,7 +154,7 @@ async def get_manga_info(info_url):
         alt_title = soup.findAll('h2')
         if len(alt_title[0].text.split(';')) > 1:
             if alt_title[0].text.split(';')[1].strip().isascii():
-                data['otherNames'] = alt_title[0].text.split(';')[1].strip()
+                data['altNames'] = alt_title[0].text.split(';')[1].strip()
     
         chapter_list_chunk = soup.find('div', {'class': 'manga-info-chapter'})
         chapter_list = chapter_list_chunk.findAll('a')
