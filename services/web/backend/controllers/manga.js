@@ -2,7 +2,7 @@ const Manga = require('../models/Manga');
 
 
 
-const get = (req, res) => {
+const getById = (req, res) => {
     Manga
         .findById(req.params.mangaId)
         .exec((err, manga) => {
@@ -24,7 +24,7 @@ const get = (req, res) => {
  * @param  {string} req.params.name
  * @param  {Manga} res returns the found Manga
  */
-const getByName = (req, res) => {
+const get = (req, res) => {
     Manga.findOne({ name: req.params.name }, (err, manga) => {
         if (err) {
             console.error(err);
@@ -91,4 +91,4 @@ const criteria = (req, res, next) => {
     next();
 }
 
-module.exports = { get, getByName, list, criteria };
+module.exports = { get, getById, list, criteria };

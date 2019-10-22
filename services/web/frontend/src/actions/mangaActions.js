@@ -13,13 +13,13 @@ const selectManga = manga => {
     }
 }
 
-const findMangaName = mangaName => {
+const getMangaName = mangaName => {
     let params = {
         mangaName
     }
     return dispatch => {
         dispatch(request('GET', get_manga_name, params ))
-        return axios.get(`/api/manga/name/${mangaName}`)
+        return axios.get(`/api/manga/${mangaName}`)
             .then(response => {
                 dispatch(reqSuccess(get_manga_name, response))
                 dispatch(reqData(get_manga_name, response))
@@ -31,4 +31,4 @@ const findMangaName = mangaName => {
 
 
 
-export { selectManga, select_manga, findMangaName };
+export { selectManga, select_manga, getMangaName };

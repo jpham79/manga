@@ -91,7 +91,7 @@ const fetchChapter = chapterId => {
   
   return dispatch => {
       dispatch(request('GET', 'MangaChapter', params ))
-      return axios.get(`/api/manga/chapter/${chapterId}`)
+      return axios.get(`/api/manga/chapter/id/${chapterId}`)
           .then(response => {
               dispatch(reqSuccess('MangaChapter', response))
               dispatch(reqData('MangaChapter', response))

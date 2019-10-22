@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PageList from '../../components/pageList/PageList.jsx';
-
+import { getChapterNum } from '../../actions/chapterActions';
 
 
 const mapStateToProps = state => ({
@@ -9,16 +9,24 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-
+    getChapterNum: (mangaName, chapterNum) => getChapterNum(mangaName, chapterNum),
 }
 
 const Reader = props => {
-    const { selectedChapter } = props;
+    const { selectedChapter, getChapterNum } = props;
+    if (!selectedChapter) {
+        const urlArr = window.location.pathname.split('/');
+        let [ , , mangaName, ,chapterNum] = urlArr; // Destructure array, ignoring 1st, 2nd, and 4th elements
+        console.log(urlArr);
+        
+        console.log(chapterNum)
+        getChapterNum(mangaName, chapterNum);
+    }
     if (selectedChapter) {
         const { pages } = selectedChapter;
         return (
             <div>
-                <PageList pages={pages} />
+                <PageList pages={pages}/>
             </div>
         )
     }  else  {
