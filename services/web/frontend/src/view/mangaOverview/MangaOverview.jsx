@@ -1,33 +1,29 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
-import MangaInfo from './MangaInfo/MangaInfo.jsx';
-import ChapterList from './ChapterList/ChapterList.jsx';
+import { findMangaName }  from '../../actions/mangaActions';
+import { getChapter } from '../../actions/chapterActions';
+import MangaInfo from './MangaInfo.jsx';
 
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     manga: state.manga.selectedManga
 });
 
 const mapDispatchToProps = {
-
+    findMangaName: mangaName => findMangaName(mangaName),
+    getChapter: chapterId => getChapter(chapterId),
 }
 
 const MangaOverview = props => {
-    const { manga } = props;
-    const sources = manga.source;
+    let { manga, findMangaName, getChapter } = props;
+    if (!manga) {
+        const mangaName = window.location.href.split('/').pop().replace('_', ' ');
+        findMangaName(mangaName);
+    }
     return (
         <div>
             <div>
-                {manga.name}
-            </div>
-            <div>
-                {sources? sources.map(source => {
-                    return (
-                        <ChapterList chapters={source.chapters}></ChapterList>
-                    )
-                }) : <div>Loading</div>}
-                
+                <MangaInfo manga={manga} findMangaName={findMangaName} getChapter={getChapter} ></MangaInfo>
             </div>
         </div>
     )

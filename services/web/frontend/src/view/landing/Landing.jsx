@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { listTest } from './home/homeActions';
-import { selectManga } from '../../shared/actions/mangaActions';
-import MangaList from '../../shared/components/mangaList/MangaList.jsx';
+import { selectManga } from '../../actions/mangaActions';
+import MangaList from '../../components/mangaList/MangaList.jsx';
 import { Home } from './home/Home.jsx';
 
 /**

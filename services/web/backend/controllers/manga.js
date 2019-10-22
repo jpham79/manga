@@ -1,16 +1,56 @@
 const Manga = require('../models/Manga');
-const Chapter = require('../models/Chapter');
+
 
 
 const get = (req, res) => {
-    Manga.find({ name: req.params.name }, (err, data) => {
+    Manga
+        .findById(req.params.mangaId)
+        .exec((err, manga) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).end()
+            }
+            if (!manga) {
+                res.status(404).send("Not found.");
+            } else {
+                res.json(manga);
+            }
+        })
+}
+/**
+ * Takes the route parameter of a manga name and attempts to query for it in the name field.
+ * If that fails, it tries to search through the otherNames array.
+ * 
+ * @param  {string} req.params.name
+ * @param  {Manga} res returns the found Manga
+ */
+const getByName = (req, res) => {
+    Manga.findOne({ name: req.params.name }, (err, manga) => {
         if (err) {
             console.error(err);
         }
-        console.log(`Successfully found: ${data.name}`);
-        res.json(data);
+        if (!manga) {
+            console.log(req.params.name)
+            Manga
+                .findOne({ otherNames: { $in: [req.params.name] } })
+                .exec((err, manga) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                    if (!manga) {
+                        res.status(404).send("Not found.");
+                    } else {
+                        console.log(`Successfully found: ${manga.name}`);
+                        res.json(manga);
+                    }
+                })
+        } else {
+            console.log(`Successfully found: ${manga.name}`);
+            res.json(manga);
+        }
     });
 }
+
 
 const list = (req, res) => {
     Manga
@@ -21,27 +61,14 @@ const list = (req, res) => {
                 console.error(err);
                 return res.status(500).end()
             }
-            if (mangalist.length === 0) {
+            if (!mangalist) {
                 res.status(404).send("Not found.");
-            } 
-            res.json(mangalist);
+            } else {
+                res.json(mangalist);
+            }
         });
 }
 
-const getChapter = (req, res) => {
-    Chapter
-        .findById(req.params.chapterId)
-        .exec((err, chapter) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).end()
-            }
-            if (chapter.length === 0) {
-                res.status(404).send("Not found.");
-            }
-            res.json(chapter);
-        })
-}
 
 
 const criteria = (req, res, next) => {
@@ -64,4 +91,4 @@ const criteria = (req, res, next) => {
     next();
 }
 
-module.exports = { get, list, criteria, getChapter };
+module.exports = { get, getByName, list, criteria };

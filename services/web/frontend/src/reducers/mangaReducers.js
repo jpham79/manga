@@ -1,4 +1,4 @@
-import { selectManga, select_manga } from '../actions/mangaActions';
+import { select_manga } from '../actions/mangaActions';
 
 const initState = {
     selectedManga: '',
@@ -11,7 +11,6 @@ const manga = (state = initState, action ) => {
                 ...state,
                 selectedManga: action.manga
             };
-
 
             default:
                 return state
