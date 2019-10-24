@@ -48,33 +48,14 @@ const mapDispatchToProps = {
     list: listTest
 }
 
-/**
- * Page user will see if they are logged in
- */
-const getPersonalizedLanding = (mangaList) => {
-    let mangas = [];
-    
-    if (mangaList && mangaList.data) mangas = mangaList.data;
-
-    return <Home mangas={mangas} />;
-}
-
-/**
- * Page user will see when they are not logged in
- */
-const getDefaultLanding = (mangaList, selectManga) => {
-    let mangas = [];
-    
-    if (mangaList && mangaList.data) mangas = mangaList.data;
-    return <MangaList mangas={mangas} selectManga={selectManga}></MangaList>
-}
-
 const Landing = (props) => {
     let { selectedTags, list, mangaList, isLoggedIn, selectManga } = props;
-    
+    let mangas = [];
+
     if (!mangaList) list();
-    
-    return isLoggedIn ? getPersonalizedLanding(mangaList) : getDefaultLanding(mangaList, selectManga);
+    if (mangaList && mangaList.data) mangas = mangaList.data;
+
+    return <Home mangas={mangas} selectManga={selectManga} isLoggedIn={isLoggedIn} />;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
