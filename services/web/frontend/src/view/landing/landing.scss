@@ -16,7 +16,22 @@
     text-align: left;
     padding: 5px;
 
+    .extra-top {
+        margin-top: 20px !important;
+    }
+
+    .right-end {
+        margin-right: 10px;
+    }
+
+    .content {
+        border-radius: 5px;
+        padding: 1px;
+        margin-top: 20px;
+        box-shadow: 0 0 3px gray;
+    }
+
     .heading-content {
-        margin-top: 23px;
+        margin-top: 13px;
     }
 }

@@ -11,21 +11,22 @@ import '../../../root/App.scss'
 export class Home extends React.Component {
     
     getPersonizatedList({ mangas, selectManga, isLoggedIn }) {
-        let elements = [];
+        let elements;
         if (isLoggedIn) {
-            elements.push(
-                <div className="heading-content">
-                    <span className="sub-heading">Recommended Mangas:</span>
-                    <span className="right-end"><Link to={ROUTES.favorites}>View All</Link></span>
+            elements = (
+                <div class="content">
+                    <div className="heading-content">
+                        <span className="sub-heading">Recommended Mangas:</span>
+                        <span className="right-end"><Link to={ROUTES.favorites}>View All</Link></span>
+                    </div>
+                    <MangaList mangas={mangas} selectManga={selectManga} />
                 </div>
             );
-            elements.push(
-                <MangaList mangas={mangas} selectManga={selectManga} />
-            );
+
         }
         else {
-            elements.push(
-                <div className="heading-content">
+            elements = (
+                <div className="extra-top heading-content">
                     <Segment placeholder inverted secondary>
                         <Header icon>
                         <Icon name='thumbs up outline' />
@@ -44,17 +45,22 @@ export class Home extends React.Component {
         
         return (
             <div className="home">
-                <div className="heading-content">
-                    <span className="sub-heading">Hot Updates:</span>
-                    <span className="right-end"><Link to={ROUTES.favorites}>View All</Link></span>
-                </div>
-                <MangaList mangas={mangas} selectManga={selectManga} />
 
-                <div className="heading-content">
-                    <span className="sub-heading">Recently Updated:</span>
-                    <span className="right-end"><Link to={ROUTES.favorites}>View All</Link></span>
+                <div class="content">
+                    <div className="heading-content">
+                        <span className="sub-heading">Hot Updates:</span>
+                        <span className="right-end"><Link to={ROUTES.favorites}>View All</Link></span>
+                    </div>
+                    <MangaList mangas={mangas} selectManga={selectManga} />
                 </div>
-                <MangaList mangas={mangas} selectManga={selectManga} />
+
+                <div class="content">
+                    <div className="heading-content">
+                        <span className="sub-heading">Recently Updated:</span>
+                        <span className="right-end"><Link to={ROUTES.favorites}>View All</Link></span>
+                    </div>
+                    <MangaList mangas={mangas} selectManga={selectManga} />
+                </div>
 
                 {this.getPersonizatedList(this.props)}
 
