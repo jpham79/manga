@@ -41,15 +41,17 @@ export class Home extends React.Component {
     }
 
     render() {
-        let { mangas, selectManga, isLoggedIn } = this.props;
-        
+        const { mangas, selectManga, isLoggedIn } = this.props;
+        const listURL = ROUTES.list.split(':')[0]; // /list/:query -> /list/
+        const hotURL = `${listURL}hot-updates`;
+        const newUpdateURL = `${listURL}new-updates`
         return (
             <div className="home">
 
                 <div class="content">
                     <div className="heading-content">
                         <span className="sub-heading">Hot Updates:</span>
-                        <span className="right-end"><Link to={ROUTES.favorites}>View All</Link></span>
+                        <span className="right-end"><Link to={hotURL}>View All</Link></span>
                     </div>
                     <MangaList mangas={mangas} selectManga={selectManga} />
                 </div>
@@ -57,7 +59,7 @@ export class Home extends React.Component {
                 <div class="content">
                     <div className="heading-content">
                         <span className="sub-heading">Recently Updated:</span>
-                        <span className="right-end"><Link to={ROUTES.favorites}>View All</Link></span>
+                        <span className="right-end"><Link to={newUpdateURL}>View All</Link></span>
                     </div>
                     <MangaList mangas={mangas} selectManga={selectManga} />
                 </div>

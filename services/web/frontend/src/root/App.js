@@ -14,7 +14,7 @@ import Navigation from '../view/Navigation/Navigation.jsx';
 import MangaOverview from '../view/mangaOverview/MangaOverview.jsx';
 import Reader from '../view/reader/Reader.jsx';
 import Search from '../view/Search/Search.jsx';
-
+import List from '../view/list/List.jsx';
 
 class App extends Component {
 
@@ -55,7 +55,8 @@ export const ROUTES = {
   accountCreation: '/new-account',
   settings: '/settings',
   offlineLibrary: '/offline-library',
-  search: '/search/:query'
+  search: '/search/:query',
+  list: '/list/:query'
 };
 
 const routeList = [
@@ -63,6 +64,7 @@ const routeList = [
   <Route key='manga' exact={true} path={ROUTES.manganame} component={MangaOverview} />,
   <Route key='chapter' exact={true} path={ROUTES.chapterId} component={Reader} />,
   <Route key='search' exact={false} path={ROUTES.search} component={Search} />,
+  <Route key='list' exact={false} path={ROUTES.list} component={List} />,
 ];
 
 /**
