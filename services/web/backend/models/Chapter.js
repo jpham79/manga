@@ -48,11 +48,11 @@ const chapterSchema = new Schema({
     }],
     contributors: [{
         userId: {
-            types: Schema.Types.ObjectId,
-            ref: 'User'
+            type: Schema.Types.ObjectId,
+            ref: 'User',
         },
         username: {
-            type: String
+            type: String,
         },
     }],
     source: {

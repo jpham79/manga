@@ -33,7 +33,7 @@ async def get(url):
 async def fetch(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            return await response.text()
+            return await response.content.read()
 
 """
  Will only be checking for sitemaps,
@@ -46,7 +46,7 @@ async def crawl():
     for page in sites:
         request = urllib.request.Request(page + '/robots.txt', headers=header)
         response = urllib.request.urlopen(request)
-        parse_sitemap(response.read().decode("utf-8").splitlines())
+        parse_sitemap(response.read().decode("utf8", errors="ignore").splitlines())
 
         robotParser = urllib.robotparser.RobotFileParser(page + '/robots.txt')
         robotParser.read()
@@ -59,8 +59,6 @@ async def crawl():
             parsedXml = BeautifulSoup(xmlFile, 'xml')
             # mangaLinks.append(link)
 
-            curr_manga = None
-            chapters = []
             for location in parsedXml.find_all('loc'):
                 link = location.contents[0]
                 # print(link)
@@ -68,18 +66,9 @@ async def crawl():
                 if link.endswith('.xml'):
                     siteMaps.append(link)
                 else:
-                    if curr_manga is None and 'chapter' not in link:
-                        curr_manga = link
-                    if 'chapter' in link:
-                        # print(link)
-                        chapters.append(link)
-                    elif 'chapter' not in link and curr_manga is not None and link != curr_manga:
-                        # print(curr_manga, chapters)
-
-                        await parse(curr_manga, chapters)
-                        chapters.clear()
-                        curr_manga = link
-                        print(curr_manga)
+                    if 'chapter' not in link:
+                        print(link)
+                        await parse(link)
 
             if requestRate:
                time.sleep(requestRate) 
@@ -117,9 +106,19 @@ async def getPages(link):
 
 async def get_manga_info(info_url):
     data = {}
+    chapter_names = []
+    chapters = []
     txt = await fetch(info_url)
     soup = BeautifulSoup(txt, 'html.parser')
+    summary = 'No summary currently..'
     myul = soup.findAll('ul', {'class': 'manga-info-text'})
+    # descriptionChunk = soup.find('meta', {'property': 'og:description'})
+    # summary = descriptionChunk.attrs['content']
+    description = soup.find('div', {'id': 'noidungm'})
+    if description is not None:
+        description.h2.clear()
+        summary = description.text.strip('\n')
+        data['summary'] = summary
 
     if len(myul) > 0:
         # name
@@ -134,7 +133,7 @@ async def get_manga_info(info_url):
         # author
         authors = soup.findAll(href = re.compile('search_author'))
         if len(authors) > 0:
-            data['author'] = authors[0].text
+            data['author'] = authors[0].text.lower()
 
         # status
         status = soup.findAll(text = re.compile('Status'))
@@ -155,8 +154,20 @@ async def get_manga_info(info_url):
         alt_title = soup.findAll('h2')
         if len(alt_title[0].text.split(';')) > 1:
             if alt_title[0].text.split(';')[1].strip().isascii():
-                data['otherNames'] = alt_title[0].text.split(';')[1].strip()
-        
+                data['altNames'] = alt_title[0].text.split(';')[1].strip()
+    
+        chapter_list_chunk = soup.find('div', {'class': 'manga-info-chapter'})
+        chapter_list = chapter_list_chunk.findAll('a')
+        for chapter in chapter_list:
+            chapters.append(chapter.get('href'))
+            if chapter.get('title') is not None:
+                chapter_names.append(chapter.get('title'))
+            else:
+                chapter_names.append('No name')
+        chapters.reverse()
+        chapter_names.reverse()
+        data['source'] = [{'name': 'mangakakalot', 'link': info_url}]
+        data['chapters'] = {'chapters': chapters, 'chapter_names': chapter_names}
         return data
 
 async def insertChapter(chapter):
@@ -173,19 +184,19 @@ async def insertManga(manga):
         db.mangas.insert_one(manga)
         print(f"Just inserted: {manga['name']}")
 
-async def parse(currManga, chapters):
+async def parse(currManga):
     chapter_nums = []
     manga_name = currManga.rsplit('/')[4]
     manga_name = manga_name.replace('_', ' ')
     manga = await get_manga_info(currManga)
     if manga is not None:
         tasks = []
-        for link in chapters:
+        for link in manga['chapters']['chapters']:
             task = asyncio.create_task(getPages(link))
             tasks.append(task)
         result_chapters = await asyncio.gather(*tasks)
 
-        for link in chapters:
+        for link in manga['chapters']['chapters']:
             m = re.search("chapter_(.*)", link)
             currNum = float(m.group(1))
             chapter_nums.append(currNum)
@@ -193,8 +204,9 @@ async def parse(currManga, chapters):
         chapter_tasks = []
         chapter_ids = []
         for index, pages in enumerate(result_chapters): 
-            if len(pages) > 0:
-                chapter = {'num': chapter_nums[index], 'pages': pages, 'manga': {'name': manga_name}, 'source': 'mangakakalot'}
+            if len(pages) > 0:  
+                name = manga['chapters']['chapter_names'][index]
+                chapter = {'num': chapter_nums[index], 'name': name, 'pages': pages, 'manga': {'name': manga_name}, 'source': 'mangakakalot'}
                 task = asyncio.create_task(insertChapter(chapter))
                 chapter_tasks.append(task)
                 if len(chapter_tasks) > 49:
@@ -206,13 +218,23 @@ async def parse(currManga, chapters):
         for index, chapter_id in enumerate(chapter_ids):
             if chapter_id is not None:
                 try:
-                    chapter = {'num': chapter_nums[index], 'chapterId': chapter_id}
+                    name = manga['chapters']['chapter_names'][index]
+                    chapter = {'num': chapter_nums[index], 'name': name, 'chapterId': chapter_id}
                     chapters.append(chapter)
                 except:
                     print('This chapter was already inserted.')
-        manga['chapters'] = chapters
+        del manga['chapters']
+        for source in manga['source']:
+            if source['name'] == 'mangakakalot':
+                source['chapters'] = chapters
         await insertManga(manga)
 
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(crawl())
+# async def test():
+#     data = await get_manga_info('https://mangakakalot.com/manga/ri918008')
+#     # print(data)
+
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(test())

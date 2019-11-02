@@ -1,9 +1,11 @@
 import {req, req_data, req_success, req_fail, toggle_sidenav, select_tags} from './actionTypes'
+import manga from '../../src/reducers/mangaReducers';
+import chapter from '../../src/reducers/chapterReducers';
 import { combineReducers } from 'redux'
 
 const initState = {
     isSidenavVisible: false,
-    selectedTags: []
+    selectedTags: [],
 }
 
 const requests = (state = initState, action ) => {
@@ -67,7 +69,9 @@ const requests = (state = initState, action ) => {
 }
 
 const app = combineReducers({
-    requests
+    requests,
+    chapter,
+    manga
 })
 
 export default app
