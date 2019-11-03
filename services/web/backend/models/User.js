@@ -7,10 +7,6 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    password: { // TODO: figure out how to store passwords securely
-        type: String,
-        required: true
-    },
     picture: {
         type: String  //link to profile pic
     },
