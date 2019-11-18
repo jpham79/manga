@@ -4,6 +4,7 @@ import './top-menu.scss';
 import React from 'react';
 import { Link } from "react-router-dom"
 import { Menu, Popup, Form, Input, Button } from 'semantic-ui-react';
+import { NavItem, Navbar } from 'react-materialize';
 
 import { ROUTES } from '../../../root/App.js';
 
@@ -47,20 +48,20 @@ export class TopMenu extends React.Component {
     render() {
         const { showSidebar, selectedTags } = this.props;
         // return as array to get the Pusher on the parent to work properly
-        return <Menu inverted className='top-menu'>
-                    <Menu.Item onClick={showSidebar}>Show Navagation</Menu.Item>
-                    <Menu.Item position='right'><Input icon='search' placeholder='Search' iconPosition='left'/></Menu.Item>
-                    <Popup 
+        return <Navbar className={'indigo darken-1'}>
+                    <NavItem onClick={showSidebar}>Show Navagation</NavItem>
+                    {/* <NavItem position='right'><Input icon='search' placeholder='Search' iconPosition='left'/></NavItem> */}
+                    {/* <Popup 
                         hoverable
                         position ='bottom right'
                         on='click'
                         className='top-menu filter'
                         trigger={ 
-                            <Menu.Item>Filter</Menu.Item>
+                            <NavItem>Filter</NavItem>
                         }
-                        >
+                        > */}
                             {/* popup is rendered outside of component */}
-                            <Popup.Content className='body'>
+                            {/* <Popup.Content className='body'>
                                 <Form>
                                     <Form.Field>
                                         <label>Tags</label>
@@ -74,25 +75,25 @@ export class TopMenu extends React.Component {
                                     </Form.Field>
                                 </Form>
                             </Popup.Content>
-                    </Popup>
-                    <Menu.Item link>
+                    </Popup> */}
+                    <NavItem link>
                         <Link to={ROUTES.landing}>Home</Link>
-                    </Menu.Item>
-                    <Menu.Item link>
+                    </NavItem>
+                    <NavItem link>
                         Download
-                    </Menu.Item>
-                    <Menu.Item link>
+                    </NavItem>
+                    <NavItem link>
                         <Link to={ROUTES.favorites}>Favorites</Link>
-                    </Menu.Item>
-                    <Popup 
+                    </NavItem>
+                    {/* <Popup 
                         hoverable
                         position ='bottom right'
                         on='click'
                         trigger={ 
-                            <Menu.Item>Login</Menu.Item>
+                            <NavItem>Login</NavItem>
                         }
-                        >
-                            <Popup.Content>
+                        > */}
+                            {/* <Popup.Content>
                                 <Form>
                                     <Form.Field>
                                         <Input placeholder='Username' />
@@ -105,7 +106,7 @@ export class TopMenu extends React.Component {
                                     <Link to={ROUTES.accountCreation}>New User?</Link>
                                 </Form>
                             </Popup.Content>
-                    </Popup>
-                </Menu>;
+                    </Popup> */}
+                </Navbar>;
     }
 }
