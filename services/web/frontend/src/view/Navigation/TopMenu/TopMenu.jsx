@@ -48,7 +48,7 @@ export class TopMenu extends React.Component {
     render() {
         const { showSidebar, selectedTags } = this.props;
         // return as array to get the Pusher on the parent to work properly
-        return <Navbar className={'indigo darken-1'}>
+        return <Navbar className={'blue-grey darken-3'}>
                     <NavItem onClick={showSidebar}>Show Navagation</NavItem>
                     {/* <NavItem position='right'><Input icon='search' placeholder='Search' iconPosition='left'/></NavItem> */}
                     {/* <Popup 

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid, Segment, Label } from 'semantic-ui-react';
+import { Card, Col, Row } from 'react-materialize/lib/';
 import { Link } from "react-router-dom";
 import '../../view/landing/landing.scss';
 
@@ -9,17 +10,26 @@ let MangaList = props => {
 
 
     return (
-        <Grid centered stackable columns={3} className='manga-grid'>
+        <Row>
             {mangas.map((manga) =>
-                <Link key={manga._id} to={`manga/${manga.name.split(' ').join('_')}`}>
-                    <Segment  className='manga-segment' onClick={() => selectManga(manga)}>
-                        <Label attached='bottom'>{manga.name}</Label>
-                        <img src={manga.image} height='200px' width='150px' />
-                    </Segment>
-                </Link>
-            )
-            }
-        </Grid>
+                <Col className="" s={12} m={4} l={3} xl={1}>
+                    <Link key={manga._id} to={`manga/${manga.name.split(' ').join('_')}`}>
+                        <Card className={'card small blue-grey darken-3 z-depth-2 hoverable'}
+                            header={
+                                <div className="card-image">
+                                    <img className={'responsive-img'} src={manga.image} />
+                                </div>
+                            }
+                            onClick={() => selectManga(manga)}>
+                            <div className="white-text">
+                            	{manga.name}
+                            </div>
+                        </Card>
+                    </Link>
+                </Col>
+            )}
+
+        </Row>
     )
 
 
