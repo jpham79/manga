@@ -18,4 +18,16 @@ const listTest = (tags) => {
     }
 }
 
-export { listTest };
+const getUpdated = () => {
+    return (dispatch) => {
+        dispatch(request('GET', 'Updated'))
+        return axios.get('http://localhost:5000/api/latest')
+            .then((response) => {
+                dispatch(reqSuccess('Updated', response))
+                dispatch(reqData('Updated', response))
+            })
+            .catch((response) => dispatch(reqFail('Updated', response)))
+    }
+}
+
+export { listTest, getUpdated };

@@ -51,6 +51,25 @@ const getByName = (req, res) => {
     });
 }
 
+const getLatest = (req, res) => {
+    Manga
+        .find()
+        .sort('updated')
+        .exec((err, mangalist) => {
+            console.log('test');
+            
+            if (err) {
+                console.error(err);
+                return res.status(500).end()
+            }
+            if (!mangalist) {
+                res.status(404).send("Not found.");
+            } else {
+                res.json(mangalist);
+            }
+        });
+}
+
 
 const list = (req, res) => {
     Manga
@@ -91,4 +110,4 @@ const criteria = (req, res, next) => {
     next();
 }
 
-module.exports = { get, getByName, list, criteria };
+module.exports = { get, getByName, list, criteria, getLatest };

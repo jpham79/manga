@@ -12,4 +12,7 @@ module.exports = app => {
     
     app.route('/api/manga/name/:name')
         .get(manga.getByName)
+
+    app.route('/api/latest')
+        .get(pagination.paginate, manga.criteria, manga.getLatest);
 }

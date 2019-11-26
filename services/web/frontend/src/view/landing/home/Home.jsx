@@ -48,7 +48,7 @@ export class Home extends React.Component {
         return (
             <div className="home">
 
-                <div class="content">
+                <div className="content">
                     <div className="heading-content">
                         <span className="sub-heading">Hot Updates:</span>
                         <span className="right-end"><Link to={hotURL}>View All</Link></span>
@@ -56,7 +56,7 @@ export class Home extends React.Component {
                     <MangaList mangas={mangas} selectManga={selectManga} />
                 </div>
 
-                <div class="content">
+                <div className="content">
                     <div className="heading-content">
                         <span className="sub-heading">Recently Updated:</span>
                         <span className="right-end"><Link to={newUpdateURL}>View All</Link></span>

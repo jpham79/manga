@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { listTest } from './home/homeActions';
+import { getUpdated } from './home/homeActions';
 import { selectManga } from '../../actions/mangaActions';
-import MangaList from '../../components/mangaList/MangaList.jsx';
 import { Home } from './home/Home.jsx';
 
 /**
@@ -37,7 +36,7 @@ import { Home } from './home/Home.jsx';
 const mapStateToProps = (state) => ({
     posts: state.requests.posts,
     mangas: state.requests.mangas,
-    mangaList: state.requests.ListTest ? state.requests.ListTest : null,
+    mangaList: state.requests.Updated ? state.requests.Updated : null,
     selectedTags: state.requests.selectedTags
 });
   
@@ -45,7 +44,7 @@ const mapDispatchToProps = {
     // nothing so far
     // list: listTest,
     selectManga: manga => selectManga(manga),
-    list: listTest
+    list: getUpdated
 }
 
 const Landing = (props) => {
