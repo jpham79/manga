@@ -1,10 +1,8 @@
-import 'semantic-ui-css/semantic.min.css';
 import './top-menu.scss';
 
 import React from 'react';
 import { Link } from "react-router-dom"
-import { Menu, Popup, Form, Input, Button } from 'semantic-ui-react';
-import { NavItem, Navbar } from 'react-materialize';
+import { Row, Col, TextInput } from 'react-materialize';
 
 import { ROUTES } from '../../../root/App.js';
 
@@ -48,65 +46,25 @@ export class TopMenu extends React.Component {
     render() {
         const { showSidebar, selectedTags } = this.props;
         // return as array to get the Pusher on the parent to work properly
-        return <Navbar className={'blue-grey darken-3'}>
-                    <NavItem onClick={showSidebar}>Show Navagation</NavItem>
-                    {/* <NavItem position='right'><Input icon='search' placeholder='Search' iconPosition='left'/></NavItem> */}
-                    {/* <Popup 
-                        hoverable
-                        position ='bottom right'
-                        on='click'
-                        className='top-menu filter'
-                        trigger={ 
-                            <NavItem>Filter</NavItem>
-                        }
-                        > */}
-                            {/* popup is rendered outside of component */}
-                            {/* <Popup.Content className='body'>
-                                <Form>
-                                    <Form.Field>
-                                        <label>Tags</label>
-                                        { this.filter.map((tag) =>  (
-                                                <Form.Checkbox 
-                                                    onChange={(event, target) => this.handleItemClick(event, target, tag.id)} 
-                                                    checked={selectedTags.includes(tag.id)}
-                                                    key={tag.id} 
-                                                    label={tag.name} />))
-                                        }
-                                    </Form.Field>
-                                </Form>
-                            </Popup.Content>
-                    </Popup> */}
-                    <NavItem link>
+        return <Row className={'blue-grey darken-3 top-menu'}>
+                    <Col>
+                        <div onClick={showSidebar} className={'open-navagation'}> Show Navagation</div>
+                    </Col>
+                    <Col className={'right-item'}>
                         <Link to={ROUTES.landing}>Home</Link>
-                    </NavItem>
-                    <NavItem link>
+                    </Col>
+                    <Col className={'right-item'}>
                         Download
-                    </NavItem>
-                    <NavItem link>
+                    </Col>
+                    <Col className={'right-item'}>
                         <Link to={ROUTES.favorites}>Favorites</Link>
-                    </NavItem>
-                    {/* <Popup 
-                        hoverable
-                        position ='bottom right'
-                        on='click'
-                        trigger={ 
-                            <NavItem>Login</NavItem>
-                        }
-                        > */}
-                            {/* <Popup.Content>
-                                <Form>
-                                    <Form.Field>
-                                        <Input placeholder='Username' />
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <Input placeholder='Password' />
-                                    </Form.Field>
-                                    <Button type='submit'>Login</Button>
-                                    <br/>
-                                    <Link to={ROUTES.accountCreation}>New User?</Link>
-                                </Form>
-                            </Popup.Content>
-                    </Popup> */}
-                </Navbar>;
+                    </Col>
+                    <Col className={'right-item'}>
+                        Search Placeholder
+                        {/* <TextInput
+                            icon="search"
+                            /> */}
+                    </Col>
+                </Row>;
     }
 }
