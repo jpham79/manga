@@ -7,14 +7,19 @@
 
     .right-item {
         float: right;
+        display: flex;
 
-        &.input {
-            padding: 0;
-            height: 0;
+    }
+    
+    .search-bar {
+        i {
+            margin-right: 5px;
+        }
 
-            input {
-                height: 0;
-            }
+        input {
+            height: 1rem !important;
+            margin: auto !important;
+            color: white;
         }
     }
 
@@ -32,20 +37,20 @@
     a {
         color: white;
     }
+
+    &.filter {
+        padding-right: 0px;
+        padding-top: 0px; 
+        padding-bottom: 0px; 
+        .body {
+            max-height: 200px;
+            overflow-y: scroll;
+            padding-right: 10px;
+            padding-bottom: 10px;
+        }
+    }
 }
 
 .dark {
     background-color: rgba(27, 28, 29, 1);
-}
-
-.top-menu.filter {
-    padding-right: 0px;
-    padding-top: 0px; 
-    padding-bottom: 0px; 
-    .body {
-        max-height: 200px;
-        overflow-y: scroll;
-        padding-right: 10px;
-        padding-bottom: 10px;
-    }
 }

@@ -2,7 +2,7 @@ import './top-menu.scss';
 
 import React from 'react';
 import { Link } from "react-router-dom"
-import { Row, Col, TextInput } from 'react-materialize';
+import { Row, Col, Icon } from 'react-materialize';
 
 import { ROUTES } from '../../../root/App.js';
 
@@ -45,7 +45,7 @@ export class TopMenu extends React.Component {
 
     render() {
         const { showSidebar, selectedTags } = this.props;
-        // return as array to get the Pusher on the parent to work properly
+
         return <Row className={'blue-grey darken-3 top-menu'}>
                     <Col>
                         <div onClick={showSidebar} className={'open-navagation'}> Show Navagation</div>
@@ -59,11 +59,11 @@ export class TopMenu extends React.Component {
                     <Col className={'right-item'}>
                         <Link to={ROUTES.favorites}>Favorites</Link>
                     </Col>
-                    <Col className={'right-item'}>
-                        Search Placeholder
-                        {/* <TextInput
-                            icon="search"
-                            /> */}
+                    <Col className={'right-item search-bar'}>
+                        <Icon>
+                            search
+                        </Icon>
+                        <input type="text" />
                     </Col>
                 </Row>;
     }
