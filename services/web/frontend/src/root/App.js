@@ -87,7 +87,6 @@ const fetchChapter = chapterId => {
   let params = {
       chapterId
   }
-  console.log('yeet');
   
   return dispatch => {
       dispatch(request('GET', 'MangaChapter', params ))

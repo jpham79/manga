@@ -1,9 +1,8 @@
-import 'semantic-ui-css/semantic.min.css';
 import './side-nav.scss';
 
 import React from 'react';
-import { Link } from "react-router-dom"
-import { Header, Icon, Menu, Sidebar } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
+import M from "materialize-css/dist/js/materialize.min.js";
 
 import { ROUTES } from '../../../root/App.js';
 
@@ -19,35 +18,31 @@ export class SideNav extends React.Component {
         {type: 'item', name: 'Mangarock', key: 'sourceLink1', icon: 'sitemap'}
     ];
 
+    componentDidMount() {
+        let sideNav = document.querySelector(".sidenav");
+        M.Sidenav.init(sideNav, {
+            edge: "left",
+            inDuration: 250
+        });
+    }
+
     render() {
-        const { isSidebarVisible, hideSidebar } = this.props;
-        
-        // return as array to get the Pusher on the parent to work properly
-        return <Sidebar
-                    as={Menu}
-                    animation='overlay'
-                    icon='labeled'
-                    inverted
-                    onHide={hideSidebar}
-                    vertical
-                    visible={isSidebarVisible}
-                    width='wide'>
-                    <Menu.Item onClick={hideSidebar}>Hide Navagation</Menu.Item>
+        return <ul id="slide-out" className="sidenav">
+                    <li>
+                        <div class="sidenav-close">Hide Navagation</div>
+                    </li>
                     {
                         this.menuEntries.map((entry) => {
                             if (entry.type === 'header') 
-                             return <Header as="h2"color='blue' key ={entry.key}>{entry.name}</Header>;
+                               return   <li>
+                                            <div className="subheader" key ={entry.key}>{entry.name}</div>
+                                        </li>;
                             else 
-                                return (
-                                    <Menu.Item
-                                        link
-                                        key={entry.key}>
-                                        <Icon name={entry.icon}/>
-                                        <Link to={entry.key}><span className="menu-label">{entry.name}</span></Link>
-                                    </Menu.Item>
-                                );
+                                return  <li>
+                                            <Link to={entry.key}><span>{entry.name}</span></Link>
+                                        </li>;
                         })
                     }
-                </Sidebar>;
+                </ul>;
     }
 }

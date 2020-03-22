@@ -44,11 +44,11 @@ export class TopMenu extends React.Component {
     }
 
     render() {
-        const { showSidebar, selectedTags } = this.props;
+        const { selectedTags } = this.props;
 
         return <Row className={'blue-grey darken-3 top-menu'}>
-                    <Col>
-                        <div onClick={showSidebar} className={'open-navagation'}> Show Navagation</div>
+                    <Col className="sidenav-trigger" data-target="slide-out">
+                        <div className={'open-navagation'}> Show Navagation</div>
                     </Col>
                     <Col className={'right-item'}>
                         <Link to={ROUTES.landing}>Home</Link>
