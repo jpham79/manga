@@ -1,13 +1,10 @@
-import React from 'react'
-import { Grid, Segment, Label } from 'semantic-ui-react';
+import React from 'react';
 import { Card, Col, Row } from 'react-materialize/lib/';
 import { Link } from "react-router-dom";
 import '../../view/landing/landing.scss';
 
 let MangaList = props => {
-
     const { mangas, selectManga } = props;
-
 
     return (
         <Row>
@@ -28,38 +25,8 @@ let MangaList = props => {
                     </Link>
                 </Col>
             )}
-
         </Row>
     )
-
-
-
-    //     if (mangas) {
-    //         if (mangas.data) {
-    //             const data = mangas.data;
-    //             return (
-    //                 <Grid centered stackable>
-    //                     {data.map((manga) => {
-    //                         return (
-    //                             <div >
-    //                                 <Segment className='manga-segment'>
-    //                                     <Label attached='bottom'>{manga.name}</Label>
-    //                                     <img src={manga.image} height='200px' width='150px' />
-    //                                 </Segment>
-    //                             </div>
-    //                         )
-    //                     })
-    //                     }
-    //                 </Grid>
-    //             )
-    //         }
-    //         return <div>loading</div>
-
-    //     } else {
-    //         props.list()
-    //         return (<div>loading</div>)
-    //     }
-    // }
 }
 
 export default MangaList;

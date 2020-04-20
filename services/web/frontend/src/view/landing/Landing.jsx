@@ -68,7 +68,6 @@ const getDefaultLanding = (mangaList, selectManga) => {
     
     if (mangaList && mangaList.data) mangas = mangaList.data;
     return <MangaList mangas={mangas} selectManga={selectManga}></MangaList>
-    // return <Category mangas={mangas} />;
 }
 
 const Landing = (props) => {
@@ -78,7 +77,6 @@ const Landing = (props) => {
     
     return isLoggedIn ? getPersonalizedLanding(mangaList) : getDefaultLanding(mangaList, selectManga);
 }
-// <Home mangas={mangas} selectedTags={selectedTags}/>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
 

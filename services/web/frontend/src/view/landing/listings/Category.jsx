@@ -1,23 +1,35 @@
 import React from 'react';
-import 'semantic-ui-css/semantic.min.css';
 
-import { Grid, Segment, Label } from 'semantic-ui-react';
+import { Card, Col, Row } from 'react-materialize/lib/';
+import { Link } from "react-router-dom";
+
 import '../landing.scss';
 
 const Category = (props) => {
-    let { mangas } = props;
-        
-        return (
-                <Grid centered stackable columns={3} className='manga-grid'>
-                    { mangas.map((manga) => 
-                            <Segment className='manga-segment'>
-                                <Label attached='bottom'>{manga.name}</Label>
-                                <img src={manga.image} height='200px' width='150px' />
-                            </Segment>
-                        ) 
-                    }
-                </Grid>
-        )
+    const { mangas, selectManga } = props;
+
+    return (
+        <Row className='manga-grid'>
+            {mangas.map((manga) =>
+                <Col className="" s={12} m={4} l={3} xl={1}>
+                    <Link key={manga._id} to={`manga/${manga.name.split(' ').join('_')}`}>
+                        <Card className={'card small blue-grey darken-3 z-depth-2 hoverable'}
+                            header={
+                                <div className="card-image">
+                                    <img className={'responsive-img'} src={manga.image} />
+                                </div>
+                            }
+                            onClick={() => selectManga(manga)}>
+                            <div className="white-text">
+                            	{manga.name}
+                            </div>
+                        </Card>
+                    </Link>
+                </Col>
+            )}
+
+        </Row>
+    )
 }
 
 export default Category;

@@ -1,6 +1,6 @@
 import React from 'react';
+
 import './mangaOverview.scss';
-import { Container, Grid, Image, Header } from 'semantic-ui-react'
 import ChapterList from '../../components/chapterList/ChapterList.jsx';
 import {Col, Row } from 'react-materialize/lib/';
 
