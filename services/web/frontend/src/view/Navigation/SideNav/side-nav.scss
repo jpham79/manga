@@ -1,2 +1,15 @@
-.side-nav {
+.sidenav {
+    background-color: black;
+
+    li > * {
+        color: white !important;
+
+        &:not(.subheader) {
+            cursor: pointer;
+        }
+    }
+
+    .subheader{
+        background-color: gray;
+    }
 }

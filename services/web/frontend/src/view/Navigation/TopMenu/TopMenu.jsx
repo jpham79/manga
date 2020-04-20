@@ -1,9 +1,8 @@
-import 'semantic-ui-css/semantic.min.css';
 import './top-menu.scss';
 
 import React from 'react';
 import { Link } from "react-router-dom"
-import { Menu, Popup, Form, Input, Button } from 'semantic-ui-react';
+import { Row, Col, Icon } from 'react-materialize';
 
 import { ROUTES } from '../../../root/App.js';
 
@@ -45,67 +44,27 @@ export class TopMenu extends React.Component {
     }
 
     render() {
-        const { showSidebar, selectedTags } = this.props;
-        // return as array to get the Pusher on the parent to work properly
-        return <Menu inverted className='top-menu'>
-                    <Menu.Item onClick={showSidebar}>Show Navagation</Menu.Item>
-                    <Menu.Item position='right'><Input icon='search' placeholder='Search' iconPosition='left'/></Menu.Item>
-                    <Popup 
-                        hoverable
-                        position ='bottom right'
-                        on='click'
-                        className='top-menu filter'
-                        trigger={ 
-                            <Menu.Item>Filter</Menu.Item>
-                        }
-                        >
-                            {/* popup is rendered outside of component */}
-                            <Popup.Content className='body'>
-                                <Form>
-                                    <Form.Field>
-                                        <label>Tags</label>
-                                        { this.filter.map((tag) =>  (
-                                                <Form.Checkbox 
-                                                    onChange={(event, target) => this.handleItemClick(event, target, tag.id)} 
-                                                    checked={selectedTags.includes(tag.id)}
-                                                    key={tag.id} 
-                                                    label={tag.name} />))
-                                        }
-                                    </Form.Field>
-                                </Form>
-                            </Popup.Content>
-                    </Popup>
-                    <Menu.Item link>
+        const { selectedTags } = this.props;
+
+        return <Row className={'blue-grey darken-3 top-menu'}>
+                    <Col className="sidenav-trigger" data-target="slide-out">
+                        <div className={'open-navagation'}> Show Navagation</div>
+                    </Col>
+                    <Col className={'right-item'}>
                         <Link to={ROUTES.landing}>Home</Link>
-                    </Menu.Item>
-                    <Menu.Item link>
+                    </Col>
+                    <Col className={'right-item'}>
                         Download
-                    </Menu.Item>
-                    <Menu.Item link>
+                    </Col>
+                    <Col className={'right-item'}>
                         <Link to={ROUTES.favorites}>Favorites</Link>
-                    </Menu.Item>
-                    <Popup 
-                        hoverable
-                        position ='bottom right'
-                        on='click'
-                        trigger={ 
-                            <Menu.Item>Login</Menu.Item>
-                        }
-                        >
-                            <Popup.Content>
-                                <Form>
-                                    <Form.Field>
-                                        <Input placeholder='Username' />
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <Input placeholder='Password' />
-                                    </Form.Field>
-                                    <Button type='submit'>Login</Button>
-                                    <br/>
-                                    <Link to={ROUTES.accountCreation}>New User?</Link>
-                                </Form>
-                            </Popup.Content>
-                    </Popup>
-                </Menu>;
+                    </Col>
+                    <Col className={'right-item search-bar'}>
+                        <Icon>
+                            search
+                        </Icon>
+                        <input type="text" />
+                    </Col>
+                </Row>;
     }
 }

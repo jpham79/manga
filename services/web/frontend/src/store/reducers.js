@@ -1,10 +1,9 @@
-import {req, req_data, req_success, req_fail, toggle_sidenav, select_tags} from './actionTypes'
+import {req, req_data, req_success, req_fail, select_tags} from './actionTypes';
 import manga from '../../src/reducers/mangaReducers';
 import chapter from '../../src/reducers/chapterReducers';
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
 const initState = {
-    isSidenavVisible: false,
     selectedTags: [],
 }
 
@@ -50,12 +49,6 @@ const requests = (state = initState, action ) => {
                         error: action.error
                     }
                 } 
-                
-            case toggle_sidenav:
-                return {
-                    ...state,
-                    isSidebarVisible: action.visible
-                }
 
             case select_tags:
                 return {

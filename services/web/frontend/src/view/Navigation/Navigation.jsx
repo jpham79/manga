@@ -13,20 +13,17 @@ import { TopMenu } from './TopMenu/TopMenu.jsx';
  * tags: [list of selected ids]
  */
 const mapStateToProps = (state) => ({
-    isSidebarVisible: state.requests.isSidebarVisible,
     selectedTags: state.requests.selectedTags
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    showSidebar: () => dispatch(toggleSidenav(true)),
-    hideSidebar: () => dispatch(toggleSidenav(false)),
     selectTags: (tags) => dispatch(selectTags(tags))
 });
 
 const Navigation = (props) => {
     return [
-            <TopMenu key='topMenu' showSidebar={props.showSidebar} selectedTags={props.selectedTags} selectTags={props.selectTags} />,
-            <SideNav key='sideNav' isSidebarVisible={props.isSidebarVisible} hideSidebar={props.hideSidebar} />
+            <TopMenu key='topMenu' selectedTags={props.selectedTags} selectTags={props.selectTags} />,
+            <SideNav key='sideNav' />
         ];
 }
 
