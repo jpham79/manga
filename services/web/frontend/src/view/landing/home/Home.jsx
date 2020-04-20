@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, Col, Row } from 'react-materialize/lib/';
+import { Card, Col, Row } from 'react-materialize';
 import { Link } from "react-router-dom";
 import '../landing.scss';
 

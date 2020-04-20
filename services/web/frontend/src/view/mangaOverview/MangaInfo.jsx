@@ -2,7 +2,7 @@ import React from 'react';
 
 import './mangaOverview.scss';
 import ChapterList from '../../components/chapterList/ChapterList.jsx';
-import {Col, Row } from 'react-materialize/lib/';
+import {Col, Row } from 'react-materialize';
 
 const MangaInfo = props => {
     let { manga, getChapterId } = props;
