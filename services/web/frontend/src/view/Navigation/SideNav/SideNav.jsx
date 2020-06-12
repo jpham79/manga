@@ -27,9 +27,9 @@ export class SideNav extends React.Component {
     }
 
     render() {
-        return <ul id="slide-out" className="sidenav">
+        return <ul id="slide-out" className="sidenav" key="sidenav">
                     <li>
-                        <div class="sidenav-close">Hide Navagation</div>
+                        <div className="sidenav-close">Hide Navagation</div>
                     </li>
                     {
                         this.menuEntries.map((entry) => {

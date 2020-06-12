@@ -1,31 +1,29 @@
 import React from 'react';
-import { Card, Col, Row } from 'react-materialize';
+import { Card } from 'react-materialize';
 import { Link } from "react-router-dom";
-import '../../view/landing/landing.scss';
+import './manga-list.scss';
 
 let MangaList = props => {
     const { mangas, selectManga } = props;
 
     return (
-        <Row>
+        <div className="manga-list">
             {mangas.map((manga) =>
-                <Col className="" s={12} m={4} l={3} xl={1}>
-                    <Link key={manga._id} to={`manga/${manga.name.split(' ').join('_')}`}>
-                        <Card className={'card small blue-grey darken-3 z-depth-2 hoverable'}
-                            header={
-                                <div className="card-image">
-                                    <img className={'responsive-img'} src={manga.image} />
-                                </div>
-                            }
-                            onClick={() => selectManga(manga)}>
-                            <div className="white-text">
-                            	{manga.name}
+                <Link key={manga._id} to={`manga/${manga.name.split(' ').join('_')}`} className="manga-card">
+                    <Card className={'card small blue-grey darken-3 hoverable'}
+                        header={
+                            <div className="card-image">
+                                <img className={'responsive-img'} src={manga.image} />
                             </div>
-                        </Card>
-                    </Link>
-                </Col>
+                        }
+                        onClick={() => selectManga(manga)}>
+                        <div className="white-text content">
+                            {manga.name}
+                        </div>
+                    </Card>
+                </Link>
             )}
-        </Row>
+        </div>
     )
 }
 

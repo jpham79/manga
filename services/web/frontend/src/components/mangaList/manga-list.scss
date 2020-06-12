@@ -1,0 +1,24 @@
+.manga-list {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+
+    .manga-card {
+        display: inline-block;
+    }
+
+    .card {
+        width: 200px;
+        height: 200px;
+        margin-left: 15px;
+        background-color: blue;
+
+        .content {
+            white-space: normal;
+            word-wrap: break-word;
+        }
+    }
+}
