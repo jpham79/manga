@@ -27,18 +27,18 @@ export class SideNav extends React.Component {
     }
 
     render() {
-        return <ul id="slide-out" className="sidenav">
+        return <ul id="slide-out" className="sidenav" key="sidenav">
                     <li>
-                        <div class="sidenav-close">Hide Navagation</div>
+                        <div className="sidenav-close">Hide Navagation</div>
                     </li>
                     {
                         this.menuEntries.map((entry) => {
                             if (entry.type === 'header') 
-                               return   <li>
-                                            <div className="subheader" key ={entry.key}>{entry.name}</div>
+                               return   <li key={entry.key}>
+                                            <div className="subheader">{entry.name}</div>
                                         </li>;
                             else 
-                                return  <li>
+                                return  <li key={entry.key}>
                                             <Link to={entry.key}><span>{entry.name}</span></Link>
                                         </li>;
                         })
