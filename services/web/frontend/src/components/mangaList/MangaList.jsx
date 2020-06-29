@@ -13,7 +13,7 @@ let MangaList = props => {
                     <Card className={'card small blue-grey darken-3 hoverable'}
                         header={
                             <div className="card-image">
-                                <img className={'responsive-img'} src={manga.image} />
+                                {/* <img className={'responsive-img'} src={'manga.image'} /> can't access image (403), disabled for now*/}
                             </div>
                         }
                         onClick={() => selectManga(manga)}>

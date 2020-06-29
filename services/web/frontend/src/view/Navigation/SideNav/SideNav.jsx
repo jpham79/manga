@@ -34,11 +34,11 @@ export class SideNav extends React.Component {
                     {
                         this.menuEntries.map((entry) => {
                             if (entry.type === 'header') 
-                               return   <li>
-                                            <div className="subheader" key ={entry.key}>{entry.name}</div>
+                               return   <li key={entry.key}>
+                                            <div className="subheader">{entry.name}</div>
                                         </li>;
                             else 
-                                return  <li>
+                                return  <li key={entry.key}>
                                             <Link to={entry.key}><span>{entry.name}</span></Link>
                                         </li>;
                         })
