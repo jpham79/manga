@@ -1,21 +1,21 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { Collection, CollectionItem } from 'react-materialize';
 
 const ChapterList = props => {
     const { name, chapters, getChapterId  } = props;
     return (
-        <div>
+        <Collection>
             {chapters.map(chapter =>
-                <li key={chapter.chapterId}>
+                <CollectionItem key={chapter.chapterId} className="blue-grey lighten-3">
                     <Link to={`${name}/chapter/${chapter.num}`} >
-                        <div onClick={() => getChapterId(chapter.chapterId)}>
+                        <div onClick={() => getChapterId(chapter.chapterId)} className="white-text">
                             {chapter.name}
                         </div>
                     </Link>
-
-                </li>
+                </CollectionItem>
             )}
-        </div>
+        </Collection>
     )
 }
 

@@ -3,5 +3,15 @@ h1 {
 }
 
 .manga-banner {
-    width: 40%;
+    text-align: center;
+    
+    .manga-image {
+        background-color: blue;
+        width: 40%;
+        height: 300px;
+    }
+}
+
+.overview {
+    text-align: left;
 }
