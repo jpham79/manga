@@ -2,7 +2,7 @@ import React from 'react';
 
 import './mangaOverview.scss';
 import ChapterList from '../../components/chapterList/ChapterList.jsx';
-import { Col, Row } from 'react-materialize';
+import { Col, Row, Card, CardTitle } from 'react-materialize';
 
 const MangaInfo = props => {
     let { manga, getChapterId } = props;
@@ -12,23 +12,17 @@ const MangaInfo = props => {
         <div className="overview">
             <Row>
                 <Col s={8}>
-                    <div className={'manga-banner'}>
-                        {/* <img src={image} className={'manga-banner'} /> */}
-                        <img className={'manga-image'} />
-                    </div>
-                    <div>
-                        <h1>
-                            {name}
-                        </h1>
-                        <h4>
-                            {author}
-                        </h4>
-                    </div>
-                    <div>
+                    <Card
+                        className="blue-grey darken-3"
+                        header={<CardTitle image="https://materializecss.com/images/sample-1.jpg"></CardTitle>}
+                        title={<h4>{name}</h4>}>
                         <p>
+                            {author}
+                        </p>
+                        <p> 
                             {summary}
                         </p>
-                    </div>
+                    </Card>
                 </Col>
                 <Col s={4}>
                     {source ? source.map(sourceObj => {

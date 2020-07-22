@@ -7,7 +7,7 @@ const ChapterList = props => {
     return (
         <Collection>
             {chapters.map(chapter =>
-                <CollectionItem key={chapter.chapterId} className="blue-grey lighten-3">
+                <CollectionItem key={chapter.chapterId} className="blue-grey darken-3">
                     <Link to={`${name}/chapter/${chapter.num}`} >
                         <div onClick={() => getChapterId(chapter.chapterId)} className="white-text">
                             {chapter.name}

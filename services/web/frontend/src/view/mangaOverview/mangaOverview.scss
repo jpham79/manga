@@ -2,16 +2,15 @@ h1 {
     color: white;
 }
 
-.manga-banner {
-    text-align: center;
-    
-    .manga-image {
-        background-color: blue;
-        width: 40%;
-        height: 300px;
-    }
+.card {
+    width: inherit;
+    margin-left: 10%;
 }
 
 .overview {
     text-align: left;
+
+    .card-content {
+        padding-top: 0;
+    }
 }
