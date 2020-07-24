@@ -11,10 +11,10 @@ const MangaInfo = props => {
     return (
         <div className="overview">
             <Row>
-                <Col s={8}>
+                <Col s={7}>
                     <Card
                         className="blue-grey darken-3"
-                        header={<CardTitle image="https://materializecss.com/images/sample-1.jpg"></CardTitle>}
+                        header={<CardTitle image={image}></CardTitle>}
                         title={<h4>{name}</h4>}>
                         <p>
                             {author}

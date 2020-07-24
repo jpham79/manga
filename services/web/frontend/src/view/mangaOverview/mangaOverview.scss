@@ -3,7 +3,6 @@ h1 {
 }
 
 .card {
-    width: inherit;
     margin-left: 10%;
 }
 
@@ -12,5 +11,11 @@ h1 {
 
     .card-content {
         padding-top: 0;
+    }
+
+    .card-image {
+        img {
+            height: 600px;
+        }
     }
 }
