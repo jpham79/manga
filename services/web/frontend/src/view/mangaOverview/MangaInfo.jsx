@@ -11,7 +11,7 @@ const MangaInfo = props => {
     return (
         <div className="overview">
             <Row>
-                <Col s={7}>
+                <Col s={5} className="info">
                     <Card
                         className="blue-grey darken-3"
                         header={<CardTitle image={image}></CardTitle>}

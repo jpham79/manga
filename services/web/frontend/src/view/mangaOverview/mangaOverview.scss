@@ -8,6 +8,19 @@ h1 {
 
 .overview {
     text-align: left;
+    
+    .row {
+        display: flex;
+        margin: auto;
+
+        .info {
+            margin-left: 13%;
+        }
+
+        .col:not(.info){
+            margin: 0 0 0 2%;
+        }
+    }
 
     .card-content {
         padding-top: 0;
@@ -15,6 +28,7 @@ h1 {
 
     .card-image {
         img {
+            object-fit: contain;
             height: 600px;
         }
     }
