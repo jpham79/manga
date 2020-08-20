@@ -2,51 +2,36 @@ import React from 'react';
 
 import './mangaOverview.scss';
 import ChapterList from '../../components/chapterList/ChapterList.jsx';
-import {Col, Row } from 'react-materialize';
+import { Col, Row, Card, CardTitle } from 'react-materialize';
 
 const MangaInfo = props => {
     let { manga, getChapterId } = props;
     let { name, summary, image, author, ongoing, genres, source } = manga;
 
     return (
-        <div>
+        <div className="overview">
             <Row>
-                <Row>
-                    <Col s={12}>
-                        <div>
-                            <img src={image} className={'manga-banner'} />
-                        </div>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col s={8}>
-                        <div>
-                            <h1>
-                                {name}
-                            </h1>
-                            <h2>
-                                {author}
-                            </h2>
-                        </div>
-                        <div>
-                            <p>
-                                {summary}
-                            </p>
-                        </div>
-                    </Col>
-                    <Col s={4}>
-                        {source ? source.map(sourceObj => {
-                            return (
-                                <ChapterList key={sourceObj.name} name={name.split(' ').join('_')} chapters={sourceObj.chapters} getChapterId={getChapterId}></ChapterList>
-                            )
-                        }) : <div>Loading</div>}
-                    </Col>
-                </Row>
+                <Col s={5} className="info">
+                    <Card
+                        className="blue-grey darken-3"
+                        header={<CardTitle image={image}></CardTitle>}
+                        title={<h4>{name}</h4>}>
+                        <p>
+                            {author}
+                        </p>
+                        <p> 
+                            {summary}
+                        </p>
+                    </Card>
+                </Col>
+                <Col s={4}>
+                    {source ? source.map(sourceObj => {
+                        return (
+                            <ChapterList key={sourceObj.name} name={name.split(' ').join('_')} chapters={sourceObj.chapters} getChapterId={getChapterId}></ChapterList>
+                        )
+                    }) : <div>Loading</div>}
+                </Col>
             </Row>
-
-
-
         </div>
     )
 }

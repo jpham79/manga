@@ -2,6 +2,34 @@ h1 {
     color: white;
 }
 
-.manga-banner {
-    width: 40%;
+.card {
+    margin-left: 10%;
+}
+
+.overview {
+    text-align: left;
+    
+    .row {
+        display: flex;
+        margin: auto;
+
+        .info {
+            margin-left: 13%;
+        }
+
+        .col:not(.info){
+            margin: 0 0 0 2%;
+        }
+    }
+
+    .card-content {
+        padding-top: 0;
+    }
+
+    .card-image {
+        img {
+            object-fit: contain;
+            height: 600px;
+        }
+    }
 }
