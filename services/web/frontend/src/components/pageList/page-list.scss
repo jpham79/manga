@@ -1,0 +1,40 @@
+.page {
+    width: 800px;
+    height: 1000px;
+}
+
+.dropdown-trigger {
+    margin-bottom: 10px;
+}
+
+.current-chapter {
+    border: 1px solid #37474f;
+    border-radius: 5px;
+}
+
+a {
+    color: #26a69a;
+}
+
+.override-overlay {
+    position: relative;
+    z-index: 3;
+}
+
+.overlay-left {
+    position: fixed; 
+    z-index: 2;
+    width: 50%; 
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.overlay-right {
+    position: fixed; 
+    z-index: 2;
+    width: 50%; 
+    height: 100%;
+    top: 0;
+    right: 0;
+}
