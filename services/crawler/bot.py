@@ -61,13 +61,12 @@ async def crawl():
 
             for location in parsedXml.find_all('loc'):
                 link = location.contents[0]
-                print(link)
 
                 if link.endswith('.xml'):
                     siteMaps.append(link)
                 else:
                     if 'chapter' not in link:
-                        print(link)
+                        print(f"chapter not in link {link}")
                         await parse(link)
 
             if requestRate:
@@ -94,14 +93,16 @@ def parse_sitemap(response):
 
 async def getPages(link):
     txt = await get(link)
-    soup = BeautifulSoup(txt, 'html.parser')
-    images = soup.find_all('img')
-    pages = []
-    for index, image in enumerate(images):
-        if 'chapter' in image['src']:
-            page = {'num': index, 'link': image['src']}
-            pages.append(page)
-    print(pages)
+    print(f"text = {txt}")
+    # soup = BeautifulSoup(txt, 'html.parser')
+    # images = soup.find_all('img')
+    # print(f"images {images}")
+    # pages = []
+    # for index, image in enumerate(images):
+    #     if 'chapter' in image['src']:
+    #         page = {'num': index, 'link': image['src']}
+    #         pages.append(page)
+    print(f"pages {pages}")
     return pages
 
 async def get_manga_info(info_url):
