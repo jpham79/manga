@@ -61,7 +61,7 @@ async def crawl():
 
             for location in parsedXml.find_all('loc'):
                 link = location.contents[0]
-                # print(link)
+                print(link)
 
                 if link.endswith('.xml'):
                     siteMaps.append(link)
@@ -101,7 +101,7 @@ async def getPages(link):
         if 'chapter' in image['src']:
             page = {'num': index, 'link': image['src']}
             pages.append(page)
-    # print(pages)
+    print(pages)
     return pages
 
 async def get_manga_info(info_url):
@@ -173,14 +173,14 @@ async def get_manga_info(info_url):
 async def insertChapter(chapter):
     chapter_id = None
     count = db.chapters.count_documents({'manga': {'name': chapter['manga']['name']}, 'num': chapter['num']})
-    if count is 0:
+    if count == 0:
         chapter_id = db.chapters.insert_one(chapter).inserted_id
         print(f"just inserted chapter {chapter['num']} for manga: {chapter['manga']['name']}")
     return chapter_id
 
 async def insertManga(manga):
     count = db.mangas.count_documents({'name': manga['name']})
-    if count is 0:
+    if count == 0:
         db.mangas.insert_one(manga)
         print(f"Just inserted: {manga['name']}")
 

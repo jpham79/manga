@@ -2,12 +2,22 @@
 
 Launching the crawler on windows:
 1. CD into the crawler directory
-2. Run the following commands
+2. Run the following commands on windows
 
 ```
-./env/Scripts/activate 
+.\venv\Scripts\activate
 pip install -r requirements.txt
 python bot.py
+```
+
+On mac run 
+```
+source env/bin/activate
+```
+
+3. When on windows to install python3 dependencies
+```
+pip install -r .\app\requirements.txt
 ```
 
 When installing new packages please run:
