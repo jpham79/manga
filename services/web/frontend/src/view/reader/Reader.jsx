@@ -6,7 +6,8 @@ import { getMangaName }  from '../../actions/mangaActions';
 
 const mapStateToProps = state => ({
     selectedChapter: state.chapter.selectedChapter,
-    manga: state.manga.selectedManga
+    manga: state.manga.selectedManga,
+    useDualPage: state.requests.dualPage
 });
 
 const mapDispatchToProps = {
@@ -15,7 +16,7 @@ const mapDispatchToProps = {
 }
 
 const Reader = props => {
-    const { selectedChapter, getChapterNum, getMangaName, manga } = props;
+    const { selectedChapter, getChapterNum, getMangaName, manga, useDualPage } = props;
     const { source } = manga;
     let [ , , mangaName, ,chapterNum] = window.location.pathname.split('/'); // Destructure url array, ignoring 1st, 2nd, and 4th elements
     
@@ -29,7 +30,7 @@ const Reader = props => {
     if (selectedChapter && source) { // wait for both api calls to finish
         return (
             <div>
-                <PageList source={source} chapterInfo={selectedChapter} getChapter={getChapter} chapterNumber={chapterNum} />
+                <PageList source={source} chapterInfo={selectedChapter} getChapter={getChapter} chapterNumber={chapterNum} useDualPage={useDualPage}/>
             </div>
         )
     }  else  {

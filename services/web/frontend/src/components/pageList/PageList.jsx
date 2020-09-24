@@ -8,7 +8,7 @@ import './page-list.scss';
  * Displays the pages of the selected chapter
  */
 const PageList = (props) => {
-    const { chapterInfo, source, chapterNumber } = props;
+    const { chapterInfo, source, chapterNumber, useDualPage } = props;
     const { chapters } = source[0];
     const { pages, name, num } = chapterInfo;
 
@@ -108,9 +108,13 @@ const PageList = (props) => {
             <div>
                 {
                     pages.map(page =>
+                        useDualPage ?
                         <span key={page.num /* <img src={page.link} /> */}>
                             <img className='page' style={getRandomColor()} />
-                        </span>
+                        </span>:
+                        <div key={page.num /* <img src={page.link} /> */}>
+                            <img className='page' style={getRandomColor()} />
+                        </div>
                     )
                 }
             </div>
