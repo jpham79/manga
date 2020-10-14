@@ -5,7 +5,7 @@ import { getChapterId } from '../../actions/chapterActions';
 import MangaInfo from './MangaInfo.jsx';
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     manga: state.manga.selectedManga
 });
 
@@ -14,22 +14,17 @@ const mapDispatchToProps = {
     getChapterId: chapterId => getChapterId(chapterId),
 }
 
-const MangaOverview = props => {
-    let { manga, getMangaName, getChapterId } = props;
+const MangaOverview = (props) => {
+    let { manga, getMangaName, getChapterId, searchInput } = props;
+
     if (!manga) {
         const mangaName = window.location.pathname.split('/').pop().replace(/_/g, ' ');
         getMangaName(mangaName);
     }
+    
     return (
-        <div>
-            <div>
-                <MangaInfo manga={manga} getMangaName={getMangaName} getChapterId={getChapterId}></MangaInfo>
-            </div>
-        </div>
-    )
+        <MangaInfo manga={manga} searchInput={searchInput} getMangaName={getMangaName} getChapterId={getChapterId}></MangaInfo>
+    );
 }
-//  {/* <MangaInfo /> */}
-// <Home mangas={mangas} selectedTags={selectedTags}/>
 
 export default connect(mapStateToProps, mapDispatchToProps)(MangaOverview);
-// export default MangaOverview;

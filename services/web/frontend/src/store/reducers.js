@@ -1,4 +1,4 @@
-import {req, req_data, req_success, req_fail, select_tags, enable_dual_page} from './actionTypes';
+import {req, req_data, req_success, req_fail, search_input, enable_dual_page} from './actionTypes';
 import manga from '../../src/reducers/mangaReducers';
 import chapter from '../../src/reducers/chapterReducers';
 import { combineReducers } from 'redux';
@@ -8,7 +8,8 @@ const dualPageKey = 'useDualPage';
 
 const initState = {
     selectedTags: [],
-    dualPage: sessionStorage.getItem(dualPageKey) == 'true'
+    dualPage: sessionStorage.getItem(dualPageKey) == 'true',
+    searchInput: ''
 }
 
 const requests = (state = initState, action ) => {
@@ -54,10 +55,10 @@ const requests = (state = initState, action ) => {
                     }
                 } 
 
-            case select_tags:
+            case search_input:
                 return {
                     ...state,
-                    selectedTags: action.tags
+                    searchInput: action.searchInput
                 }
 
             case enable_dual_page:

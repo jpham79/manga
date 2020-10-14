@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { toggleSidenav, selectTags } from '../../store/actions.js';
+
+import { searchManga } from '../../store/actions.js';
 import { SideNav } from './SideNav/SideNav.jsx';
 import { TopMenu } from './TopMenu/TopMenu.jsx';
 
@@ -13,16 +14,16 @@ import { TopMenu } from './TopMenu/TopMenu.jsx';
  * tags: [list of selected ids]
  */
 const mapStateToProps = (state) => ({
-    selectedTags: state.requests.selectedTags
+    searchInput: state.requests.searchInput
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    selectTags: (tags) => dispatch(selectTags(tags))
+    searchManga: (tags) => dispatch(searchManga(tags))
 });
 
 const Navigation = (props) => {
     return [
-            <TopMenu key='topMenu' selectedTags={props.selectedTags} selectTags={props.selectTags} />,
+            <TopMenu key='topMenu' searchInput={props.searchInput} searchManga={props.searchManga} />,
             <SideNav key='sideNav' />
         ];
 }

@@ -1,0 +1,22 @@
+.manga-table {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    width: 80%;
+    margin: auto;
+
+    .card {
+        width: 200px;
+        height: 250px;
+        margin-left: 15px;
+
+        .card-image {
+            height: 300px;
+        }
+
+        .content {
+            white-space: normal;
+            word-wrap: break-word;
+        }
+    }
+}

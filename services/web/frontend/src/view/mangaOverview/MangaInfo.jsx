@@ -7,6 +7,7 @@ import { Col, Row, Card, CardTitle } from 'react-materialize';
 const MangaInfo = props => {
     let { manga, getChapterId } = props;
     let { name, summary, image, author, ongoing, genres, source } = manga;
+    
     return (
         <div className="overview">
             { manga ? 
