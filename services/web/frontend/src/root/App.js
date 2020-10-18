@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import store from '../store/store';
-import { request, reqSuccess, reqFail } from '../store/actions'
-import axios from 'axios'
-import {reqData} from '../store/actions'
 import './App.scss';
 
 // import  getNavMenus  from '../view/Navigation/Navagation.jsx.js';
@@ -14,6 +11,7 @@ import Navigation from '../view/Navigation/Navigation.jsx';
 import MangaOverview from '../view/mangaOverview/MangaOverview.jsx';
 import Reader from '../view/reader/Reader.jsx';
 import Settings from '../view/settings/Settings.jsx';
+import Browse from '../view/browse/Browse.jsx';
 
 
 class App extends Component {
@@ -54,13 +52,14 @@ export const ROUTES = {
   profile: '/profile',
   accountCreation: '/new-account',
   settings: '/settings',
-  offlineLibrary: '/offline-library'
+  browse: '/browse'
 };
 
 const routeList = [
   <Route key='home' exact={true} path={ROUTES.landing} component={Landing} />,
   <Route key='manga' exact={true} path={ROUTES.manganame} component={MangaOverview} />,
   <Route key='chapter' exact={true} path={ROUTES.chapterId} component={Reader} />,
-  <Route key='settings' exact={true} path={ROUTES.settings} component={Settings} />
+  <Route key='settings' exact={true} path={ROUTES.settings} component={Settings} />,
+  <Route key='browse' exact={true} path={ROUTES.browse} component={Browse} />
 ];
 

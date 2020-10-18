@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from 'react-materialize';
 
@@ -11,7 +11,9 @@ import './manga-table.scss';
  */
 const MangaTable = props => {
     const { mangas, selectManga, searchInput } = props;
-
+    // This will be used when the user wants to find mangas that starts with A-Z
+    const [firstLetter, setFirstLetter] = useState('');
+    
     return (
         <div className="manga-table">
             {

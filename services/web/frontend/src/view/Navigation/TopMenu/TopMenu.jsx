@@ -33,7 +33,7 @@ export class TopMenu extends React.Component {
                         Download
                     </Col>
                     <Col className={'right-item'}>
-                        <Link to={ROUTES.favorites}>Favorites</Link>
+                        <Link to={ROUTES.browse}>Browse</Link>
                     </Col>
                     <Col className={'right-item search-bar'}>
                         <Icon>

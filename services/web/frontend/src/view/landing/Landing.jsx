@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { listTest } from './home/homeActions.js';
+import { listTest } from '../../store/homeActions.js';
 import { selectManga } from '../../actions/mangaActions';
 import MangaList from '../../components/mangaList/MangaList.jsx';
 import MangaTable from '../../components/mangaTable/MangaTable.jsx';

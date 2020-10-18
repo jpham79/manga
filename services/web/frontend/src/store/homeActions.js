@@ -1,4 +1,4 @@
-import { request, reqSuccess, reqFail, reqData } from '../../../store/actions'
+import { request, reqSuccess, reqFail, reqData } from './actions'
 import axios from 'axios'
 
 const listTest = () => {
