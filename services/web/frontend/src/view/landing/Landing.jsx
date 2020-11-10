@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { listTest } from './home/homeActions';
+import { listTest } from '../../store/homeActions.js';
 import { selectManga } from '../../actions/mangaActions';
 import MangaList from '../../components/mangaList/MangaList.jsx';
-import { Home } from './home/Home.jsx';
+import MangaTable from '../../components/mangaTable/MangaTable.jsx';
+
 import './landing.scss';
 
 /**
@@ -39,36 +40,26 @@ const mapStateToProps = (state) => ({
     posts: state.requests.posts,
     mangas: state.requests.mangas,
     mangaList: state.requests.ListTest ? state.requests.ListTest : null,
-    selectedTags: state.requests.selectedTags
+    selectedTags: state.requests.selectedTags,
+    searchInput: state.requests.searchInput
 });
   
 const mapDispatchToProps = {
-    // nothing so far
-    // list: listTest,
     selectManga: manga => selectManga(manga),
     list: listTest
 }
 
 /**
- * Page user will see if they are logged in
+ * Page user will see
  */
-const getPersonalizedLanding = (mangaList) => {
-    let mangas = [];
-    
-    if (mangaList && mangaList.data) mangas = mangaList.data;
-
-    return <Home mangas={mangas} />;
-}
-
-/**
- * Page user will see when they are not logged in
- */
-const getDefaultLanding = (mangaList, selectManga) => {
+const getDefaultLanding = (mangaList, selectManga, searchInput) => {
     let mangas = [];
     
     if (mangaList && mangaList.data) mangas = mangaList.data;
 
     return (
+        searchInput.length > 0 ?
+        <MangaTable mangas={mangas} selectManga={selectManga} searchInput={searchInput}/>:
         <div id='landing' key='landing'>
             <div className='new'> 
                 <h4> New Uploads: </h4>
@@ -87,11 +78,11 @@ const getDefaultLanding = (mangaList, selectManga) => {
 }
 
 const Landing = (props) => {
-    let { selectedTags, list, mangaList, isLoggedIn, selectManga } = props;
+    let { selectedTags, list, mangaList, isLoggedIn, selectManga, searchInput } = props;
     
     if (!mangaList) list();
     
-    return isLoggedIn ? getPersonalizedLanding(mangaList) : getDefaultLanding(mangaList, selectManga);
+    return getDefaultLanding(mangaList, selectManga, searchInput);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

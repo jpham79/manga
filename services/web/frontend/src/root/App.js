@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import store from '../store/store';
-import { request, reqSuccess, reqFail } from '../store/actions'
-import axios from 'axios'
-import {reqData} from '../store/actions'
 import './App.scss';
 
 // import  getNavMenus  from '../view/Navigation/Navagation.jsx.js';
@@ -13,6 +10,8 @@ import Landing from '../view/landing/Landing.jsx';
 import Navigation from '../view/Navigation/Navigation.jsx';
 import MangaOverview from '../view/mangaOverview/MangaOverview.jsx';
 import Reader from '../view/reader/Reader.jsx';
+import Settings from '../view/settings/Settings.jsx';
+import Browse from '../view/browse/Browse.jsx';
 
 
 class App extends Component {
@@ -53,64 +52,14 @@ export const ROUTES = {
   profile: '/profile',
   accountCreation: '/new-account',
   settings: '/settings',
-  offlineLibrary: '/offline-library'
+  browse: '/browse'
 };
 
 const routeList = [
   <Route key='home' exact={true} path={ROUTES.landing} component={Landing} />,
   <Route key='manga' exact={true} path={ROUTES.manganame} component={MangaOverview} />,
   <Route key='chapter' exact={true} path={ROUTES.chapterId} component={Reader} />,
+  <Route key='settings' exact={true} path={ROUTES.settings} component={Settings} />,
+  <Route key='browse' exact={true} path={ROUTES.browse} component={Browse} />
 ];
-
-/**
- * EXAMPLE GET REQUEST WITH AXIOS AND REDUX
- * You can only use listTest if your backend is running
- */
-
-const listTest = () => {
-  return dispatch => {
-    dispatch(request('GET', 'ListTest'))
-    return axios.get('/api/manga', {
-      params: {
-        genres: ['adult', 'shounen']
-      }
-    })
-    .then(response => {
-      dispatch(reqSuccess('ListTest', response))
-      dispatch(reqData('ListTest', response))
-    })
-    .catch(response => dispatch(reqFail('ListTest', response)))
-  }
-}
-// store.dispatch(listTest())
-const fetchChapter = chapterId => {
-  let params = {
-      chapterId
-  }
-  
-  return dispatch => {
-      dispatch(request('GET', 'MangaChapter', params ))
-      return axios.get(`/api/manga/chapter/id/${chapterId}`)
-          .then(response => {
-              dispatch(reqSuccess('MangaChapter', response))
-              dispatch(reqData('MangaChapter', response))
-              // dispatch(selectChapter(response))
-          })
-          .catch(response => dispatch(reqFail('MangaChapter', response)))
-  }
-}
-// store.dispatch(fetchChapter('5da42b12d7b142cfc693584a'));
-// const httpTest = () => {
-//   return dispatch => {
-//     dispatch(request('GET', 'GetTest'))
-//     return axios.get('https://httpbin.org/get')
-//     .then(response => {
-//       dispatch(reqSuccess('GetTest', response))
-//       dispatch(reqData('GetTest', response))
-//     })
-//     .catch(response => dispatch(reqFail('GetTest', response)))
-//   }
-// }
-// store.dispatch(httpTest())
-
 

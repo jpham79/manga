@@ -1,4 +1,4 @@
-import {req, req_success, req_fail, req_data, select_tags} from './actionTypes'
+import {req, req_success, req_fail, req_data, search_input, enable_dual_page} from './actionTypes'
 
 const request = (reqType, name, params = undefined) => {
     return {
@@ -38,10 +38,12 @@ const reqData = (name, response) => {
 }
 
 
-const selectTags = makeActionCreator(select_tags, 'tags');
+const searchManga = makeActionCreator(search_input, 'searchInput');
+
+const toggleDualPage = makeActionCreator(enable_dual_page, 'dualPageFlag');
 
 function makeActionCreator(type, ...argNames) {
-    return function(...args) {
+    return (...args) => {
       const action = { type }
       argNames.forEach((arg, index) => {
         action[arg] = args[index]
@@ -50,4 +52,4 @@ function makeActionCreator(type, ...argNames) {
     }
 }
 
-export {request, reqData, reqFail, reqSuccess, selectTags}
+export {request, reqData, reqFail, reqSuccess, searchManga, toggleDualPage}
