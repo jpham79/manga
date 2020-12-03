@@ -1,3 +1,32 @@
-img {
-    margin-right: 10px;
+.page-container {
+    margin-left: -10px; // to offset the margin-left of span for each first item of each row
+
+    span {
+        display: inline-block;
+        margin-top: 10px;
+        margin-left: 10px;
+        height: fit-content;
+        width: fit-content;
+        
+        padding: 10px;
+        background-color: #37474f;
+    }
+
+    .input-button {
+        margin-top: 10px;
+
+        button:first-child {
+            background-color: dodgerblue;
+        }
+
+        button:not(:first-child) {
+            margin-left: 15px;
+        }
+    }
+}
+
+.page-index {
+    width: 65px !important;
+    color: white;
+    text-align: center;
 }
