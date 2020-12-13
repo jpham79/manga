@@ -53,7 +53,7 @@ export const ROUTES = {
   accountCreation: '/new-account',
   settings: '/settings',
   browse: '/browse',
-  upload: '/upload'
+  upload: '/upload/:manganame'
 };
 
 const routeList = [

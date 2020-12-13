@@ -2,10 +2,11 @@ import React from 'react';
 
 import './mangaOverview.scss';
 import ChapterList from '../../components/chapterList/ChapterList.jsx';
-import { Col, Row, Card, CardTitle } from 'react-materialize';
+import { Col, Row, Card, CardTitle, Button } from 'react-materialize';
+import { Link } from "react-router-dom";
 
 const MangaInfo = props => {
-    let { manga, getChapterId } = props;
+    let { manga, mangaKey, getChapterId } = props;
     let { name, summary, image, author, ongoing, genres, source } = manga;
     
     return (
@@ -13,15 +14,17 @@ const MangaInfo = props => {
             { manga ? 
                 <Row>
                     <Col s={5} className="info">
-                        
                             <Card
                                 className="blue-grey darken-3"
-                                header={<CardTitle image={image}></CardTitle>}
-                                title={<h4>{name}</h4>}>
+                                header={<CardTitle image={image}></CardTitle>}>
+                                <h4>{name}</h4>
                                 <p>
                                     {author}
                                 </p>
-                                <p> 
+                                <Link to={`/upload/${mangaKey}`} >
+                                    <Button variant="contained">Upload New Chapter</Button>
+                                </Link>
+                                <p className='summary'> 
                                     {summary}
                                 </p>
                             </Card> 
@@ -37,7 +40,7 @@ const MangaInfo = props => {
                 <div>Loading</div>
             }
         </div>
-    )
+    );
 }
 
 export default MangaInfo;

@@ -77,34 +77,43 @@ const PageManager = (props) => {
     }
 
     return (
-        <div>
+        [
             <div>
-                <input type="file" onChange={(event) => processFiles(event.target.files)} multiple/> 
-            </div>
-            {
-                pages.length > 0 ?
-                    <div className='page-container'>
-                        { 
-                            pages.map((page, index) => (
-                                <span key={page.name}>
-                                    <img src={page.objectUrl}
-                                        height='600px' 
-                                        width='300px'/>
-                                        <div>
-                                            <input className='page-index' type='number' value={page.index + 1} onChange={(event) => changeIndexDirty(event, index)} />
-                                        </div>
-                                </span>
-                            )) 
-                        }
-
-                        <div className='input-button'>
-                            { pages.length > 1 && <Button className='rearrange' variant="contained" onClick={changeIndex}>Rearrange</Button> }
-                            <Button variant="contained">Upload</Button>
+                <form className="info-input">
+                    <div class="row">
+                        <div class="col s12">
+                            <input placeholder="Chapter Name" type="text"/>
+                            <input type="file" onChange={(event) => processFiles(event.target.files)} multiple/> 
                         </div>
-                    </div> :
-                    <div></div>
-            }
-        </div>
+                    </div>
+                </form>
+            </div>,
+            <div>
+                {
+                    pages.length > 0 ?
+                        <div className='page-container'>
+                            { 
+                                pages.map((page, index) => (
+                                    <span key={page.name}>
+                                        <img src={page.objectUrl}
+                                            height='600px' 
+                                            width='300px'/>
+                                            <div>
+                                                <input className='page-index' type='number' value={page.index + 1} onChange={(event) => changeIndexDirty(event, index)} />
+                                            </div>
+                                    </span>
+                                )) 
+                            }
+
+                            <div className='input-button'>
+                                { pages.length > 1 && <Button className='rearrange' variant="contained" onClick={changeIndex}>Rearrange</Button> }
+                                <Button variant="contained">Upload</Button>
+                            </div>
+                        </div> :
+                        <div></div>
+                }
+            </div>
+        ]
     )
 }
 

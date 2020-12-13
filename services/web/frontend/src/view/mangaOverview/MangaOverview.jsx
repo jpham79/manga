@@ -15,15 +15,16 @@ const mapDispatchToProps = {
 }
 
 const MangaOverview = (props) => {
+    const mangaKey = window.location.pathname.split('/').pop();
     let { manga, getMangaName, getChapterId, searchInput } = props;
-
+    
     if (!manga) {
-        const mangaName = window.location.pathname.split('/').pop().replace(/_/g, ' ');
+        const mangaName = mangaKey.replace(/_/g, ' ');
         getMangaName(mangaName);
     }
     
     return (
-        <MangaInfo manga={manga} searchInput={searchInput} getMangaName={getMangaName} getChapterId={getChapterId}></MangaInfo>
+        <MangaInfo mangaKey={mangaKey} manga={manga} searchInput={searchInput} getMangaName={getMangaName} getChapterId={getChapterId}></MangaInfo>
     );
 }
 
