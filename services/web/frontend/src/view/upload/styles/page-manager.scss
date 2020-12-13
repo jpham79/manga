@@ -1,0 +1,58 @@
+.page-container {
+    margin-top: 97px;
+    margin-left: -10px; // to offset the margin-left of span for each first item of each row
+
+    span {
+        display: inline-block;
+        margin-top: 10px;
+        margin-left: 10px;
+        height: fit-content;
+        width: fit-content;
+        
+        padding: 10px;
+        background-color: #37474f;
+    }
+
+    .input-button {
+        margin-top: 10px;
+
+        button:first-child {
+            background-color: dodgerblue;
+        }
+
+        button:not(:first-child) {
+            margin-left: 15px;
+        }
+    }
+}
+
+.page-index {
+    width: 65px !important;
+    color: white;
+    text-align: center;
+}
+
+.info-input {
+    position: absolute;
+    left: 50%;
+    margin-left: -205px;
+
+    input {
+        color: white;
+    }
+}
+
+.manga-input {
+    @extend .info-input;
+    margin-left: -439px;
+
+    textarea {
+        height: 12rem;
+        color: white;
+        resize: none; //cause resize messes with the positioning reeee...
+    }
+}
+
+.no-click {
+    pointer-events: none;
+}

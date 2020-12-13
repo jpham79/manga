@@ -6,6 +6,9 @@
 
         &:not(.subheader) {
             cursor: pointer;
+            &:hover {
+                background-color: rgba($color: #37474f , $alpha: 0.9);
+            }
         }
     }
 
